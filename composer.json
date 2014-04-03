@@ -1,5 +1,5 @@
 {
-    "name": "linestorm/blog-post",
+    "name": "linestorm/blog-post-bundle",
     "description": "Post Module for LineStorm BlogBundle",
     "require": {
         "php": ">=5.3.0",
