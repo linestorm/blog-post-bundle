@@ -1,50 +1,16 @@
 <?php
 
-namespace LineStorm\BlogPostBundle\Controller;
+namespace LineStorm\BlogPostBundle\Controller\Api;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use LineStorm\BlogBundle\Controller\Api\AbstractApiController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\View;
-use LineStorm\BlogBundle\Model\ModelManager;
-use LineStorm\BlogBundle\Module\ModuleManager;
 use LineStorm\BlogPostBundle\Model\Post;
 
-class ApiController extends Controller implements ClassResourceInterface
+class PostController extends AbstractApiController implements ClassResourceInterface
 {
-    private $modelManager = null;
-
-    private $moduleManager = null;
-
-    private function createResponse($data = null, $code = 200, $headers = array())
-    {
-        return View::create($data, $code, $headers)
-            ->setFormat('json');
-    }
-
-    /**
-     * @return ModelManager
-     */
-    private function getModelManager()
-    {
-        if(!$this->modelManager)
-            $this->modelManager = $this->get('linestorm.blog.model_manager');
-
-        return $this->modelManager;
-    }
-
-    /**
-     * @return ModuleManager
-     */
-    private function getModuleManager()
-    {
-        if(!$this->moduleManager)
-            $this->moduleManager = $this->get('linestorm.blog.module_manager');
-
-        return $this->moduleManager;
-    }
-
     private function getForm($entity = null)
     {
         return $this->createForm('linestorm_blog_form_post', $entity);
@@ -100,7 +66,7 @@ class ApiController extends Controller implements ClassResourceInterface
             $em->flush();
 
             $view = View::create(null, 201, array(
-                'location' => $this->generateUrl('linestorm_blog_admin_module_post_api_post_get_post', array( 'id' => $form->getData()->getId() ))
+                'location' => $this->generateUrl('linestorm_blog_post_module_api_get_post', array( 'id' => $form->getData()->getId() ))
             ));
         } else {
             $view = View::create($form);
@@ -145,7 +111,7 @@ class ApiController extends Controller implements ClassResourceInterface
             $em->persist($updatedPost);
             $em->flush();
 
-            $view = $this->createResponse(array('location' => $this->generateUrl('linestorm_blog_admin_module_post_api_post_get_post', array( 'id' => $form->getData()->getId()))), 200);
+            $view = $this->createResponse(array('location' => $this->generateUrl('linestorm_blog_post_module_api_get_post', array( 'id' => $form->getData()->getId()))), 200);
         }
         else
         {

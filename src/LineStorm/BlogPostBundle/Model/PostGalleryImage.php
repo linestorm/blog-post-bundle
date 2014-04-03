@@ -3,6 +3,7 @@
 namespace LineStorm\BlogPostBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use LineStorm\BlogBundle\Model\Media;
 
 class PostGalleryImage
 {

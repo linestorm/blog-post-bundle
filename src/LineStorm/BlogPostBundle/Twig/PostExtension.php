@@ -1,6 +1,6 @@
 <?php
 
-namespace LineStorm\BlogBundle\Twig;
+namespace LineStorm\BlogPostBundle\Twig;
 
 use LineStorm\BlogBundle\Module\ModuleManager;
 use LineStorm\BlogPostBundle\Module\Component\ComponentInterface;

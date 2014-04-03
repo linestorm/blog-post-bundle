@@ -11,21 +11,21 @@ class ComponentCompilerPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('linestorm.blog.module_manager')) {
+        if (!$container->hasDefinition('linestorm.blog.module.post')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'linestorm.blog.module_manager'
+            'linestorm.blog.module.post'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'linestorm.blog.module'
+            'linestorm.blog.module.post.component'
         );
 
         foreach ($taggedServices as $id => $attributes) {
             $definition->addMethodCall(
-                'addModule',
+                'addComponent',
                 array(new Reference($id))
             );
         }

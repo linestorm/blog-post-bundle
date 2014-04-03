@@ -34,6 +34,6 @@ class CategoryFormType extends AbstractBlogFormType
      */
     public function getName()
     {
-        return 'linestorm_blog_form_category';
+        return 'linestorm_blog_form_post_category';
     }
 }

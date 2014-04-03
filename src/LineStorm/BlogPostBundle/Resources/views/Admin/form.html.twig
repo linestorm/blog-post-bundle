@@ -25,16 +25,16 @@
 
 {% block head %}
     {% javascripts
-        '@LineStormBlogBundle/Resources/public/js/dropzone.js'
-        '@LineStormBlogBundle/Resources/public/js/select2/select2.min.js'
         '@LineStormBlogBundle/Resources/public/js/api.js'
-        '@LineStormBlogBundle/Resources/public/js/admin/post.js'
-        output='compiled/js/admin/post.js' %}
+        '@LineStormBlogPostBundle/Resources/public/js/dropzone.js'
+        '@LineStormBlogPostBundle/Resources/public/js/select2/select2.min.js'
+        '@LineStormBlogPostBundle/Resources/public/js/admin/post.js'
+        output='compiled/js/admin/blog-post.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    <script type="text/javascript" src="/bundles/linestormblog/js/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript" src="/bundles/linestormblog/js/ckeditor/adapters/jquery.js"></script>
+    <script type="text/javascript" src="/bundles/linestormblogpost/js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/bundles/linestormblogpost/js/ckeditor/adapters/jquery.js"></script>
 
     <script type="text/javascript">
         window.lineStorm.modalContainer = "{{ fn.modalContainer()|e('js') }}";
@@ -43,10 +43,10 @@
     </script>
 
     {% stylesheets
-        '@LineStormBlogBundle/Resources/public/css/admin/post.css'
-        '@LineStormBlogBundle/Resources/public/css/dropzone.css'
-        'bundles/linestormblog/css/select2.css'
-        filter='cssrewrite' output='compiled/css/blog.css' %}
+        '@LineStormBlogPostBundle/Resources/public/css/admin/post.css'
+        '@LineStormBlogPostBundle/Resources/public/css/dropzone.css'
+        'bundles/linestormblogpost/css/select2.css'
+        filter='cssrewrite' output='compiled/css/blog-post.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
@@ -61,7 +61,7 @@
     {{ form_start(form, {attr: { class: 'api-save'} }) }}
         {{ form_row(form.title) }}
         {{ form_row(form.liveOn) }}
-        {{ form_row(form.category, {add_link: {class: 'add-category', href:path('linestorm_blog_api_new_category')}, attr: {'class': 'form-control category-select'} } ) }}
+        {{ form_row(form.category, {add_link: {class: 'add-category', href:path('linestorm_blog_post_module_api_new_category')}, attr: {'class': 'form-control category-select'} } ) }}
 
         <hr />
 

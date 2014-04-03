@@ -34,6 +34,6 @@ class TagFormType extends AbstractBlogFormType
      */
     public function getName()
     {
-        return 'linestorm_blog_form_tag';
+        return 'linestorm_blog_form_post_tag';
     }
 }

@@ -2,6 +2,7 @@
 
 namespace LineStorm\BlogPostBundle;
 
+use LineStorm\BlogPostBundle\DependencyInjection\ContainerBuilder\ComponentCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
@@ -12,6 +13,8 @@ class LineStormBlogPostBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
+
+        $container->addCompilerPass(new ComponentCompilerPass());
 
         $modelDir = realpath(__DIR__.'/Resources/config/model/doctrine');
         $mappings = array(

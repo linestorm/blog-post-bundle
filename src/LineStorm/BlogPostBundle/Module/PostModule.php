@@ -81,8 +81,8 @@ class PostModule extends AbstractModule implements ModuleInterface
     public function getNavigation()
     {
         return array(
-            'View All' => array('linestorm_blog_admin_module_post_list', array()),
-            'New' => array('linestorm_blog_admin_module_post_create', array()),
+            'View All' => array('linestorm_blog_post_module_admin_list', array()),
+            'New' => array('linestorm_blog_post_module_admin_create', array()),
         );
     }
 
@@ -103,7 +103,7 @@ class PostModule extends AbstractModule implements ModuleInterface
      */
     public function addRoutes(LoaderInterface $loader)
     {
-        $moduleRoutes = $loader->import('@LineStormBlogBundle/Resources/config/routing/modules/post/post.yml', 'yaml');
+        $moduleRoutes = $loader->import('@LineStormBlogPostBundle/Resources/config/routing.yml', 'yaml');
 
         // import all the component routes
         foreach ($this->components as $component) {

@@ -9,8 +9,6 @@ services:
     class: %linestorm.blog.module.post.class%
     tags:
       - { name: linestorm.blog.module }
-    calls: # TODO: This should be done as tags!
-      - [ setComponents, [ [@linestorm.blog.module.post.component.article, @linestorm.blog.module.post.component.gallery, @linestorm.blog.module.post.component.tag] ] ]
 
   linestorm.blog.module.post.component.article:
     class: %linestorm.blog.module.post.article.class%
@@ -34,7 +32,7 @@ services:
   #
   # TWIG POST MODULE
   linestorm.blog.twig.module_post_extension:
-    class: LineStorm\BlogBundle\Twig\Module\PostExtension
+    class: LineStorm\BlogPostBundle\Twig\PostExtension
     arguments: [ @linestorm.blog.module_manager, @service_container ]
     tags:
       - { name: twig.extension }

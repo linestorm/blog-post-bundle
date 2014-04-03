@@ -19,7 +19,7 @@ class AdminController extends Controller
 
         $posts = $modelManager->get('post')->findAll();
 
-        return $this->render('LineStormBlogBundle:Modules:Post/list.html.twig', array(
+        return $this->render('LineStormBlogPostBundle:Admin:list.html.twig', array(
             'posts' => $posts,
         ));
     }
@@ -33,7 +33,7 @@ class AdminController extends Controller
         $modelManager = $this->get('linestorm.blog.model_manager');
         $post = $modelManager->get('post')->find($id);
 
-        return $this->render('LineStormBlogBundle:Modules:Post/view.html.twig', array(
+        return $this->render('LineStormBlogPostBundle:Admin:view.html.twig', array(
             'post'      => $post,
             'module'    => $module,
         ));
@@ -54,11 +54,11 @@ class AdminController extends Controller
         $post = $modelManager->get('post')->find($id);
 
         $form = $this->createForm('linestorm_blog_form_post', $post, array(
-            'action' => $this->generateUrl('linestorm_blog_admin_module_post_api_post_put_post', array('id' => $post->getId())),
+            'action' => $this->generateUrl('linestorm_blog_post_module_api_put_post', array('id' => $post->getId())),
             'method' => 'PUT',
         ));
 
-        return $this->render('LineStormBlogBundle:Modules:Post/edit.html.twig', array(
+        return $this->render('LineStormBlogPostBundle:Admin:edit.html.twig', array(
             'post'      => $post,
             'form'      => $form->createView(),
             'module'    => $module,
@@ -73,21 +73,13 @@ class AdminController extends Controller
             throw new AccessDeniedException();
         }
 
-        $moduleManager = $this->get('linestorm.blog.module_manager');
-        $module        = $moduleManager->getModule('post');
-
-        $modelManager = $this->get('linestorm.blog.model_manager');
-
         $form = $this->createForm('linestorm_blog_form_post', null, array(
-            'action' => $this->generateUrl('linestorm_blog_admin_module_post_api_post_post_post'),
+            'action' => $this->generateUrl('linestorm_blog_post_module_api_post_post'),
             'method' => 'POST',
         ));
 
-        //$form->add('submit', 'submit', array('label' => 'Create', 'attr' => array('class' => 'btn btn-primary')));
-
-        return $this->render('LineStormBlogBundle:Modules:Post/new.html.twig', array(
+        return $this->render('LineStormBlogPostBundle:Admin:new.html.twig', array(
             'form' => $form->createView(),
-            'module' => $module,
         ));
     }
 

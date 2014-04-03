@@ -1,6 +1,5 @@
 linestorm_blog_post_module_admin:
-  type:         rest
-  prefix:       /admin
+  prefix:       /
   resource:     "routing/admin.yml"
 
 

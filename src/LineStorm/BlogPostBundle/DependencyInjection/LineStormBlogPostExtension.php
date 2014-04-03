@@ -31,8 +31,8 @@ class LineStormBlogPostExtension extends Extension
         $container->setParameter("linestorm_blog.backend_type_orm",     true);
         $xmlLoader->load('orm.xml');
 
-        $container->getDefinition('linestorm.blog.model.post.listener')->addTag('doctrine.event_subscriber');
-        $container->getDefinition('linestorm.blog.model.tag.listener')->addTag('doctrine.event_subscriber');
+        $container->getDefinition('linestorm.blog.module.post.model.post.listener')->addTag('doctrine.event_subscriber');
+        $container->getDefinition('linestorm.blog.module.post.model.tag.listener')->addTag('doctrine.event_subscriber');
 
     }
 }
