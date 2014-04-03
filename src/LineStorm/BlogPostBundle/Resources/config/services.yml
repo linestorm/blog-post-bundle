@@ -1,0 +1,40 @@
+parameters:
+  linestorm.blog.module.post.class:             LineStorm\BlogPostBundle\Module\PostModule
+  linestorm.blog.module.post.article.class:     LineStorm\BlogPostBundle\Module\Component\ArticleComponent
+  linestorm.blog.module.post.gallery.class:     LineStorm\BlogPostBundle\Module\Component\GalleryComponent
+  linestorm.blog.module.post.tag.class:         LineStorm\BlogPostBundle\Module\Component\TagComponent
+
+services:
+  linestorm.blog.module.post:
+    class: %linestorm.blog.module.post.class%
+    tags:
+      - { name: linestorm.blog.module }
+    calls: # TODO: This should be done as tags!
+      - [ setComponents, [ [@linestorm.blog.module.post.component.article, @linestorm.blog.module.post.component.gallery, @linestorm.blog.module.post.component.tag] ] ]
+
+  linestorm.blog.module.post.component.article:
+    class: %linestorm.blog.module.post.article.class%
+    arguments: [@linestorm.blog.model_manager]
+    tags:
+      - { name: linestorm.blog.module.post.component }
+
+  linestorm.blog.module.post.component.gallery:
+    class: %linestorm.blog.module.post.gallery.class%
+    arguments: [@linestorm.blog.model_manager]
+    tags:
+      - { name: linestorm.blog.module.post.component }
+
+  linestorm.blog.module.post.component.tag:
+    class: %linestorm.blog.module.post.tag.class%
+    arguments: [@linestorm.blog.model_manager]
+    tags:
+      - { name: linestorm.blog.module.post.component }
+
+
+  #
+  # TWIG POST MODULE
+  linestorm.blog.twig.module_post_extension:
+    class: LineStorm\BlogBundle\Twig\Module\PostExtension
+    arguments: [ @linestorm.blog.module_manager, @service_container ]
+    tags:
+      - { name: twig.extension }

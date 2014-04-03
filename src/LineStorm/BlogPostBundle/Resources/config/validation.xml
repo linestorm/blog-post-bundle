@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="LineStorm\BlogBundle\Model\Post">
+      <property name="title">
+        <constraint name="NotNull" />
+        <constraint name="Length">
+            <option name="min">5</option>
+            <option name="max">50</option>
+            <option name="minMessage">Title must be at least {{ limit }} characters in length</option>
+            <option name="maxMessage">Title cannot be longer than {{ limit }} characters in length</option>
+        </constraint>
+      </property>
+
+    </class>
+
+</constraint-mapping>

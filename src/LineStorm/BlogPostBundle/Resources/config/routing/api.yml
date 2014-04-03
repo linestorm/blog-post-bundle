@@ -1,0 +1,4 @@
+linestorm_blog_post_module_api_controller:
+    type:     rest
+    resource: LineStorm\BlogPostBundle\Controller\ApiController
+    name_prefix:  linestorm_blog_post_module_api_
