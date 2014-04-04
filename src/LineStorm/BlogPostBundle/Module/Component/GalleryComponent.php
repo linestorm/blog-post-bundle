@@ -7,11 +7,12 @@ use LineStorm\BlogPostBundle\Model\Post;
 use LineStorm\BlogPostBundle\Model\PostGallery;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
 
 class GalleryComponent extends AbstractBodyComponent implements ComponentInterface
 {
     protected $name = 'Gallery';
-    protected $id = 'gallery';
+    protected $id = 'galleries';
 
     public function isSupported($entity)
     {

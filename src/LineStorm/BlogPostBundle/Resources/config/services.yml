@@ -12,19 +12,16 @@ services:
 
   linestorm.blog.module.post.component.article:
     class: %linestorm.blog.module.post.article.class%
-    arguments: [@linestorm.blog.model_manager]
     tags:
       - { name: linestorm.blog.module.post.component }
 
   linestorm.blog.module.post.component.gallery:
     class: %linestorm.blog.module.post.gallery.class%
-    arguments: [@linestorm.blog.model_manager]
     tags:
       - { name: linestorm.blog.module.post.component }
 
   linestorm.blog.module.post.component.tag:
     class: %linestorm.blog.module.post.tag.class%
-    arguments: [@linestorm.blog.model_manager]
     tags:
       - { name: linestorm.blog.module.post.component }
 

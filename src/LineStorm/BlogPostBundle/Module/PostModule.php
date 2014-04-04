@@ -4,6 +4,8 @@ namespace LineStorm\BlogPostBundle\Module;
 
 use LineStorm\BlogBundle\Module\AbstractModule;
 use LineStorm\BlogBundle\Module\ModuleInterface;
+use LineStorm\BlogPostBundle\Module\Component\AbstractBodyComponent;
+use LineStorm\BlogPostBundle\Module\Component\AbstractComponent;
 use LineStorm\BlogPostBundle\Module\Component\ComponentInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\RouteCollection;
@@ -42,11 +44,28 @@ class PostModule extends AbstractModule implements ModuleInterface
     }
 
     /**
+     * @param null $type
      * @return Component\ComponentInterface[]
      */
-    public function getComponents()
+    public function getComponents($type=null)
     {
-        return $this->components;
+        if($type === null)
+        {
+            return $this->components;
+        }
+        else
+        {
+            $components = array();
+            foreach($this->components as $component)
+            {
+                if($component->getType() === AbstractComponent::strToType($type))
+                {
+                    $components[] = $component;
+                }
+            }
+
+            return $components;
+        }
     }
 
     /**

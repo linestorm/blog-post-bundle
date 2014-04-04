@@ -4,6 +4,7 @@ namespace LineStorm\BlogPostBundle\Module\Component;
 
 use LineStorm\BlogPostBundle\Model\Post;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Templating\EngineInterface;
 
 interface ComponentInterface
@@ -19,6 +20,10 @@ interface ComponentInterface
     public function handleSave(Post $post, array $data);
 
     public function setTemplateEngine(EngineInterface $templating);
+
+    public function getForm(FormView $view);
+
+    public function getFormAssetTemplate();
 
     public function getNewTemplate();
 

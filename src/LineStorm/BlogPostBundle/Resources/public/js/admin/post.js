@@ -1,8 +1,4 @@
-var contentCounts = {
-    article: {count: 0 },
-    gallery: {count: 0 },
-    gallery_images: {}
-};
+var contentCounts = {};
 
 // setup dropzone
 Dropzone.autoDiscover = false;
@@ -58,8 +54,8 @@ function setupDropzone(placeholder){
     var $p = $(placeholder),
         localCount;
 
-    contentCounts.gallery_images[contentCounts.gallery.count] = {count: $p.find('.dz-preview').length || 0};
-    localCount = contentCounts.gallery_images[contentCounts.gallery.count];
+    contentCounts.gallery_images[contentCounts.galleries.count] = {count: $p.find('.dz-preview').length || 0};
+    localCount = contentCounts.gallery_images[contentCounts.galleries.count];
 
     // bind the remove button as it won't be set by dropzone on init
     $p.find('.dz-remove').on('click', function(){
@@ -135,49 +131,40 @@ $(document).ready(function(){
         return false;
     });
 
-    var $articleCollectionHolder, $addArticleLink, $addGalleryLink;
+    var $postBodyHolder;
 
-    $articleCollectionHolder = $('.post-components');
-    $addArticleLink = $('a.post-component-new.article-new');
+    $postBodyHolder = $('.post-components');
 
-    $addArticleLink.on('click', function(e) {
+    $('a.post-component-new').on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
+        e.stopPropagation();
 
         // Get the data-prototype explained earlier
         var prototype = $(this).data('prototype');
+        var id = $(this).data('id');
 
         // add a new tag form (see next code block)
-        var $el = addForm($articleCollectionHolder, prototype, contentCounts.article);
-        $el.find('input[type="hidden"]').val(contentCounts.gallery.count);
-        $el.find('[data-role="textarea"],textarea').ckeditor().focus();
-    });
+        var $el = addForm($postBodyHolder, prototype, contentCounts[id]);
 
-    $addGalleryLink = $('a.post-component-new.gallery-new');
-    $addGalleryLink.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
+        if($el){
+            $el.find('input[type="hidden"]').val(contentCounts[id].count);
+            $el.find('[data-role="textarea"],textarea').ckeditor().focus();
 
-        // Get the data-prototype explained earlier
-        var prototype = $(this).data('prototype');
+            setupDropzone($el.find('.dropzone')[0]);
+        }
 
-        // add a new tag form (see next code block)
-        var $el = addForm($articleCollectionHolder, prototype, contentCounts.gallery);
-        $el.find('input[type="hidden"]').val(contentCounts.gallery.count);
-        $el.find('[data-role="textarea"],textarea').ckeditor().focus();
-
-        setupDropzone($el.find('.dropzone')[0]);
     });
 
     // add ckeditor to all the pre-loaded articles
-    $articleCollectionHolder.find('textarea.ckeditor-textarea').ckeditor();
-    $articleCollectionHolder.find('.item-gallery').each(function(){
+    $postBodyHolder.find('textarea.ckeditor-textarea').ckeditor();
+    $postBodyHolder.find('.item-gallery').each(function(){
         setupDropzone($(this).find('.dropzone')[0]);
         $(this).find('textarea.gallery-body').ckeditor();
     });
 
     // set up the sortable content
-    $articleCollectionHolder.sortable({
+    $postBodyHolder.sortable({
         handle: '.item-reorder',
         axis: 'y',
         start: function(e, ui){
@@ -206,7 +193,7 @@ $(document).ready(function(){
             }
 
             // update the order
-            $articleCollectionHolder.children('li').each(function(i, li){
+            $postBodyHolder.children('li').each(function(i, li){
                 var $li = $(li);
                 var $order = $li.find('input[name*="[order]"]');
                 $order.val(i);
@@ -215,7 +202,7 @@ $(document).ready(function(){
     });
 
     // configure remove button
-    $articleCollectionHolder.on('click', 'button.item-remove', function(){
+    $postBodyHolder.on('click', 'button.item-remove', function(){
         if(confirm('Are you sure you want to remove this item?\n\nNOTE: IT CANNOT BE UNDONE ONCE SAVED')){
             var i = $(this).data('count');
             $(this).closest('.post-component-item').parent().remove();

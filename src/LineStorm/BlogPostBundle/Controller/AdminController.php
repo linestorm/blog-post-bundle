@@ -73,13 +73,18 @@ class AdminController extends Controller
             throw new AccessDeniedException();
         }
 
+        $moduleManager = $this->get('linestorm.blog.module_manager');
+        $module        = $moduleManager->getModule('post');
+
         $form = $this->createForm('linestorm_blog_form_post', null, array(
             'action' => $this->generateUrl('linestorm_blog_post_module_api_post_post'),
             'method' => 'POST',
         ));
 
         return $this->render('LineStormBlogPostBundle:Admin:new.html.twig', array(
-            'form' => $form->createView(),
+            'post'      => null,
+            'form'      => $form->createView(),
+            'module'    => $module,
         ));
     }
 

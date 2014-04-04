@@ -15,19 +15,28 @@ class ComponentCompilerPass implements CompilerPassInterface
             return;
         }
 
-        $definition = $container->getDefinition(
-            'linestorm.blog.module.post'
-        );
+        if (!$container->hasDefinition('linestorm.blog.model_manager')) {
+            return;
+        }
 
-        $taggedServices = $container->findTaggedServiceIds(
-            'linestorm.blog.module.post.component'
-        );
+        $definition = $container->getDefinition('linestorm.blog.module.post');
+        $modelManagerRef = new Reference('linestorm.blog.model_manager');
+        $containerRef = new Reference('service_container');
+
+        $taggedServices = $container->findTaggedServiceIds('linestorm.blog.module.post.component');
 
         foreach ($taggedServices as $id => $attributes) {
+            $tagReference = new Reference($id);
             $definition->addMethodCall(
                 'addComponent',
-                array(new Reference($id))
+                array($tagReference)
             );
+
+            $componentDefinition = $container->getDefinition($id);
+
+            $componentDefinition->setArguments(array(
+                $modelManagerRef, $containerRef
+            ));
         }
     }
 } 

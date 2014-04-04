@@ -6,15 +6,21 @@ use LineStorm\BlogPostBundle\Model\Post;
 use LineStorm\BlogPostBundle\Model\Tag;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
 
-class TagComponent extends AbstractHeaderComponent implements ComponentInterface
+class TagComponent extends AbstractMetaComponent implements ComponentInterface
 {
     protected $name = 'Tag';
-    protected $id = 'tag';
+    protected $id = 'tags';
 
     public function isSupported($entity)
     {
         return ($entity instanceof Tag);
+    }
+
+    public function getFormAssetTemplate()
+    {
+        return 'LineStormBlogPostBundle:Admin:Component/tag/form-assets.html.twig';
     }
 
     /**

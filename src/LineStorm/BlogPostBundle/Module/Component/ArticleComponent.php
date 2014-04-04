@@ -7,11 +7,12 @@ use LineStorm\BlogPostBundle\Model\Post;
 use LineStorm\BlogPostBundle\Model\PostArticle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
 
 class ArticleComponent extends AbstractBodyComponent implements ComponentInterface
 {
     protected $name = 'Article';
-    protected $id = 'article';
+    protected $id = 'articles';
 
     public function isSupported($entity)
     {
