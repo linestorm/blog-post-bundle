@@ -19,6 +19,9 @@ class PostFormType extends AbstractBlogFormType
             ->add('title', 'text', array(
                 'required' => true
             ))
+            ->add('coverImage', 'mediaentity', array(
+
+            ))
             ->add('liveOn', 'datetime', array(
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
@@ -38,7 +41,6 @@ class PostFormType extends AbstractBlogFormType
         foreach($module->getComponents() as $component){
             $component->buildForm($builder, $options);
         }
-
 
     }
 

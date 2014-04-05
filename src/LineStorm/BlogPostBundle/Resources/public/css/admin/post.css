@@ -90,3 +90,11 @@ div.post-component-item > .post-component-item-widget {
 .options-toggle > i {
     line-height: 23px;
 }
+
+.dropzone-coverImage {
+    min-height: 75px !important;
+    margin-bottom: 10px;
+}
+.post-image-preview-container > img {
+    max-height: 600px;
+}

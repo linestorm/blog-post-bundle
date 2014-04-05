@@ -11,7 +11,6 @@
     <field name="liveOn" type="datetime" column="live_on" precision="0" scale="0" nullable="false"/>
     <field name="deletedOn" type="datetime" column="deleted_on" precision="0" scale="0" nullable="true"/>
 
-    <field name="coverImage" type="string" column="cover_image" length="50" precision="0" scale="0" nullable="true" />
     <field name="blurb" type="string" column="blurb" length="100" precision="0" scale="0" nullable="true" />
     <field name="slug" type="string" column="slug" length="50" precision="0" scale="0" nullable="true" />
     <field name="metaDescription" type="string" column="meta_description" length="50" precision="0" scale="0" nullable="true" />

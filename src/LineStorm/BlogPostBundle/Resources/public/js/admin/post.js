@@ -88,7 +88,7 @@ function setupDropzone(placeholder){
             });
             this.on("error", function(file, response) {
                 this.removeFile(file);
-                alert("Cannot add file: "+response);
+                alert("Cannot add file:\n\n"+response.error);
             });
             this.on("removedfile", function(file){
                 --localCount.count;
@@ -154,6 +154,35 @@ $(document).ready(function(){
             setupDropzone($el.find('.dropzone')[0]);
         }
 
+    });
+
+    // set up the cover image dropzone
+
+    var $coverImageDropZone = $('.dropzone-coverImage');
+    var coverImageformId = $coverImageDropZone.data('form-target');
+    var $coverImageform = $('#'+coverImageformId);
+    var $coverImageformPreview = $('.'+coverImageformId+'_preview');
+
+    new Dropzone($coverImageDropZone[0], {
+        url: window.lineStormTags.mediaBank.upload,
+        acceptedFiles: 'image/*',
+        init: function(){
+            this.on("success", function(file, response) {
+                if(file.xhr.status == 200){
+                    alert('An identical file already exists and has been returned.');
+                }
+                $coverImageform.val(response.id);
+                $coverImageformPreview.attr('src', response.src);
+                this.removeFile(file);
+            });
+            this.on("error", function(file, response) {
+                this.removeFile(file);
+                alert("Cannot add file:\n\n"+response.error);
+            });
+            this.on("removedfile", function(file){
+            });
+        },
+        previewTemplate: $coverImageDropZone.data('preview')
     });
 
     // add ckeditor to all the pre-loaded articles

@@ -2,57 +2,39 @@
 
 namespace LineStorm\BlogPostBundle\Module\Component;
 
-use LineStorm\BlogPostBundle\Form\BlogPostGalleryType;
-use LineStorm\BlogPostBundle\Model\Post;
 use LineStorm\BlogPostBundle\Model\PostGallery;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormView;
 
+/**
+ * Class GalleryComponent
+ * @package LineStorm\BlogPostBundle\Module\Component
+ */
 class GalleryComponent extends AbstractBodyComponent implements ComponentInterface
 {
     protected $name = 'Gallery';
     protected $id = 'galleries';
 
+    /**
+     * @inheritdoc
+     */
     public function isSupported($entity)
     {
         return ($entity instanceof PostGallery);
     }
 
+
     /**
-     * Get the view html
-     *
-     * @param $entity PostGallery
-     * @return string
+     * @inheritdoc
      */
     public function getViewTemplate($entity)
     {
-        return $this->templating->render('LineStormBlogBundle:Modules:Post/Component/gallery/view.html.twig', array(
-            'gallery' => $entity,
-        ));
+        return 'LineStormBlogPostBundle:Component:Gallery/view.html.twig';
     }
 
     /**
-     * Get the new form html
-     *
-     * @return string
+     * @inheritdoc
      */
-    public function getNewTemplate()
-    {
-        return $this->templating->render('LineStormBlogBundle:Modules:Post/Component/gallery/new.html.twig');
-    }
-
-    /**
-     * Get the edit html
-     *
-     * @param $entity PostGallery
-     * @return string
-     */
-    public function getEditTemplate($entity)
-    {
-        return $this->templating->render('LineStormBlogBundle:Modules:Post/Component/gallery/new.html.twig');
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -66,21 +48,11 @@ class GalleryComponent extends AbstractBodyComponent implements ComponentInterfa
         ;
     }
 
-    public function createEntity(array $data)
-    {
-        $class  = $this->modelManager->getEntityClass('post_gallery');
-        $entity = new $class();
-
-        return $entity;
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function getRoutes(LoaderInterface $loader)
     {
         return null;
-    }
-
-    public function handleSave(Post $post, array $data)
-    {
-        // TODO: Implement handleSave() method.
     }
 }

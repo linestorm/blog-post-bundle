@@ -5,6 +5,7 @@ namespace LineStorm\BlogPostBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use LineStorm\MediaBundle\Model\Media;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class Post
@@ -100,7 +101,9 @@ abstract class Post
      */
     protected $metaKeywords;
 
-
+    /**
+     * @var Media
+     */
     protected $coverImage;
 
     /**
@@ -514,5 +517,23 @@ abstract class Post
     {
         return $this->metaKeywords;
     }
+
+    /**
+     * @param Media $coverImage
+     */
+    public function setCoverImage(Media $coverImage)
+    {
+        $this->coverImage = $coverImage;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getCoverImage()
+    {
+        return $this->coverImage;
+    }
+
+
 
 }

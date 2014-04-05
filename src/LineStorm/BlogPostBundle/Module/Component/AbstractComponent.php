@@ -3,11 +3,13 @@
 namespace LineStorm\BlogPostBundle\Module\Component;
 
 use LineStorm\BlogBundle\Model\ModelManager;
-use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Templating\EngineInterface;
 
+/**
+ * Class AbstractComponent
+ * @package LineStorm\BlogPostBundle\Module\Component
+ */
 abstract class AbstractComponent
 {
     const TYPE_HEADER   = 1;
@@ -24,36 +26,47 @@ abstract class AbstractComponent
     protected $modelManager;
 
     /**
-     * @var TwigEngine
-     */
-    protected $templating;
-
-    /**
      * @var Container
      */
     protected $container;
 
+    /**
+     * @param ModelManager $modelManager
+     * @param Container    $container
+     */
     public function __construct(ModelManager $modelManager, Container $container)
     {
         $this->modelManager = $modelManager;
         $this->container = $container;
     }
 
+    /**
+     * Fetch the component id string
+     *
+     * @return string
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Fetch the component name
+     *
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function setTemplateEngine(EngineInterface $templating)
-    {
-        $this->templating   = $templating;
-    }
-
+    /**
+     * Build the edit/creation form type
+     *
+     * @param FormView $view
+     *
+     * @return mixed
+     */
     public function getForm(FormView $view)
     {
         return $this->container->get('templating')->render('LineStormBlogBundle:Component:form.html.twig', array(
@@ -62,12 +75,23 @@ abstract class AbstractComponent
         ));
     }
 
+    /**
+     * Returns a template that will render a list of assets to include in the head for this component when editing
+     *
+     * @return null|string
+     */
     public function getFormAssetTemplate()
     {
         return null;
     }
 
-
+    /**
+     * Convert a string into a component type
+     *
+     * @param $type
+     *
+     * @return int|null
+     */
     static function strToType($type)
     {
         $type = strtoupper($type);
@@ -90,9 +114,4 @@ abstract class AbstractComponent
         return null;
     }
 
-
-    public function getFormTemplate()
-    {
-        return '';
-    }
 }

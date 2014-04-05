@@ -2,52 +2,38 @@
 
 namespace LineStorm\BlogPostBundle\Module\Component;
 
-use LineStorm\BlogPostBundle\Form\BlogPostArticleType;
-use LineStorm\BlogPostBundle\Model\Post;
 use LineStorm\BlogPostBundle\Model\PostArticle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormView;
 
+/**
+ * Class ArticleComponent
+ * @package LineStorm\BlogPostBundle\Module\Component
+ */
 class ArticleComponent extends AbstractBodyComponent implements ComponentInterface
 {
     protected $name = 'Article';
     protected $id = 'articles';
 
+    /**
+     * @inheritdoc
+     */
     public function isSupported($entity)
     {
         return ($entity instanceof PostArticle);
     }
 
     /**
-     * @param $entity PostArticle
-     * @return string
+     * @inheritdoc
      */
     public function getViewTemplate($entity)
     {
-        return $this->templating->render('LineStormBlogBundle:Modules:Post/Component/article/view.html.twig', array(
-            'article' => $entity,
-        ));
-    }
-
-    public function getNewTemplate()
-    {
-        return $this->templating->render('LineStormBlogBundle:Modules:Post/Component/article/new.html.twig', array(
-            'articles' => null,
-        ));
+        return 'LineStormBlogPostBundle:Component:Article/view.html.twig';
     }
 
     /**
-     * @param $entity PostArticle
-     * @return string
+     * @inheritdoc
      */
-    public function getEditTemplate($entity)
-    {
-        return $this->templating->render('LineStormBlogBundle:Modules:Post/Component/article/new.html.twig', array(
-            'articles' => $entity,
-        ));
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -61,36 +47,12 @@ class ArticleComponent extends AbstractBodyComponent implements ComponentInterfa
         ;
     }
 
-    public function handleSave(Post $post, array $data)
-    {
-        $entities = array();
-
-        foreach($data as $i => $eData)
-        {
-            $eData['order'] = $i;
-            $article = $this->createEntity($eData);
-            $post->addArticle($article);
-            $entities[] = $article;
-        }
-
-        return $entities;
-    }
-
-    public function createEntity(array $data)
-    {
-        /** @var PostArticle $class */
-        $class = $this->modelManager->getEntityClass('post_article');
-        $entity = new $class();
-
-        $entity->setOrder($data['order']);
-        $entity->setBody($data['body']);
-
-        return $entity;
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function getRoutes(LoaderInterface $loader)
     {
         return null;
-        // return $loader->import('@LineStormBlogBundle/Resources/config/routing/modules/component/article.yml', 'rest');
+        // return $loader->import('@LineStormBlogPostBundle/Resources/config/routing/modules/component/article.yml', 'rest');
     }
 } 

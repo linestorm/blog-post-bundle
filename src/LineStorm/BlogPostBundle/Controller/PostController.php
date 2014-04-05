@@ -3,21 +3,32 @@
 namespace LineStorm\BlogPostBundle\Controller;
 
 use Doctrine\ORM\Query;
-use FOS\RestBundle\Routing\ClassResourceInterface;
-use FOS\RestBundle\View\View;
 use LineStorm\BlogPostBundle\Model\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * Class PostController
+ * @package LineStorm\BlogPostBundle\Controller
+ */
 class PostController extends Controller
 {
 
+    /**
+     * Display a post
+     *
+     * @param $category
+     * @param $id
+     * @param $slug
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function displayAction($category, $id, $slug)
     {
         $modelManager = $this->get('linestorm.blog.model_manager');
+        $moduleManager = $this->get('linestorm.blog.module_manager');
 
-        $mediaManager = $this->get('linestorm.blog.media_manager');
+        $module = $moduleManager->getModule('post');
 
         $post = $modelManager->get('post')->find($id);
 
@@ -27,7 +38,8 @@ class PostController extends Controller
         }
 
         return $this->render('LineStormBlogBundle:Post:display.html.twig', array(
-            'post' => $post,
+            'post'   => $post,
+            'module' => $module
         ));
     }
 

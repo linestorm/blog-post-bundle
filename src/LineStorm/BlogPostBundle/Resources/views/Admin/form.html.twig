@@ -70,6 +70,8 @@
 
     {{ form_start(form, {attr: { class: 'api-save'} }) }}
         {{ form_row(form.title) }}
+        {{ form_row(form.coverImage) }}
+
         {{ form_row(form.liveOn) }}
         {{ form_row(form.category, {add_link: {class: 'add-category', href:path('linestorm_blog_post_module_api_new_category')}, attr: {'class': 'form-control category-select'} } ) }}
 

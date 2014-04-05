@@ -7,6 +7,10 @@ use LineStorm\BlogPostBundle\Module\Component\ComponentInterface;
 use LineStorm\BlogPostBundle\Module\PostModule;
 use Symfony\Component\DependencyInjection\Container;
 
+/**
+ * Class PostExtension
+ * @package LineStorm\BlogPostBundle\Twig
+ */
 class PostExtension extends \Twig_Extension
 {
     /**
@@ -24,6 +28,10 @@ class PostExtension extends \Twig_Extension
      */
     private $container;
 
+    /**
+     * @param ModuleManager $moduleManager
+     * @param Container     $container
+     */
     public function __construct(ModuleManager $moduleManager, Container $container)
     {
         $this->container = $container;
@@ -31,48 +39,39 @@ class PostExtension extends \Twig_Extension
         $this->postModule = $this->moduleManager->getModule('post');
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('render_post_component_new', array($this, 'renderPostComponentNew'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('render_post_component_edit', array($this, 'renderPostComponentEdit'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('render_post_component_view', array($this, 'renderPostComponentView'), array('is_safe' => array('html'))),
         );
     }
 
-    public function renderPostComponentNew(ComponentInterface $component)
-    {
-        // we need to pass in templating here or we get cyclic references :(
-        $component->setTemplateEngine($this->container->get('templating'));
-        return $component->getNewTemplate();
-    }
-
-    public function renderPostComponentEdit($entities)
-    {
-        foreach($this->postModule->getComponents() as $component)
-        {
-            if($component->isSupported($entities))
-            {
-                // we need to pass in templating here or we get cyclic references :(
-                $component->setTemplateEngine($this->container->get('templating'));
-                return $component->getEditTemplate($entities);
-            }
-        }
-    }
-
+    /**
+     * fetch the html for components
+     * TODO: this is a bit shit.
+     *
+     * @param $entities
+     *
+     * @return mixed
+     */
     public function renderPostComponentView($entities)
     {
         foreach($this->postModule->getComponents() as $component)
         {
+            /** @var $component ComponentInterface */
             if($component->isSupported($entities))
             {
-                // we need to pass in templating here or we get cyclic references :(
-                $component->setTemplateEngine($this->container->get('templating'));
                 return $component->getViewTemplate($entities);
             }
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getName()
     {
         return 'linestorm_blog_module_post_extension';
