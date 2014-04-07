@@ -38,6 +38,13 @@ interface ComponentInterface
     public function getViewTemplate($entity);
 
     /**
+     * Get a rendered include of assets
+     *
+     * @return mixed
+     */
+    public function getViewAssetTemplate();
+
+    /**
      * Check if the entity is supported by this component
      *
      * @param $entity

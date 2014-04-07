@@ -3,6 +3,7 @@
 namespace LineStorm\BlogPostBundle\Module\Component;
 
 use LineStorm\BlogPostBundle\Model\PostGallery;
+use LineStorm\BlogPostBundle\Module\Component\View\ComponentView;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -29,7 +30,7 @@ class GalleryComponent extends AbstractBodyComponent implements ComponentInterfa
      */
     public function getViewTemplate($entity)
     {
-        return 'LineStormBlogPostBundle:Component:Gallery/view.html.twig';
+        return new ComponentView('LineStormBlogPostBundle:Component:Gallery/view.html.twig');
     }
 
     /**

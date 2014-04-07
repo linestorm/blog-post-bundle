@@ -29,7 +29,7 @@ class TagComponent extends AbstractMetaComponent implements ComponentInterface
      */
     public function getViewTemplate($entity)
     {
-        return '';
+        return null;
     }
 
     public function getNewTemplate()

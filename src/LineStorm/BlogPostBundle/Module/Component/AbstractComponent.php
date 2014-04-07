@@ -86,6 +86,14 @@ abstract class AbstractComponent
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getViewAssetTemplate()
+    {
+        return null;
+    }
+
+    /**
      * Convert a string into a component type
      *
      * @param $type

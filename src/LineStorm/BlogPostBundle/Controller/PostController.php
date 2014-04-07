@@ -4,6 +4,7 @@ namespace LineStorm\BlogPostBundle\Controller;
 
 use Doctrine\ORM\Query;
 use LineStorm\BlogPostBundle\Model\Post;
+use LineStorm\BlogPostBundle\Module\PostModule;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -28,6 +29,7 @@ class PostController extends Controller
         $modelManager = $this->get('linestorm.blog.model_manager');
         $moduleManager = $this->get('linestorm.blog.module_manager');
 
+        /** @var PostModule $module */
         $module = $moduleManager->getModule('post');
 
         $post = $modelManager->get('post')->find($id);
@@ -39,7 +41,7 @@ class PostController extends Controller
 
         return $this->render('LineStormBlogBundle:Post:display.html.twig', array(
             'post'   => $post,
-            'module' => $module
+            'module' => $module,
         ));
     }
 
