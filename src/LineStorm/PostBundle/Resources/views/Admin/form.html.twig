@@ -25,16 +25,18 @@
 
 {% block head %}
     {% javascripts
-        '@LineStormCmsBundle/Resources/public/js/api.js'
-        'vendor/bootstrap/dist/js/bootstrap.min.js'
         'vendor/select2/select2.min.js'
+        'vendor/dropzone/downloads/dropzone.min.js'
+        '@LineStormCmsBundle/Resources/public/js/api.js'
         '@LineStormPostBundle/Resources/public/js/admin/post.js'
+
         output='compiled/js/admin/blog-post.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    <script type="text/javascript" src="/bundles/linestormblogpost/js/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript" src="/bundles/linestormblogpost/js/ckeditor/adapters/jquery.js"></script>
+    <script type="text/javascript" src='/vendor/ckeditor/ckeditor.js'></script>
+    <script type="text/javascript" src='/vendor/ckeditor/adapters/jquery.js'></script>
+    <script type="text/javascript" src='/vendor/ckeditor/config.js'></script>
 
     <script type="text/javascript">
         window.lineStorm.modalContainer = "{{ fn.modalContainer()|e('js') }}";
@@ -47,11 +49,9 @@
 
     </script>
 
-    {#
-    '@LineStormPostBundle/Resources/public/css/dropzone.css' #}
     {% stylesheets
         '@LineStormPostBundle/Resources/public/css/admin/post.css'
-        'vendor/dropzone/downloads/css/dropzone.css'
+        '@LineStormPostBundle/Resources/public/css/dropzone.css'
         'vendor/select2/select2.css'
         'vendor/select2/select2-bootstrap.css'
         filter='cssrewrite' output='compiled/css/blog-post.css' %}
@@ -143,6 +143,8 @@
                 <button type="submit" class="btn btn-default post-save">Save</button>
             </div>
         </div>
+
+        {{ form_widget(form._token) }}
 
     {{ form_end(form) }}
 

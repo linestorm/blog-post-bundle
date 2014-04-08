@@ -1,11 +1,26 @@
 {% extends 'LineStormCmsBundle::layout.html.twig' %}
 
-{% block body %}
-    <h1>{{ tag.name }}</h1>
 
-    {% for post in posts %}
-        <p>
-            <a href="{{ path('linestorm_cms_post', {category: post.category.name, id: post.id, slug: post.slug }) }}">{{ post.title }}</a>
-        </p>
-    {% endfor %}
+{% block head %}
+    {% stylesheets
+    '@LineStormPostBundle/Resources/public/css/post-list.css'
+    filter='cssrewrite' output='compiled/css/post/list.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+
+{% block body %}
+    <h1>Tag: {{ tag.name }}</h1>
+
+    {% if posts|length %}
+        <div class="posts-container">
+            {% include 'LineStormPostBundle:Post:list.html.twig' %}
+        </div>
+    {% else %}
+        <div class="center-block no-posts">
+            <h2 class="text-muted">There are no posts with this tag yet</h2>
+        </div>
+    {% endif %}
+
 {% endblock %}

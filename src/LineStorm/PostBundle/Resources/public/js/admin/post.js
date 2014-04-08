@@ -151,7 +151,8 @@ $(document).ready(function(){
             $el.find('input[type="hidden"]').val(contentCounts[id].count);
             $el.find('[data-role="textarea"],textarea').ckeditor().focus();
 
-            setupDropzone($el.find('.dropzone')[0]);
+            if($el.find('.dropzone').length)
+                setupDropzone($el.find('.dropzone')[0]);
         }
 
     });
@@ -187,9 +188,13 @@ $(document).ready(function(){
 
     // add ckeditor to all the pre-loaded articles
     $postBodyHolder.find('textarea.ckeditor-textarea').ckeditor();
-    $postBodyHolder.find('.item-gallery').each(function(){
-        setupDropzone($(this).find('.dropzone')[0]);
-        $(this).find('textarea.gallery-body').ckeditor();
+    $postBodyHolder.find('.post-component-item').each(function(){
+
+        if($(this).find('.dropzone').length)
+            setupDropzone($(this).find('.dropzone')[0]);
+
+        if($(this).find('textarea.keditor-textarea').length)
+            $(this).find('textarea.keditor-textarea').ckeditor();
     });
 
     // set up the sortable content
