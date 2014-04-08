@@ -1,0 +1,60 @@
+#
+# DEFAULT FORM TYPES
+#
+parameters: ~
+
+services:
+
+  #
+  # Widget Types
+  #
+  linestorm.cms.module.post.form.type.widget.dropzone:
+        class: LineStorm\PostBundle\Form\Type\DropZoneType
+        tags:
+            - { name: form.type, alias: dropzone }
+
+  linestorm.cms.module.post.form.type.widget.tag:
+        class: LineStorm\PostBundle\Form\Type\TagType
+        arguments: [@linestorm.cms.model_manager]
+        tags:
+            - { name: form.type, alias: tag }
+
+  #
+  # Form Types
+  #
+  linestorm.cms.module.post.form.post:
+        class: LineStorm\PostBundle\Form\PostFormType
+        arguments: [@linestorm.cms.model_manager, @linestorm.cms.module_manager]
+        tags:
+            - { name: form.type, alias: linestorm_cms_form_post }
+
+  linestorm.cms.module.post.form.tag:
+        class: LineStorm\PostBundle\Form\TagFormType
+        arguments: [@linestorm.cms.model_manager]
+        tags:
+            - { name: form.type, alias: linestorm_cms_form_post_tag }
+
+  linestorm.cms.module.post.form.category:
+        class: LineStorm\PostBundle\Form\CategoryFormType
+        arguments: [@linestorm.cms.model_manager]
+        tags:
+            - { name: form.type, alias: linestorm_cms_form_post_category }
+
+  linestorm.cms.module.post.form.type.component.article:
+        class: LineStorm\PostBundle\Form\PostArticleFormType
+        arguments: [@linestorm.cms.model_manager]
+        tags:
+            - { name: form.type, alias: linestorm_cms_form_post_article }
+
+  linestorm.cms.module.post.form.component.gallery:
+        class: LineStorm\PostBundle\Form\PostGalleryFormType
+        arguments: [@linestorm.cms.model_manager]
+        tags:
+            - { name: form.type, alias: linestorm_cms_form_post_gallery }
+
+  linestorm.cms.module.post.form.component.gallery.image:
+        class: LineStorm\PostBundle\Form\PostGalleryImageFormType
+        arguments: [@linestorm.cms.model_manager]
+        tags:
+            - { name: form.type, alias: linestorm_cms_form_post_gallery_image }
+

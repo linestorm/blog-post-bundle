@@ -42,11 +42,11 @@ public function registerBundles()
 Step 3: Configure the Bundle
 ----------------------------
 
-Add the class entity definitions in the line_storm_blog namespace and the media namespace
+Add the class entity definitions in the line_storm_cms namespace and the media namespace
 inside the `app/config/config.yml` file:
 
 ```yml
-line_storm_blog:
+line_storm_cms:
   ...
   entity_classes:
     ...

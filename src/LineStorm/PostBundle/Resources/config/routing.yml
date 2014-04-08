@@ -1,0 +1,9 @@
+linestorm_cms_module_post_admin:
+  prefix:       /
+  resource:     "routing/admin.yml"
+
+
+linestorm_cms_module_post_api:
+  type:         rest
+  prefix:       /api
+  resource:     "routing/api.yml"

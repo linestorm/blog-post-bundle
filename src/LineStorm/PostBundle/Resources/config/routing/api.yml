@@ -1,0 +1,14 @@
+linestorm_cms_module_post_api_controller:
+    type:     rest
+    resource: LineStorm\PostBundle\Controller\Api\PostController
+    name_prefix:  linestorm_cms_module_post_api_
+
+linestorm_cms_api_tag:
+    type:     rest
+    resource: LineStorm\PostBundle\Controller\Api\TagController
+    name_prefix:  linestorm_cms_module_post_api_
+
+linestorm_cms_api_category:
+    type:     rest
+    resource: LineStorm\PostBundle\Controller\Api\CategoryController
+    name_prefix:  linestorm_cms_module_post_api_
