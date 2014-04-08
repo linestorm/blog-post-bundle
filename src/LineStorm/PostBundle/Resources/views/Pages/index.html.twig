@@ -1,15 +1,239 @@
 {% extends 'LineStormCmsBundle::layout.html.twig' %}
+{% set title = 'Blog' %}
 
-{% block content %}
-    <h1>Homepage</h1>
+{% block head %}
+    <style>
+        .post-controls {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            z-index: 100;
+        }
+        
+        .no-posts {
+            width: 400px;
+            margin: 200px auto 0 auto;
+        }
+        .posts-container {
+            margin: 20px 10px;
+        }
+        .post {
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%;
+            float: left;
+            margin-top: 20px;
+        }
+        .post:after {
+            content: '';
+            clear: both;
+        }
+        .post .post-image {
+            width: 200px;
+            float: left;
+            margin-right: 20px;
+            width: 200px;
+        }
+        .post .post-image img {
+            width: 100%;
+            height: 100%;
+        }
+        .post .post-details {
+            float: left;
+        }
 
-    {% for post in posts %}
-        <h3><a href="{{ path('linestorm_cms_category', {category: post.category.name}) }}">{{ post.category.name }}</a></h3>
-        <p>
-            <a href="{{ path('linestorm_cms_post', {category: post.category.name, id: post.id, slug: post.slug }) }}">{{ post.body }}</a>
-        </p>
-        {% if not loop.last %}
-            <hr />
-        {% endif %}
-    {% endfor %}
+
+        .post-leader {
+            width: 550px;
+            margin: 0 20px 0 0;
+            float: left;
+            height: 360px;
+            overflow: hidden;
+        }
+        .post-leader:after {
+            content: '';
+            clear: none;
+        }
+        .post-leader .post-image {
+            width: 100%;
+            float: none;
+        }
+        .post-leader .post-image img {
+            max-width: 100%;
+        }
+        .post-leader .post-details {
+            float: none;
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(23,23,23,0.8);
+        }
+
+        .post-leader-secondary {
+            float: left;
+            width: 550px;
+            height: 170px;
+            margin: 0;
+        }
+        .post-leader-secondary:nth-of-type(2) {
+            margin-bottom: 20px;
+        }
+        .post-leader-secondary .post-details {
+            width: 270px;
+        }
+        .post-leader-secondary .post-image {
+            height: 170px;
+            width: 255px;
+            float: left;
+            margin-right: 20px;
+        }
+
+        @media (max-width: 767px) {
+
+            .post {
+                margin-bottom: 20px;
+            }
+            .post:after {
+                content: '';
+                clear: none;
+            }
+            .post .post-image {
+                width: 100%;
+                float: none;
+            }
+            .post .post-image img {
+                width: 100%;
+                height: 100%;
+                max-width: 100%;
+            }
+            .post .post-details {
+                float: none;
+                position: absolute;
+                bottom: 0px;
+                width: 100%;
+                padding: 10px;
+                background-color: rgba(23,23,23,0.8);
+            }
+            .post .post-footer {
+                display: none;
+            }
+
+            .post-leader {
+                width: 100%;
+                height: inherit;
+            }
+
+            .post-leader-secondary {
+                width: 100%;
+                height: inherit;
+            }
+            .post-leader-secondary .post-image {
+                height: inherit;
+            }
+
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .post-leader {
+                width: 100%;
+                height: inherit;
+                margin-bottom: 20px;
+            }
+            .post-leader-secondary {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+
+            .post-leader {
+                height: 300px;
+                width: 450px;
+            }
+            .post-leader .post-image {
+                height: 300px;
+            }
+
+            .post-leader-secondary {
+                width: 450px;
+                height: 140px;
+            }
+            .post-leader-secondary .post-image {
+                height: 140px;
+                width: 210px;
+            }
+            .post-leader-secondary .post-image {
+                width: 210px;
+            }
+            .post-leader-secondary .post-details {
+                width: 220px;
+            }
+
+
+
+            .post-leader:after {
+                content: '';
+                clear: none;
+            }
+            .post-leader .post-image {
+                width: 100%;
+                float: none;
+            }
+            .post-leader .post-image img {
+                width: 100%;
+                height: 100%;
+                max-width: 100%;
+            }
+            .post-leader .post-details {
+                float: none;
+                position: absolute;
+                bottom: 0px;
+                width: 100%;
+                padding: 10px;
+                background-color: rgba(23,23,23,0.8);
+            }
+        }
+
+        @media (min-width: 1200px) {
+
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% if app.user and app.user.hasGroup('admin') %}
+        <div class="post-controls navbar-nav navbar">
+            <a href="{{ path('linestorm_cms_module_post_admin_create') }}" class="btn btn-primary" id="article-edit"><i class="fa-plus"></i> New Post</a>
+        </div>
+    {% endif %}
+    {% if posts|length %}
+        <div class="posts-container">
+            {% for post in posts %}
+                    <div class="post {% if loop.first %}post-leader{% endif %} {% if loop.index in [2,3] %}post-leader-secondary{% endif %}">
+                        <div class="post-image">
+                            <a href="{{ path('linestorm_cms_post', {category: post.category.name, id: post.id, slug: post.slug }) }}"><img src="{{ post.coverImage.src }}" /></a>
+                        </div>
+                        <div class="post-details">
+                            <div class="post-header">
+                                <a href="{{ path('linestorm_cms_category', {category: post.category.name}) }}">{{ post.category.name | capitalize }}</a>
+                                \ <a href="{{ path('linestorm_cms_post', {category: post.category.name, id: post.id, slug: post.slug }) }}">{{ post.title | capitalize }}</a>
+                                by {{ post.author.username | capitalize }}
+                            </div>
+                            <div class="post-preview">
+                                {{ post.blurb }}
+                            </div>
+                            <div class="post-footer">
+                                Posted on <time datetime="{{ post.liveOn | date("Y-m-d\\TH:i:sP") }}" pubdate="pubdate">{{ post.liveOn | date("F d, Y") }}</time>
+                            </div>
+                        </div>
+                    </div>
+
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="center-block no-posts">
+            <h2 class="text-muted">There are no posts yet!</h2>
+        </div>
+    {% endif %}
 {% endblock %}

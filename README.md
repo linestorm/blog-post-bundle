@@ -15,10 +15,11 @@ This module will provide functionality to post blog type content to the LineStor
 
 Step 1: Download bundle using composer
 --------------------------------------
-Ask composer to add SpBowerBundle in your composer.json and to download it by running the command:
+
+Add `linestorm/post-bundle` to your `composer.json` file, or download it by running the command:
 
 ```bash
-$ php composer.phar require linestorm/blog-post-bundle
+$ php composer.phar require linestorm/post-bundle
 ```
 
 Composer will install the bundle to your project's vendor/sp directory.

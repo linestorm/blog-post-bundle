@@ -1,9 +1,46 @@
 {% extends 'LineStormCmsBundle::layout.html.twig' %}
+{% set page = 'blog' %}
 
-{% block content %}
-    <h1>{{ post.title }}</h1>
+{% block head %}
+    {% for component in module.getComponents() %}
+        {% include component.viewAssetTemplate ignore missing %}
+    {% endfor %}
+{% endblock %}
 
-    <p>
-        {{ post.body }}
-    </p>
+{% block title %}
+    {{ post.category.name }}
+{% endblock %}
+{% block body %}
+    {% if app.user and post.author and (app.user.id == post.author.id or app.user.hasGroup('admin')) %}
+        <div class="pull-right navbar-nav navbar">
+            <a href="{{ path('linestorm_cms_module_post_admin_edit', {id: post.id}) }}" class="btn btn-primary" id="article-edit"><i class="fa-edit"></i> Edit</a>
+        </div>
+    {% endif %}
+
+    <section class="article">
+        <article id="article-body blog">
+            <h1>{{ post.title|capitalize }}</h1>
+            <p>
+                by {{ post.author.username }} on <time datetime="{{ post.liveOn | date("Y-m-d\\TH:i:sP") }}" pubdate="pubdate">{{ post.liveOn | date("F d, Y") }}</time>
+            </p>
+            <p>
+                {% for tag in post.tags %}
+                    <a class="label label-primary" href="{{ path('linestorm_cms_tag', {tag: tag.name} ) }}">{{ tag.name }}</a>
+                {% endfor %}
+            </p>
+            <hr/>
+
+            <div class="content">
+                {% for content in post.content %}
+                    <div class="post-content">
+                        {% set view = render_post_component_view(content) %}
+                        {% if view %}
+                            {% include view.template ignore missing with view.options %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+        </article>
+    </section>
 {% endblock %}

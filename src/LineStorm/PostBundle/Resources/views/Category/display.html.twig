@@ -5,7 +5,7 @@
 
     {% for post in posts %}
         <p>
-            <a href="{{ path('linestorm_cms_post', {category: category.name, id: post.id, slug: post.slug }) }}">{{ post.body }}</a>
+            <a href="{{ path('linestorm_cms_post', {category: category.name, id: post.id, slug: post.slug }) }}">{{ post.title }}</a>
         </p>
         {% if not loop.last %}
             <hr />
