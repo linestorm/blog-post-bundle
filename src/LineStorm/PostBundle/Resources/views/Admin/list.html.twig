@@ -1,0 +1,12 @@
+{% extends 'LineStormCmsBundle:Admin:index.html.twig' %}
+
+{% block content %}
+    <div class="list-group">
+        {% for post in posts %}
+            <a class="list-group-item" href="{{ path('linestorm_blog_post_module_admin_edit', {id: post.id}) }}">
+                <h2 class="list-group-item-heading">{{ post.title }}</h2>
+                <span class="list-group-item-text">{% for tag in  post.tags %}<label class="label label-primary">{{ tag.name }}</label>{% endfor %}</span>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

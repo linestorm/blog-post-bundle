@@ -1,0 +1,19 @@
+linestorm_blog_post_module_admin_list:
+    pattern:  /
+    defaults: { _controller: LineStormPostBundle:Admin:list }
+
+linestorm_blog_post_module_admin_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: LineStormPostBundle:Admin:edit }
+    requirements:
+       id: \d+
+
+linestorm_blog_post_module_admin_view:
+    pattern:  /{id}
+    defaults: { _controller: LineStormPostBundle:Admin:view }
+    requirements:
+       id: \d+
+
+linestorm_blog_post_module_admin_create:
+    pattern:  /new
+    defaults: { _controller: LineStormPostBundle:Admin:new }
