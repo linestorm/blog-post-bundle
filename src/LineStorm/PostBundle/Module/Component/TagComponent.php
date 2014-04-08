@@ -32,32 +32,6 @@ class TagComponent extends AbstractMetaComponent implements ComponentInterface
         return null;
     }
 
-    public function getNewTemplate()
-    {
-        $tags = $this->modelManager->get('tag')->findBy(array(), array('name' => 'ASC'));
-
-        return $this->templating->render('LineStormPostBundle:Modules:Post/Component/tag/new.html.twig', array(
-            'tagEntities'   => null,
-            'component'     => $this,
-            'tags'          => $tags,
-        ));
-    }
-
-    /**
-     * @param $entity Tag
-     * @return string
-     */
-    public function getEditTemplate($entity)
-    {
-        $tags = $this->modelManager->get('tag')->findBy(array(), array('name' => 'ASC'));
-
-        return $this->templating->render('LineStormPostBundle:Modules:Post/Component/tag/new.html.twig', array(
-            'tagEntities'   => $entity,
-            'component'     => $this,
-            'tags'          => $tags,
-        ));
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

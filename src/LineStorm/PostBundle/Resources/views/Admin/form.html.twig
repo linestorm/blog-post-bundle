@@ -26,8 +26,8 @@
 {% block head %}
     {% javascripts
         '@LineStormCmsBundle/Resources/public/js/api.js'
-        '@LineStormPostBundle/Resources/public/js/dropzone.js'
-        '@LineStormPostBundle/Resources/public/js/select2/select2.min.js'
+        'vendor/bootstrap/dist/js/bootstrap.min.js'
+        'vendor/select2/select2.min.js'
         '@LineStormPostBundle/Resources/public/js/admin/post.js'
         output='compiled/js/admin/blog-post.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
@@ -47,10 +47,13 @@
 
     </script>
 
+    {#
+    '@LineStormPostBundle/Resources/public/css/dropzone.css' #}
     {% stylesheets
         '@LineStormPostBundle/Resources/public/css/admin/post.css'
-        '@LineStormPostBundle/Resources/public/css/dropzone.css'
-        'bundles/linestormblogpost/css/select2.css'
+        'vendor/dropzone/downloads/css/dropzone.css'
+        'vendor/select2/select2.css'
+        'vendor/select2/select2-bootstrap.css'
         filter='cssrewrite' output='compiled/css/blog-post.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
