@@ -20,10 +20,15 @@
             <a href="{{ path('linestorm_cms_module_post_admin_edit', {id: post.id}) }}" class="btn btn-primary" id="article-edit"><i class="fa-edit"></i> Edit</a>
         </div>
     {% endif %}
-
+    <style type="text/css">
+        .article-image {
+            width: 100%;
+        }
+    </style>
     <section class="article">
         <article id="article-body blog">
             <h1>{{ post.title|capitalize }}</h1>
+
             <p>
                 by {{ post.author.username }} on <time datetime="{{ post.liveOn | date("Y-m-d\\TH:i:sP") }}" pubdate="pubdate">{{ post.liveOn | date("F d, Y") }}</time>
             </p>
@@ -36,6 +41,11 @@
             <hr/>
 
             <div class="content">
+
+                <img class="article-image" src="{{ post.coverImage.src }}" alt="{{ post.coverImage.alt }}" credits={{ post.coverImage.credits }} />
+
+                <hr />
+
                 {% for content in post.content %}
                     <div class="post-content">
                         {% set view = render_post_component_view(content) %}
