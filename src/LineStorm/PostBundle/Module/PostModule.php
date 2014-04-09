@@ -4,13 +4,15 @@ namespace LineStorm\PostBundle\Module;
 
 use LineStorm\CmsBundle\Module\AbstractModule;
 use LineStorm\CmsBundle\Module\ModuleInterface;
-use LineStorm\PostBundle\Module\Component\AbstractBodyComponent;
 use LineStorm\PostBundle\Module\Component\AbstractComponent;
 use LineStorm\PostBundle\Module\Component\ComponentInterface;
 use Symfony\Component\Config\Loader\Loader;
-use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ * Class PostModule
+ * @package LineStorm\PostBundle\Module
+ */
 class PostModule extends AbstractModule implements ModuleInterface
 {
     protected $name = 'Post';

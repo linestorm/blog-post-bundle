@@ -2,11 +2,10 @@
 
 namespace LineStorm\PostBundle;
 
+use LineStorm\CmsBundle\DependencyInjection\ContainerBuilder\DoctrineOrmCompilerPass;
 use LineStorm\PostBundle\DependencyInjection\ContainerBuilder\ComponentCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use LineStorm\CmsBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass as LocalDoctrineOrmMappingsPass;
 
 class LineStormPostBundle extends Bundle
 {
@@ -20,26 +19,7 @@ class LineStormPostBundle extends Bundle
         $mappings = array(
             $modelDir => 'LineStorm\PostBundle\Model',
         );
-
-        $ormCompilerClass = 'Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass';
-        $localOrmCompilerClass = 'LineStorm\CmsBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass';
-        if (class_exists($ormCompilerClass)) {
-            $container->addCompilerPass(
-                DoctrineOrmMappingsPass::createXmlMappingDriver(
-                    $mappings,
-                    array('linestorm_cms.entity_manager'),
-                    'linestorm_cms.backend_type_orm'
-                ));
-        } elseif (class_exists($localOrmCompilerClass)) {
-            $container->addCompilerPass(
-                LocalDoctrineOrmMappingsPass::createXmlMappingDriver(
-                    $mappings,
-                    array('linestorm_cms.entity_manager'),
-                    'linestorm_cms.backend_type_orm'
-                ));
-        } else {
-            throw new \Exception("Unable to find ORM mapper");
-        }
+        $container->addCompilerPass(DoctrineOrmCompilerPass::getMappingsPass($mappings));
 
     }
 }
