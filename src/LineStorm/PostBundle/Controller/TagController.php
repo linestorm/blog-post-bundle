@@ -28,10 +28,14 @@ class TagController extends Controller
                 {$postClass} p
             WHERE
                 :tag MEMBER OF p.tags
+                AND p.liveOn <= :date
             ORDER BY
                 p.liveOn DESC
         ";
-        $posts = $modelManager->getManager()->createQuery($dql)->setParameter('tag', $tagEntity)->setMaxResults(10)->getResult();
+        $posts = $modelManager->getManager()->createQuery($dql)->setParameters(array(
+            'date'  => new \DateTime(),
+            'tag'   => $tagEntity,
+        ))->setMaxResults(15)->getResult();
 
         return $this->render('LineStormPostBundle:Tag:display.html.twig', array(
             'tag'   => $tagEntity,

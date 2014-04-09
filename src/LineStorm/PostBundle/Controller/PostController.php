@@ -2,6 +2,8 @@
 
 namespace LineStorm\PostBundle\Controller;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use LineStorm\PostBundle\Model\Post;
 use LineStorm\PostBundle\Module\PostModule;
@@ -32,7 +34,36 @@ class PostController extends Controller
         /** @var PostModule $module */
         $module = $moduleManager->getModule('post');
 
-        $post = $modelManager->get('post')->find($id);
+        $em = $modelManager->getManager();
+        $class = $modelManager->getEntityClass('post');
+
+        $dql = "
+            SELECT
+                p,c,t
+            FROM
+                {$class} p
+                JOIN p.category c
+                JOIN p.tags t
+            WHERE
+                p.id = ?1
+                AND p.liveOn <= :date
+        ";
+
+        try
+        {
+            $post = $em->createQuery($dql)->setParameters(array(
+                'date'  => new \DateTime(),
+                1       => $id,
+            ))->getSingleResult();
+        }
+        catch(NonUniqueResultException $e)
+        {
+            throw $this->createNotFoundException("Post Not Found", $e);
+        }
+        catch(NoResultException $e)
+        {
+            throw $this->createNotFoundException("Post Not Found", $e);
+        }
 
         if(!($post instanceof Post))
         {
