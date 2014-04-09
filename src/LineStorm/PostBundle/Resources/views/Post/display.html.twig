@@ -10,7 +10,9 @@
 {% block meta_keywords %}{{ post.metaKeywords }}{% endblock %}
 {% block meta_desc %}{{ post.metaDescription }}{% endblock %}
 
-{% block title %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block page_title %}
     {{ post.category.name }}
 {% endblock %}
 
@@ -27,7 +29,7 @@
     </style>
     <section class="article">
         <article id="article-body blog">
-            <h1>{{ post.title|capitalize }}</h1>
+            <h1>{{ post.title }}</h1>
 
             <p>
                 by {{ post.author.username }} on <time datetime="{{ post.liveOn | date("Y-m-d\\TH:i:sP") }}" pubdate="pubdate">{{ post.liveOn | date("F d, Y") }}</time>

@@ -1,5 +1,10 @@
 {% extends 'LineStormCmsBundle::layout.html.twig' %}
 
+{% block title %}Articles About {{ tag.name }}{% endblock %}
+
+{% block page_title %}
+    {{ tag.name }} Articles
+{% endblock %}
 
 {% block head %}
     {% stylesheets
