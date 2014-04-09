@@ -37,8 +37,13 @@ function addForm($collectionHolder, prototype, indexer, name) {
     // Replace '__name__' in the prototype's HTML to
     // instead be a number based on how many items we have#
     var rgx = new RegExp(name, 'g');
-    newForm = prototype.replace(rgx, indexer.count);
-    indexer.count++;
+    if(indexer){
+        newForm = prototype.replace(rgx, indexer.count);
+        indexer.count++;
+    } else {
+        newForm = prototype.replace(rgx, '');
+    }
+
 
     newContainer = $collectionHolder.data('prototype').replace(/__widget__/, newForm);
 
@@ -60,7 +65,6 @@ function setupDropzone(placeholder){
     // bind the remove button as it won't be set by dropzone on init
     $p.find('.dz-remove').on('click', function(){
         $(this).closest('.dz-preview').remove();
-        --localCount.count;
     });
 
     new Dropzone(placeholder, {
@@ -91,7 +95,6 @@ function setupDropzone(placeholder){
                 alert("Cannot add file:\n\n"+response.error);
             });
             this.on("removedfile", function(file){
-                --localCount.count;
             });
         },
         previewTemplate: $p.data('preview')
@@ -129,6 +132,17 @@ $(document).ready(function(){
         });
 
         return false;
+    });
+
+    $('.post-form-delete').on('click', function(){
+        if(confirm("Are you sure you want to permanently delete this post?")){
+            window.lineStorm.api.call($(this).data('url'), {
+                success: function(o){
+                    alert(o.message);
+                    window.location = o.location;
+                }
+            })
+        }
     });
 
     var $postBodyHolder;
@@ -189,12 +203,13 @@ $(document).ready(function(){
     // add ckeditor to all the pre-loaded articles
     $postBodyHolder.find('textarea.ckeditor-textarea').ckeditor();
     $postBodyHolder.find('.post-component-item').each(function(){
+        var dZs = $(this).find('.dropzone');
+        var txt = $(this).find('textarea.ckeditor-textarea');
 
-        if($(this).find('.dropzone').length)
-            setupDropzone($(this).find('.dropzone')[0]);
-
-        if($(this).find('textarea.keditor-textarea').length)
-            $(this).find('textarea.keditor-textarea').ckeditor();
+        if(dZs.length)
+            setupDropzone(dZs[0]);
+        if(txt.length)
+            txt.ckeditor();
     });
 
     // set up the sortable content
@@ -240,7 +255,6 @@ $(document).ready(function(){
         if(confirm('Are you sure you want to remove this item?\n\nNOTE: IT CANNOT BE UNDONE ONCE SAVED')){
             var i = $(this).data('count');
             $(this).closest('.post-component-item').parent().remove();
-            --contentCounts[i];
         }
     });
 
@@ -267,11 +281,9 @@ $(document).ready(function(){
                     });
                     $form.on('submit', function(){
                         window.lineStorm.api.saveForm($form, function(o){
-                            $categorySelect.append('<option>'+o.name+'</option>').val(o.name);
+                            $categorySelect.append('<option value="'+o.id+'">'+o.name+'</option>').val(o.id);
                             $modal.modal('hide')
-                            alert('saved!');
                         },function(xhr, state){
-                            alert('failed: '+state);
                         });
                         return false;
                     });
@@ -283,5 +295,20 @@ $(document).ready(function(){
 
         return false;
     });
+
+    // auto fill in the slug until it is changed
+    var hasSlugChanged = false;
+    var $slugInput  = $('input.post-form-slug');
+    var $titleInput = $('input.post-form-title');
+
+    $titleInput.on('keyup', function(){
+        if(!hasSlugChanged){
+            $slugInput.val(this.value.replace(/[^\w\d\s-]/g, '').replace(/\s+/g, '-'));
+        }
+    });
+    $slugInput.on('keyup', function(){
+        hasSlugChanged = true;
+    });
+
 });
 

@@ -1,9 +1,23 @@
-linestorm_cms_module_post_admin:
-  prefix:       /
-  resource:     "routing/admin.yml"
+linestorm_cms_index:
+  path: /
+  defaults: { _controller: LineStormPostBundle:Blog:index }
 
+linestorm_cms_post:
+  pattern:  /{category}/{id}-{slug}
+  defaults: { _controller: LineStormPostBundle:Post:display }
+  requirements:
+    category: "[\w\d-]+"
+    path:     "\d+"
+    slug:     "[\w\d-]+"
+
+linestorm_cms_category:
+  pattern:  /{category}
+  defaults: { _controller: LineStormPostBundle:Category:display }
+  requirements:
+    category: "[\w\d-]+"
 
 linestorm_cms_module_post_api:
   type:         rest
   prefix:       /api
   resource:     "routing/api.yml"
+

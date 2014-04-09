@@ -1,0 +1,3 @@
+{% for tag in content %}
+    <a class="label label-primary" href="{{ path('linestorm_cms_tag', {tag: tag.name} ) }}">{{ tag.name }}</a>
+{% endfor %}

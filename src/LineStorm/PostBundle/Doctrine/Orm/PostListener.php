@@ -27,8 +27,19 @@ class PostListener implements EventSubscriber
     public function prePersist($args)
     {
         $object = $args->getEntity();
-        if ($object instanceof Post && $object->getCreatedOn() === null) {
-            $object->setCreatedOn(new \DateTime());
+
+        if ($object instanceof Post)
+        {
+            if(!($object->getCreatedOn() instanceof \DateTime))
+            {
+                $object->setCreatedOn(new \DateTime());
+            }
+
+            if(!$object->getRealSlug())
+            {
+                $slug = preg_replace(array('/[^a-zA-Z0-9\s]/', '/\s+/'), array('', '-'), $object->getTitle());
+                $object->setSlug($slug);
+            }
         }
     }
 }

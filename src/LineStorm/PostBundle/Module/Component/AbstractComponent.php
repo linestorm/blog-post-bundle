@@ -3,6 +3,7 @@
 namespace LineStorm\PostBundle\Module\Component;
 
 use LineStorm\CmsBundle\Model\ModelManager;
+use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\FormView;
 
@@ -119,6 +120,22 @@ abstract class AbstractComponent
                 break;
         }
 
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRoutes(Loader $loader)
+    {
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAdminRoutes(Loader $loader)
+    {
         return null;
     }
 

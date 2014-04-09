@@ -1,0 +1,5 @@
+linestorm_cms_tag:
+  pattern:  /tag/{tag}
+  defaults: { _controller: LineStormPostBundle:Tag:display }
+  requirements:
+    tag: "[\w\d-]+"

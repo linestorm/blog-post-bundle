@@ -136,6 +136,10 @@ abstract class Post
     {
         return $this->slug ?: strtolower(str_replace(' ', '-', $this->title));
     }
+    public function getRealSlug()
+    {
+        return $this->slug;
+    }
 
     /**
      * @param string $slug

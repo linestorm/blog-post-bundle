@@ -2,8 +2,10 @@
 
 namespace LineStorm\PostBundle\Module\Component;
 
+use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * This must be implemented by all components
@@ -76,4 +78,25 @@ interface ComponentInterface
      * @return mixed
      */
     public function buildForm(FormBuilderInterface $builder, array $options);
+
+    /**
+     * Add routes to the cms router.
+     * Normally, for a component, there are no routes. Exceptions apply, for example Tags, where you want the user to be
+     * able to view all tags.
+     *
+     * @param Loader $loader
+     * @return RouteCollection
+     */
+    public function getRoutes(Loader $loader);
+
+    /**
+     * Add routes to the admin router.
+     * Normally, for a component, there are no routes. Exceptions apply, for example Tags, where you want the user to be
+     * able to view all tags.
+     *
+     * @param Loader $loader
+     * @return RouteCollection
+     */
+    public function getAdminRoutes(Loader $loader);
+
 }

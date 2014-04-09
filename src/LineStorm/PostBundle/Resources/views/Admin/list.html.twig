@@ -1,6 +1,6 @@
 {% extends 'LineStormCmsBundle:Admin:index.html.twig' %}
 
-{% block content %}
+{% block module %}
     <div class="list-group">
         {% for post in posts %}
             <a class="list-group-item" href="{{ path('linestorm_cms_module_post_admin_edit', {id: post.id}) }}">

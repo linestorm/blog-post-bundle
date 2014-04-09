@@ -47,13 +47,4 @@ class ArticleComponent extends AbstractBodyComponent implements ComponentInterfa
             ))
         ;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function getRoutes(LoaderInterface $loader)
-    {
-        return null;
-        // return $loader->import('@LineStormPostBundle/Resources/config/routing/modules/component/article.yml', 'rest');
-    }
 } 

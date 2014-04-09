@@ -37,7 +37,6 @@ class CategoryController extends AbstractApiController implements ClassResourceI
 
         /** @var \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper $tpl */
         $tpl = $this->get('templating.helper.form');
-        $tpl->setTheme($view, 'asdasd');//array('LineStormPostBundle:Admin:Form/fields.html.twig'));
         $form = $tpl->form($view);
 
         $rView = View::create(array(

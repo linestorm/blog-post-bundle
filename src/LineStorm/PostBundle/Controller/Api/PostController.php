@@ -121,4 +121,34 @@ class PostController extends AbstractApiController implements ClassResourceInter
         return $this->get('fos_rest.view_handler')->handle($view);
     }
 
+
+    public function deleteAction($id)
+    {
+
+        $user = $this->getUser();
+        if (!($user instanceof UserInterface) || !($user->hasGroup('admin'))) {
+            throw new AccessDeniedException();
+        }
+
+        $modelManager = $this->getModelManager();
+
+        $post = $modelManager->get('post')->find($id);
+        if(!($post instanceof Post))
+        {
+            throw $this->createNotFoundException("Post not found");
+        }
+
+        $em = $modelManager->getManager();
+        $em->remove($post);
+        $em->flush();
+
+
+        $view = View::create(array(
+            'message'  => 'Post has been deleted',
+            'location' => $this->generateUrl('linestorm_cms_module_post_admin_list'),
+        ));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+
+    }
 }

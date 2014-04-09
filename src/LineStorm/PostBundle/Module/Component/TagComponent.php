@@ -2,36 +2,47 @@
 
 namespace LineStorm\PostBundle\Module\Component;
 
-use LineStorm\PostBundle\Model\Post;
 use LineStorm\PostBundle\Model\Tag;
-use Symfony\Component\Config\Loader\LoaderInterface;
+use LineStorm\PostBundle\Module\Component\View\ComponentView;
+use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormView;
 
+/**
+ * Class TagComponent
+ * @package LineStorm\PostBundle\Module\Component
+ */
 class TagComponent extends AbstractMetaComponent implements ComponentInterface
 {
     protected $name = 'Tag';
     protected $id = 'tags';
 
+    /**
+     * @inheritdoc
+     */
     public function isSupported($entity)
     {
         return ($entity instanceof Tag);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getViewTemplate($entity)
+    {
+        return new ComponentView('LineStormPostBundle:Component:Tag/view.html.twig');
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getFormAssetTemplate()
     {
         return 'LineStormPostBundle:Admin:Component/tag/form-assets.html.twig';
     }
 
     /**
-     * @param $entity Tag
-     * @return string
+     * @inheritdoc
      */
-    public function getViewTemplate($entity)
-    {
-        return null;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -43,42 +54,8 @@ class TagComponent extends AbstractMetaComponent implements ComponentInterface
         ;
     }
 
-
-    public function handleSave(Post $post, array $data)
+    public function getRoutes(Loader $loader)
     {
-        $entities = array();
-
-        foreach ($data as $eData) {
-            $tag = $this->getEntityByName($eData);
-            if (!($tag instanceof Tag)) {
-                $tag = $this->createEntity($eData);
-            }
-            $post->addTag($tag);
-            $entities[] = $tag;
-        }
-
-        return $entities;
-    }
-
-    public function getEntityByName(array $data)
-    {
-        return $this->modelManager->get('tag')->findOneBy(array(
-            'name' => $data['name']
-        ));
-    }
-
-    public function createEntity(array $data)
-    {
-        $class  = $this->modelManager->getEntityClass('tag');
-        $entity = new $class();
-
-        $entity->setName($data['name']);
-
-        return $entity;
-    }
-
-    public function getRoutes(LoaderInterface $loader)
-    {
-        return null;
+        return $loader->import('@LineStormPostBundle/Resources/config/routing/component/tag.yml', 'yaml');
     }
 } 

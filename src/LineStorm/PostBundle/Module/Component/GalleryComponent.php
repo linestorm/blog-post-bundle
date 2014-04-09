@@ -24,7 +24,6 @@ class GalleryComponent extends AbstractBodyComponent implements ComponentInterfa
         return ($entity instanceof PostGallery);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -47,13 +46,5 @@ class GalleryComponent extends AbstractBodyComponent implements ComponentInterfa
                 'label'     => false,
             ))
         ;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getRoutes(LoaderInterface $loader)
-    {
-        return null;
     }
 }

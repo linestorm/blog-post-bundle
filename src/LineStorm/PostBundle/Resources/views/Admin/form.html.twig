@@ -24,6 +24,7 @@
 {% endmacro %}
 
 {% block head %}
+
     {% javascripts
         'vendor/select2/select2.min.js'
         'vendor/dropzone/downloads/dropzone.min.js'
@@ -34,28 +35,40 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    <script type="text/javascript" src='/vendor/ckeditor/ckeditor.js'></script>
-    <script type="text/javascript" src='/vendor/ckeditor/adapters/jquery.js'></script>
-    <script type="text/javascript" src='/vendor/ckeditor/config.js'></script>
 
     <script type="text/javascript">
         window.lineStorm.modalContainer = "{{ fn.modalContainer()|e('js') }}";
+        window.contentCounts = window.contentCounts || {};
 
         {% for component in module.getComponents('BODY') %}
             window.contentCounts['{{ component.id|e('js') }}'] = {count: {{ form[component.id]|length }} };
         {% endfor %}
 
         window.contentCounts.gallery_images = {};
-
     </script>
+
+    <script type="text/javascript" src="/vendor/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/vendor/ckeditor/adapters/jquery.js"></script>
+
+    {% stylesheets
+        'vendor/dropzone/downloads/css/dropzone.css'
+        '@LineStormPostBundle/Resources/public/css/dropzone.css'
+        filter='cssrewrite' output='compiled/css/admin/vendor/dropzone.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% stylesheets
+        'vendor/select2/select2.css'
+        'vendor/select2/select2-bootstrap.css'
+        '@LineStormPostBundle/Resources/public/css/select2-bootstrap.css'
+        filter='cssrewrite' output='compiled/css/admin/vendor/select2.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 
     {% stylesheets
         '@LineStormPostBundle/Resources/public/css/admin/post.css'
-        '@LineStormPostBundle/Resources/public/css/dropzone.css'
-        'vendor/select2/select2.css'
-        'vendor/select2/select2-bootstrap.css'
-        filter='cssrewrite' output='compiled/css/blog-post.css' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+        filter='cssrewrite' output='compiled/css/admin/post.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
     {% for component in module.getComponents() %}
@@ -64,40 +77,61 @@
 
 {% endblock %}
 
-{% block content %}
-
-    <div id="FormErrors" class="alert alert-danger" style="display: none;">
-
-    </div>
+{% block module %}
 
     {{ form_start(form, {attr: { class: 'api-save'} }) }}
-        {{ form_row(form.title) }}
+        {{ form_row(form.title, {attr: {class:'form-control post-form-title'}}) }}
         {{ form_row(form.coverImage) }}
+
+        <div class="row">
+            <img src="" class="cover-image">
+        </div>
 
         {{ form_row(form.liveOn) }}
         {{ form_row(form.category, {add_link: {class: 'add-category', href:path('linestorm_cms_module_post_api_new_category')}, attr: {'class': 'form-control category-select'} } ) }}
 
+        <!--
+            <a href="#" class="options-toggle" data-toggle="extra-options">Extra Options <i class="pull-right fa-angle-down"></i></a>
+            <div class="extra-options" style="display: none">
+            </div>
+
+            <hr />
+
+            <a href="#" class="options-toggle" data-toggle="seo-options">SEO Options <i class="pull-right fa-angle-down"></i></a>
+            <div class="seo-options" style="display: none"> </div>
+        -->
+        {{ form_row(form.slug,              {help: 'User friendly URL fragment. If left blank, will be derived from title.', attr: {class:'form-control post-form-slug'}}) }}
+        {{ form_row(form.blurb,             {help: 'Preview text. If left blank, will be derived from content.'}) }}
+
         <hr />
 
-        <a href="#" class="options-toggle" data-toggle="extra-options">Extra Options <i class="pull-right fa-angle-down"></i></a>
-        <div class="extra-options" style="display: none">
-            {{ form_row(form.slug,              {help: 'User friendly URL fragment. If left blank, will be derived from title.'}) }}
-            {{ form_row(form.blurb,             {help: 'Preview text. If left blank, will be derived from content.'}) }}
-        </div>
 
-        <hr />
-
-        <a href="#" class="options-toggle" data-toggle="seo-options">SEO Options <i class="pull-right fa-angle-down"></i></a>
+        <a href="#" class="options-toggle" data-toggle="seo-options">SEO Advice <i class="pull-right fa-angle-down"></i></a>
         <div class="seo-options" style="display: none">
-            {{ form_row(form.metaDescription,   {help: 'Head meta description'}) }}
-            {{ form_row(form.metaKeywords,      {help: 'Head meta keywords'}) }}
+            <div class="row">
+                <div class="col-md-10 col-md-push-2">
+                    <p class="text-muted">
+                        <strong>Each post should be created with a keyword in mind:</strong><br/>
+                        Content : Should have between 1 - 2 uses of focus keyword/phrase<br/>
+                        Meta title: Should have between 1 - 2 uses of focus keyword/phrase<br/>
+                        Meta description: Should have 1 use of focus keyword/phrase<br/>
+                        URL: Should have 1 use of focus keyword/phrase<br/>
+                        Content: Should have 3+ uses of focus keyword/phrase
+                    </p>
+                </div>
+            </div>
         </div>
+
+        <hr />
+
+        {{ form_row(form.metaDescription,   {help: 'Head meta description'}) }}
+        {{ form_row(form.metaKeywords,      {help: 'Head meta keywords'}) }}
 
         <hr />
 
         <h3>Meta Data</h3>
         {% for component in module.getComponents('META') %}
-            {{ form_row(form[component.id], { attr: {class: 'tag-search'} }) }}
+            {{ form_row(form[component.id], { attr: {class: 'tag-search form-control'} }) }}
         {% endfor %}
 
         <hr />
@@ -140,7 +174,9 @@
 
         <div class="form-group">
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-default post-save">Save</button>
+                <button type="submit" class="btn btn-default post-save"><i class="fa-save"></i> Save</button>
+                {% block post_form_buttons %}
+                {% endblock %}
             </div>
         </div>
 

@@ -7,6 +7,7 @@ use LineStorm\CmsBundle\Module\ModuleInterface;
 use LineStorm\PostBundle\Module\Component\AbstractBodyComponent;
 use LineStorm\PostBundle\Module\Component\AbstractComponent;
 use LineStorm\PostBundle\Module\Component\ComponentInterface;
+use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -117,16 +118,36 @@ class PostModule extends AbstractModule implements ModuleInterface
 
     /**
      * Add routes to the router
-     * @param LoaderInterface $loader
+     * @param Loader $loader
      * @return RouteCollection
      */
-    public function addRoutes(LoaderInterface $loader)
+    public function addRoutes(Loader $loader)
     {
         $moduleRoutes = $loader->import('@LineStormPostBundle/Resources/config/routing.yml', 'yaml');
 
         // import all the component routes
         foreach ($this->components as $component) {
             $routes = $component->getRoutes($loader);
+            if ($routes instanceof RouteCollection) {
+                $moduleRoutes->addCollection($routes);
+            }
+        }
+
+        return $moduleRoutes;
+    }
+
+    /**
+     * Add routes to the router
+     * @param Loader $loader
+     * @return RouteCollection
+     */
+    public function addAdminRoutes(Loader $loader)
+    {
+        $moduleRoutes = $loader->import('@LineStormPostBundle/Resources/config/routing/admin.yml', 'yaml');
+
+        // import all the component routes
+        foreach ($this->components as $component) {
+            $routes = $component->getAdminRoutes($loader);
             if ($routes instanceof RouteCollection) {
                 $moduleRoutes->addCollection($routes);
             }
