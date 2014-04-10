@@ -4,6 +4,8 @@ parameters:
   linestorm.cms.module.post.gallery.class:     LineStorm\PostBundle\Module\Component\GalleryComponent
   linestorm.cms.module.post.tag.class:         LineStorm\PostBundle\Module\Component\TagComponent
 
+  linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostTriGraphSearchProvider
+
 services:
   linestorm.cms.module.post:
     class: %linestorm.cms.module.post.class%
@@ -33,3 +35,12 @@ services:
     arguments: [ @linestorm.cms.module_manager, @service_container ]
     tags:
       - { name: twig.extension }
+
+
+
+  #
+  # SEARCH PROVIDERS
+  linestorm.cms.module.post.search_provider:
+    class: %linestorm.cms.module.post.search_provider.class%
+    tags:
+      - { name: linestorm.cms.module.search.provider }
