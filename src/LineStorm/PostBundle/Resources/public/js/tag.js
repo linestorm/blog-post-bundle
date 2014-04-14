@@ -1,4 +1,4 @@
-define(['jquery', '../../../../../'], function ($, select2) {
+define(['jquery', 'select2'], function ($, select2) {
     $(document).ready(function(){
         var $tags = $('.tag-search');
         $tags.select2({

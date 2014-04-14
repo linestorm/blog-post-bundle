@@ -1,7 +1,7 @@
 
 var contentCounts = contentCounts || {};
 
-define(['jquery', 'jqueryui', '../../../../../', 'dropzone', '/assets/bundles/linestormcms/js/api'], function ($, $ui, bs, Dropzone, api) {
+define(['jquery', 'jqueryui', 'dropzone', '/assets/bundles/linestormcms/js/api'], function ($, $ui, Dropzone, api) {
 
 
     // setup dropzone

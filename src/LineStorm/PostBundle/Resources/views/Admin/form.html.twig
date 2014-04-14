@@ -42,11 +42,16 @@
 
     {{
         include('AndyPortfolioBundle::requirejs.html.twig', {
-            requirejs_module: ['/assets/bundles/linestormcms/js/main', '/assets/bundles/linestormpost/js/post']|merge(module.componentViewAssets)
+            requirejs_module: ['/assets/bundles/linestormcms/js/main', '/assets/bundles/linestormpost/js/post']|merge(module.componentAssets)
         })
     }}
 
-    <link rel="stylesheet" href="{{ asset(assetsPath ~ '/css/cms/post/post.css') }}" />
+    {% stylesheets
+        filter="compass" output="assets/bundles/linestormpost/css/post.css"
+        "@LineStormPostBundle/Resources/assets/sass/post.scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 
 {% endblock %}
 
