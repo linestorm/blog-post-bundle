@@ -7,13 +7,10 @@
 {% endblock %}
 
 {% block head %}
-    {% stylesheets
-    '@LineStormPostBundle/Resources/public/css/post-list.css'
-    filter='cssrewrite' output='compiled/css/post/list.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
+    {{ parent() }}
 
+    <link rel="stylesheet" href="{{ asset(assetsPath ~ '/css/cms/post/list.css') }}" />
+{% endblock %}
 
 {% block body %}
     <h1>Tag: {{ tag.name }}</h1>

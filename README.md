@@ -60,6 +60,7 @@ line_storm_cms:
     user:                 Acme\DemoBundle\Entity\User
     user_group:           Acme\DemoBundle\Entity\Group
 
+# The media bundle is required by the CMS
 line_storm_media:
   default_provider: local_storeage
 ```
@@ -74,4 +75,4 @@ web/vendor.
 Documentation
 =============
 
-See [index.md](src/LineStorm/BlogPostBundle/Resources/doc/index.md)
+See [index.md](docs/index.md)

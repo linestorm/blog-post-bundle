@@ -1,7 +1,8 @@
-define(['jquery', 'select2'], function ($, select2) {
+define(['jquery', '../../../../../'], function ($, select2) {
     $(document).ready(function(){
-        $('.tag-search').select2({
-            tags: $('.tag-search').data('options').split(','),
+        var $tags = $('.tag-search');
+        $tags.select2({
+            tags: $tags.data('options').split(','),
             tokenSeparators: [',', ' ', ';']
         });
     });

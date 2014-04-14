@@ -37,7 +37,7 @@ class TagComponent extends AbstractMetaComponent implements ComponentInterface
     /**
      * @inheritdoc
      */
-    public function getViewTemplate($entity)
+    public function getView($entity)
     {
         return new ComponentView('LineStormPostBundle:Component:Tag/view.html.twig');
     }

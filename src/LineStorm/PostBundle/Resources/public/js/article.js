@@ -2,7 +2,7 @@ define(['jquery', 'jckeditor'], function ($, ckeditor) {
 
     $(document).on('widget-init', '.item-articles', function(){
 
-        $(this).find('input[type="hidden"]').val(contentCounts['articles'].count);
+        $(this).find('input[name$="[order]"]').filter(function(){ return this.name.match(/\[articles\]\[\d+\]\[order\]$/) }).val(contentCounts.components);
         $(this).find('textarea.ckeditor-textarea').ckeditor().focus();
 
     });

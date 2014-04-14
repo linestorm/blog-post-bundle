@@ -105,6 +105,16 @@ class PostModule extends AbstractModule implements ModuleInterface
         return $assets;
     }
 
+    public function getComponentViewAssets()
+    {
+        $assets = array();
+        foreach ($this->components as $component) {
+            $assets = array_merge_recursive($assets, $component->getViewAssets());
+        }
+
+        return $assets;
+    }
+
     /**
      * Returns the navigation array
      *

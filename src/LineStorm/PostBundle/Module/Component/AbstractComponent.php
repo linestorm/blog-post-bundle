@@ -88,9 +88,9 @@ abstract class AbstractComponent
     /**
      * @inheritdoc
      */
-    public function getViewAssetTemplate()
+    public function getViewAssets()
     {
-        return null;
+        return array();
     }
 
     /**

@@ -37,7 +37,7 @@ class GalleryComponent extends AbstractBodyComponent implements ComponentInterfa
     /**
      * @inheritdoc
      */
-    public function getViewTemplate($entity)
+    public function getView($entity)
     {
         return new ComponentView('LineStormPostBundle:Component:Gallery/view.html.twig');
     }

@@ -9,9 +9,11 @@
 {% endblock %}
 
 {% block head %}
+    {{ parent() }}
 
     <link rel="stylesheet" href="{{ asset(assetsPath ~ '/css/cms/post/list.css') }}" />
 {% endblock %}
+
 
 {% block body %}
     {% if app.user and app.user.hasGroup('admin') %}

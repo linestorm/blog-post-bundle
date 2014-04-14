@@ -64,7 +64,7 @@ class PostExtension extends \Twig_Extension
             /** @var $component ComponentInterface */
             if($component->isSupported($entities))
             {
-                return $component->getViewTemplate($entities);
+                return $component->getView($entities);
             }
         }
     }

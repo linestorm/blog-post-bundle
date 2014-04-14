@@ -1,7 +1,7 @@
 
 var contentCounts = contentCounts || {};
 
-define(['jquery', 'jqueryui', 'bootstrap', 'dropzone', '/assets/bundles/linestormcms/js/api'], function ($, $ui, bs, Dropzone, api) {
+define(['jquery', 'jqueryui', '../../../../../', 'dropzone', '/assets/bundles/linestormcms/js/api'], function ($, $ui, bs, Dropzone, api) {
 
 
     // setup dropzone
@@ -34,6 +34,8 @@ define(['jquery', 'jqueryui', 'bootstrap', 'dropzone', '/assets/bundles/linestor
 
         $elementHtml = $(newContainer);
         $collectionHolder.append($elementHtml);
+
+        ++window.contentCounts.components;
 
         return $elementHtml;
     }
@@ -84,7 +86,6 @@ define(['jquery', 'jqueryui', 'bootstrap', 'dropzone', '/assets/bundles/linestor
         $postBodyHolder = $('.post-components');
 
         $('a.post-component-new').on('click', function(e) {
-            // prevent the link from creating a "#" on the URL
             e.preventDefault();
             e.stopPropagation();
 
@@ -97,6 +98,7 @@ define(['jquery', 'jqueryui', 'bootstrap', 'dropzone', '/assets/bundles/linestor
 
             $el.find('.post-component-item').addClass('item-'+id).trigger('widget-init');
 
+            return false;
         });
 
         // set up the cover image dropzone
@@ -132,6 +134,12 @@ define(['jquery', 'jqueryui', 'bootstrap', 'dropzone', '/assets/bundles/linestor
         $postBodyHolder.sortable({
             handle: '.item-reorder',
             axis: 'y',
+            create: function( event, ui ) {
+                var $ul = $(this);
+                $ul.children('li').sort(function(a,b) {
+                    return a.dataset.order > b.dataset.order;
+                }).appendTo($ul);
+            },
             start: function(e, ui){
 
                 $(e.target).children().addClass('fade-overlay');

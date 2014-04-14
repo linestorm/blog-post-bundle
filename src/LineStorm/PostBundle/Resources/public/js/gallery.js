@@ -53,7 +53,7 @@ define(['jquery', 'dropzone', 'jckeditor'], function ($, Dropzone, ckeditor) {
 
         var $el = $(this);
 
-        $el.find('input[type="hidden"][name*="[order]"]').val(contentCounts['galleries'].count);
+        $el.find('input[name$="[order]"]').filter(function(){ return this.name.match(/\[galleries\]\[\d+\]\[order\]$/) }).val(contentCounts.components);
         $el.find('textarea.ckeditor-textarea').ckeditor().focus();
 
         setupDropzone($el.find('.dropzone')[0]);

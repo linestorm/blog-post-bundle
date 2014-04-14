@@ -2,9 +2,13 @@
 {% set page = 'blog' %}
 
 {% block head %}
-    {% for component in module.getComponents() %}
-        {% include component.viewAssetTemplate ignore missing %}
-    {% endfor %}
+    {% block requirejs %}
+        {{
+            include('AndyPortfolioBundle::requirejs.html.twig', {
+                requirejs_module: ['app/main']|merge(module.componentViewAssets)
+            })
+        }}
+    {% endblock %}
 {% endblock %}
 
 {% block meta_keywords %}{{ post.metaKeywords }}{% endblock %}
