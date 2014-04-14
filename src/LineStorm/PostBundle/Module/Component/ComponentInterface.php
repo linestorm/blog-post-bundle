@@ -31,6 +31,13 @@ interface ComponentInterface
     public function getType();
 
     /**
+     * Get an array of any assets needed to build the admin page
+     *
+     * @return array
+     */
+    public function getAssets();
+
+    /**
      * Fetch the template for the view
      *
      * @param $entity
@@ -63,11 +70,6 @@ interface ComponentInterface
      * @return string
      */
     public function getForm(FormView $view);
-
-    /**
-     * @return string
-     */
-    public function getFormAssetTemplate();
 
     /**
      * Build the form

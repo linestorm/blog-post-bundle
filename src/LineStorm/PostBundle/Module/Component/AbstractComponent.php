@@ -62,6 +62,15 @@ abstract class AbstractComponent
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getAssets()
+    {
+        return array();
+    }
+
+
+    /**
      * Build the edit/creation form type
      *
      * @param FormView $view
@@ -74,16 +83,6 @@ abstract class AbstractComponent
             'form'          => $view,
             'component'     => $this,
         ));
-    }
-
-    /**
-     * Returns a template that will render a list of assets to include in the head for this component when editing
-     *
-     * @return null|string
-     */
-    public function getFormAssetTemplate()
-    {
-        return null;
     }
 
     /**
