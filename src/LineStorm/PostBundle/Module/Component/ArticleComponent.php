@@ -27,7 +27,17 @@ class ArticleComponent extends AbstractBodyComponent implements ComponentInterfa
     /**
      * @inheritdoc
      */
-    public function getViewTemplate($entity)
+    public function getAssets()
+    {
+        return array(
+            '@LineStormPostBundle/Resources/public/js/post_article.js'
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getView($entity)
     {
         return new ComponentView('LineStormPostBundle:Component:Article/view.html.twig');
     }

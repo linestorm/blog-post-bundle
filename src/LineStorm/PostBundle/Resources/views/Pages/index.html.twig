@@ -9,12 +9,16 @@
 {% endblock %}
 
 {% block head %}
+    {{ parent() }}
+
     {% stylesheets
-        '@LineStormPostBundle/Resources/public/css/post-list.css'
-        filter='cssrewrite' output='compiled/css/post/list.css' %}
+        filter="compass" output="assets/bundles/linestormpost/css/list.css"
+        "@LineStormPostBundle/Resources/assets/sass/list.scss"
+    %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
+
 
 {% block body %}
     {% if app.user and app.user.hasGroup('admin') %}

@@ -1,21 +1,28 @@
 {% for post in posts %}
     <div class="post {% if loop.first %}post-leader{% endif %} {% if loop.index in [2,3] %}post-leader-secondary{% endif %}">
         <div class="post-image">
-            <a href="{{ path('linestorm_cms_post', {category: post.category.name, id: post.id, slug: post.slug }) }}"><img src="{{ post.coverImage.src }}" /></a>
+            <a href="{{ path('linestorm_cms_post', {category: post.category.name|lower, id: post.id,
+            slug: post.slug }) }}"><img src="{{ post.coverImage.src }}" /></a>
         </div>
         <div class="post-details">
-            <div class="post-header">
-                <a href="{{ path('linestorm_cms_category', {category: post.category.name}) }}">{{ post.category.name | capitalize }}</a>
-                \ <a href="{{ path('linestorm_cms_post', {category: post.category.name, id: post.id, slug: post.slug }) }}">{{ post.title | capitalize }}</a>
-                by {{ post.author.username | capitalize }} on <time datetime="{{ post.liveOn | date("Y-m-d\\TH:i:sP") }}" pubdate="pubdate">{{ post.liveOn | date("F d, Y") }}</time>
-            </div>
+            <h2 class="post-header">
+                <a href="{{ path('linestorm_cms_post', {category: post.category.name|lower, id: post.id,
+                slug: post.slug }) }}">{{ post.title | capitalize }}</a>
+            </h2>
             <div class="post-preview">
-                {{ post.blurb }}
+                {% if post.blurb %}
+                    <p>
+                        {{ post.blurb|capitalize }}
+                    </p>
+                {% endif %}
+                <p>
+                    By {{ post.author.username | capitalize }} on <time datetime="{{ post.liveOn | date("Y-m-d\\TH:i:sP") }}" pubdate="pubdate">{{ post.liveOn | date("F d, Y") }}</time>
+                </p>
             </div>
             <div class="post-footer">
-                <a class="label label-success" href="{{ url('linestorm_cms_category', {category: post.category.name}) }}">{{ post.category.name }}</a>
+                <a class="label label-success" href="{{ url('linestorm_cms_category', {category: post.category.name|lower}) }}" rel="directory">{{ post.category.name|capitalize }}</a>
                 {% for tag in post.tags %}
-                    <a class="label label-primary" href="{{ path('linestorm_cms_tag', {tag: tag.name} ) }}">{{ tag.name }}</a>
+                    <a class="label label-primary" href="{{ path('linestorm_cms_tag', {tag: tag.name|lower} ) }}" rel="tag">{{ tag.name|lower }}</a>
                 {% endfor %}
             </div>
         </div>

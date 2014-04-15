@@ -1,21 +1,24 @@
 {% extends 'LineStormCmsBundle::layout.html.twig' %}
 
-{% block title %}Articles About {{ category.name }}{% endblock %}
+{% block title %}Articles About {{ category.name | capitalize }}{% endblock %}
 
 {% block page_title %}
-    {{ category.name }} Articles
+    {{ category.name | capitalize }} Articles
 {% endblock %}
 
 {% block head %}
+    {{ parent() }}
+
     {% stylesheets
-    '@LineStormPostBundle/Resources/public/css/post-list.css'
-    filter='cssrewrite' output='compiled/css/post/list.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
+        filter="compass" output="assets/bundles/linestormpost/css/list.css"
+        "@LineStormPostBundle/Resources/assets/sass/list.scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
-    <h1>Category: {{ category.name }}</h1>
+    <h1>Category: {{ category.name | capitalize }}</h1>
 
     {% if posts|length %}
         <div class="posts-container">

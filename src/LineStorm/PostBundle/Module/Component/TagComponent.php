@@ -27,17 +27,19 @@ class TagComponent extends AbstractMetaComponent implements ComponentInterface
     /**
      * @inheritdoc
      */
-    public function getViewTemplate($entity)
+    public function getAssets()
     {
-        return new ComponentView('LineStormPostBundle:Component:Tag/view.html.twig');
+        return array(
+            '@LineStormPostBundle/Resources/public/js/post_tag.js'
+        );
     }
 
     /**
      * @inheritdoc
      */
-    public function getFormAssetTemplate()
+    public function getView($entity)
     {
-        return 'LineStormPostBundle:Admin:Component/tag/form-assets.html.twig';
+        return new ComponentView('LineStormPostBundle:Component:Tag/view.html.twig');
     }
 
     /**

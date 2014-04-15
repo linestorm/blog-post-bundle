@@ -23,57 +23,35 @@
     {% endspaceless %}
 {% endmacro %}
 
+
 {% block head %}
-
-    {% javascripts
-        'vendor/select2/select2.min.js'
-        'vendor/dropzone/downloads/dropzone.min.js'
-        '@LineStormCmsBundle/Resources/public/js/api.js'
-        '@LineStormPostBundle/Resources/public/js/admin/post.js'
-
-        output='compiled/js/admin/blog-post.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
-
     <script type="text/javascript">
         window.lineStorm.modalContainer = "{{ fn.modalContainer()|e('js') }}";
         window.contentCounts = window.contentCounts || {};
 
+        {% set cTotal = 0 %}
         {% for component in module.getComponents('BODY') %}
             window.contentCounts['{{ component.id|e('js') }}'] = {count: {{ form[component.id]|length }} };
+        {% set cTotal = cTotal + form[component.id]|length %}
         {% endfor %}
+
+        window.contentCounts.components = {{ cTotal }};
 
         window.contentCounts.gallery_images = {};
     </script>
 
-    <script type="text/javascript" src="/vendor/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript" src="/vendor/ckeditor/adapters/jquery.js"></script>
+    {{
+        include('AndyPortfolioBundle::requirejs.html.twig', {
+            requirejs_module: ['cms_main', 'cms_post']|merge(module.componentAssets)
+        })
+    }}
 
     {% stylesheets
-        'vendor/dropzone/downloads/css/dropzone.css'
-        '@LineStormPostBundle/Resources/public/css/dropzone.css'
-        filter='cssrewrite' output='compiled/css/admin/vendor/dropzone.css' %}
+        filter="compass" output="assets/bundles/linestormpost/css/post.css"
+        "@LineStormPostBundle/Resources/assets/sass/post.scss"
+    %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
-
-    {% stylesheets
-        'vendor/select2/select2.css'
-        'vendor/select2/select2-bootstrap.css'
-        '@LineStormPostBundle/Resources/public/css/select2-bootstrap.css'
-        filter='cssrewrite' output='compiled/css/admin/vendor/select2.css' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-
-    {% stylesheets
-        '@LineStormPostBundle/Resources/public/css/admin/post.css'
-        filter='cssrewrite' output='compiled/css/admin/post.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-
-    {% for component in module.getComponents() %}
-        {% include component.formAssetTemplate ignore missing %}
-    {% endfor %}
 
 {% endblock %}
 
@@ -156,8 +134,8 @@
 
                 {% for component in module.getComponents('BODY') %}
                     {% for item in form[component.id] %}
-                        <li>
-                            <div class="post-component-item item-article">
+                        <li data-order="{{ item.order.vars.value }}">
+                            <div class="post-component-item item-{{ component.id }}">
                                 <div class="post-component-item-widget">{{ component.getForm(item)|raw }}</div>
                                 <div class="post-component-item-controls">
                                     <button type="button" class="btn btn-default item-remove" title="Remove This {{ component.name }}"><i class="fa-times"></i></button>

@@ -3,20 +3,22 @@
 {% block title %}Articles About {{ tag.name }}{% endblock %}
 
 {% block page_title %}
-    {{ tag.name }} Articles
+    {{ tag.name | capitalize }} Articles
 {% endblock %}
 
 {% block head %}
+    {{ parent() }}
+
     {% stylesheets
-    '@LineStormPostBundle/Resources/public/css/post-list.css'
-    filter='cssrewrite' output='compiled/css/post/list.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
+        filter="compass" output="assets/bundles/linestormpost/css/list.css"
+        "@LineStormPostBundle/Resources/assets/sass/list.scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
 
-
 {% block body %}
-    <h1>Tag: {{ tag.name }}</h1>
+    <h1>Tag: {{ tag.name | capitalize }}</h1>
 
     {% if posts|length %}
         <div class="posts-container">

@@ -27,7 +27,17 @@ class GalleryComponent extends AbstractBodyComponent implements ComponentInterfa
     /**
      * @inheritdoc
      */
-    public function getViewTemplate($entity)
+    public function getAssets()
+    {
+        return array(
+            '@LineStormPostBundle/Resources/public/js/post_gallery.js'
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getView($entity)
     {
         return new ComponentView('LineStormPostBundle:Component:Gallery/view.html.twig');
     }
