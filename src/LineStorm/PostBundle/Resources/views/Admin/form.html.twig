@@ -31,7 +31,7 @@
 
         {% set cTotal = 0 %}
         {% for component in module.getComponents('BODY') %}
-        window.contentCounts['{{ component.id|e('js') }}'] = {count: {{ form[component.id]|length }} };
+            window.contentCounts['{{ component.id|e('js') }}'] = {count: {{ form[component.id]|length }} };
         {% set cTotal = cTotal + form[component.id]|length %}
         {% endfor %}
 
@@ -42,7 +42,7 @@
 
     {{
         include('AndyPortfolioBundle::requirejs.html.twig', {
-            requirejs_module: ['/assets/bundles/linestormcms/js/main', '/assets/bundles/linestormpost/js/post']|merge(module.componentAssets)
+            requirejs_module: ['cms_main', 'cms_post']|merge(module.componentAssets)
         })
     }}
 

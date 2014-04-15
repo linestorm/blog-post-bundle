@@ -30,7 +30,7 @@ class GalleryComponent extends AbstractBodyComponent implements ComponentInterfa
     public function getAssets()
     {
         return array(
-            '@LineStormPostBundle/Resources/public/js/gallery.js'
+            '@LineStormPostBundle/Resources/public/js/post_gallery.js'
         );
     }
 

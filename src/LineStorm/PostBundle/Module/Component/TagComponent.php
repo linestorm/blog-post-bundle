@@ -30,7 +30,7 @@ class TagComponent extends AbstractMetaComponent implements ComponentInterface
     public function getAssets()
     {
         return array(
-            '@LineStormPostBundle/Resources/public/js/tag.js'
+            '@LineStormPostBundle/Resources/public/js/post_tag.js'
         );
     }
 

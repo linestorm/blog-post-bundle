@@ -28,15 +28,16 @@ define(['jquery', 'dropzone', 'jckeditor'], function ($, Dropzone, ckeditor) {
                         ;
                     var $form = addForm(dzForm, $(placeholder).data('prototype'), localCount, '__img_name__');
 
-                    $form.find('input[name*="[hash]"]').val(response.hash);
-                    $form.find('input[name*="[src]"]').val(response.src);
+                    $form.find('input[name$="[hash]"]').val(response.hash);
+                    $form.find('input[name$="[src]"]').val(response.src);
 
-                    $form.find('input[name*="[title]"]').val(response.title);
-                    $form.find('input[name*="[description]"]').val(response.description);
-                    $form.find('input[name*="[alt]"]').val(response.alt);
-                    $form.find('input[name*="[seo]"]').val(response.seo);
+                    $form.find('input[name$="[title]"]').val(response.title);
+                    $form.find('textarea[name$="[description]"]').val(response.description);
+                    $form.find('input[name$="[credits]"]').val(response.credits);
+                    $form.find('input[name$="[alt]"]').val(response.alt);
+                    $form.find('input[name$="[seo]"]').val(response.seo);
 
-                    $form.find('input[name*="[order]"]').val(idx);
+                    $form.find('input[name$="[order]"]').val(idx);
                 });
                 this.on("error", function(file, response) {
                     this.removeFile(file);
