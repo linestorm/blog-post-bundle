@@ -12,6 +12,7 @@ This module will provide functionality to post blog type content to the LineStor
 2. Enable the Bundle
 3. Configure the Bundle
 4. Installing Assets
+5. Configuring Assets
 
 Step 1: Download bundle using composer
 --------------------------------------
@@ -21,8 +22,6 @@ Add `linestorm/post-bundle` to your `composer.json` file, or download it by runn
 ```bash
 $ php composer.phar require linestorm/post-bundle
 ```
-
-Composer will install the bundle to your project's vendor/sp directory.
 
 Step 2: Enable the bundle
 -------------------------
@@ -34,8 +33,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new LineStorm\BlogPostBundle\BlogPostBundle(),
-        new LineStorm\MediaBundle\MediaBundle(),
+        new LineStorm\PostBundle\PostBundle(),
     );
 }
 ```
@@ -65,12 +63,35 @@ line_storm_media:
   default_provider: local_storeage
 ```
 
-
 Step 4: Installing Assets
 -------------------------
 
-If you use bower, add the dependencies within bower.json. If you do not, you will need to add them manually into
-web/vendor.
+###Bower
+Add [.bower.json](.bower.json) to the dependencies
+
+###Manual
+Download the modules in [.bower.json](.bower.json) to your assets folder
+
+
+Step 5: Configuring Assets
+-------------------------
+
+You will need to add these dependency paths to your requirejs config:
+
+```js
+requirejs.config({
+    paths: {
+        // ...
+
+        // cms post library
+        cms_post:           '/path/to/bundles/linestormpost/js/post',
+        cms_post_article:   '/path/to/bundles/linestormpost/js/post_article',
+        cms_post_gallery:   '/path/to/bundles/linestormpost/js/post_gallery',
+        cms_post_tag:       '/path/to/bundles/linestormpost/js/post_tag',
+    }
+});
+```
+
 
 Documentation
 =============
