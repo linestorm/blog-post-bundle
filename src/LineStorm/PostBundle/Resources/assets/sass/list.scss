@@ -37,7 +37,25 @@
     }
     .post-details {
         float: left;
+
+        h2.post-header {
+            line-height: 16px;
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .post-preview {
+            margin: 3px 0;
+
+            p {
+                margin: 0;
+                padding: 0;
+                color: #cccccc;
+            }
+        }
     }
+
 }
 
 
@@ -76,7 +94,7 @@
     height: 170px;
     margin: 0;
 
-    :nth-of-type(2) {
+    &:nth-of-type(2) {
         margin-bottom: 20px;
     }
     .post-details {

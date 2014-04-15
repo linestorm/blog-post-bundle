@@ -11,7 +11,12 @@
 {% block head %}
     {{ parent() }}
 
-    <link rel="stylesheet" href="{{ asset(assetsPath ~ '/css/cms/post/list.css') }}" />
+    {% stylesheets
+        filter="compass" output="assets/bundles/linestormpost/css/list.css"
+        "@LineStormPostBundle/Resources/assets/sass/list.scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 
 
