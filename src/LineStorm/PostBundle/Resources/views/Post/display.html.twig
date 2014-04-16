@@ -9,6 +9,14 @@
             })
         }}
     {% endblock %}
+
+    {% stylesheets
+        filter="compass" output="assets/bundles/linestormpost/css/view.css"
+        "@LineStormPostBundle/Resources/assets/sass/view.scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
 {% endblock %}
 
 {% block meta_keywords %}{{ post.metaKeywords }}{% endblock %}
@@ -22,16 +30,12 @@
 
 {% block body %}
     {% if app.user and post.author and (app.user.id == post.author.id or app.user.hasGroup('admin')) %}
-        <div class="pull-right navbar-nav navbar">
+        <div class="pull-right navbar-nav navbar" style="position: absolute; right: 0">
             <a href="{{ path('linestorm_cms_module_post_admin_edit', {id: post.id}) }}" class="btn btn-primary" id="article-edit"><i class="fa-edit"></i> Edit</a>
         </div>
     {% endif %}
-    <style type="text/css">
-        .article-image {
-            width: 100%;
-        }
-    </style>
-    <section class="article">
+
+    <section class="main">
         <article id="article-body blog">
             <div class="content">
 
@@ -39,13 +43,11 @@
 
                 <div class="article-details">
                     <div class="pull-left">
-                        <a class="label label-success" rel="directory" href="{{ url('linestorm_cms_category', {category: post.category.name}) }}">{{ post.category.name }}</a>
-                        {% for tag in post.tags %}
-                            <a class="label label-primary" href="{{ path('linestorm_cms_tag', {tag: tag.name} ) }}" rel="tag">{{ tag.name }}</a>
-                        {% endfor %}
+                        {% include 'LineStormPostBundle:Category:label.html.twig' with {category: post.category} %}
+                        {% include 'LineStormPostBundle:Component/Tag:view.html.twig' with {content: post.tags} %}
                     </div>
                     <div class="pull-right">
-                        By {{ post.author.username }} on
+                        By {{ post.author.username | capitalize }} on
                         <time datetime="{{ post.liveOn | date("Y-m-d\\TH:i:sP") }}"  pubdate="pubdate">{{ post.liveOn | date("F d, Y") }}</time>
                     </div>
                     <div class="clearfix"></div>
@@ -66,11 +68,16 @@
         </article>
     </section>
 
-    <aside>
-        {#
-            Get a list of next articles
-        #}
-        {% include 'LineStormPostBundle:Post:top-ten.html.twig' %}
+    <section class="side">
+        <div class="side-widget">
+            <h3>Related Articles</h3>
+            {% include 'LineStormPostBundle:Post:related.html.twig' with {to: post} %}
+        </div>
 
-    </aside>
+        <div class="side-widget">
+            <h3>Top 10 Articles</h3>
+            {% include 'LineStormPostBundle:Post:top-ten.html.twig' %}
+        </div>
+
+    </section>
 {% endblock %}

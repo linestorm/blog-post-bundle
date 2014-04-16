@@ -38,7 +38,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone
         ++window.contentCounts.components;
 
         return $elementHtml;
-    }
+    };
 
 
     $(document).ready(function(){
@@ -77,7 +77,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone
                         alert(o.message);
                         window.location = o.location;
                     }
-                })
+                });
             }
         });
 
@@ -206,7 +206,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone
                         $form.on('submit', function(){
                             window.lineStorm.api.saveForm($form, function(o){
                                 $categorySelect.append('<option value="'+o.id+'">'+o.name+'</option>').val(o.id);
-                                $modal.modal('hide')
+                                $modal.modal('hide');
                             },function(xhr, state){
                             });
                             return false;

@@ -3,7 +3,7 @@
   xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd" >
-  <mapped-superclass name="LineStorm\PostBundle\Model\Post" table="blog_post">
+  <mapped-superclass name="LineStorm\PostBundle\Model\Post" table="blog_post" repository-class="LineStorm\PostBundle\Entity\PostRepository">
 
     <field name="title" type="string" column="title" length="150" precision="0" scale="0" nullable="false" />
     <field name="createdOn" type="datetime" column="created_on" precision="0" scale="0" nullable="false"/>

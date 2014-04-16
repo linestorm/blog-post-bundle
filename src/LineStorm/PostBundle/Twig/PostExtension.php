@@ -2,22 +2,20 @@
 
 namespace LineStorm\PostBundle\Twig;
 
-use LineStorm\CmsBundle\Module\ModuleManager;
+use LineStorm\PostBundle\Model\Category;
+use LineStorm\PostBundle\Model\Post;
+use LineStorm\PostBundle\Model\Tag;
 use LineStorm\PostBundle\Module\Component\ComponentInterface;
 use LineStorm\PostBundle\Module\PostModule;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class PostExtension
+ *
  * @package LineStorm\PostBundle\Twig
  */
 class PostExtension extends \Twig_Extension
 {
-    /**
-     * @var ModuleManager
-     */
-    private $moduleManager;
-
     /**
      * @var PostModule
      */
@@ -29,14 +27,13 @@ class PostExtension extends \Twig_Extension
     private $container;
 
     /**
-     * @param ModuleManager $moduleManager
-     * @param Container     $container
+     * @param PostModule $postModule
+     * @param Container  $container
      */
-    public function __construct(ModuleManager $moduleManager, Container $container)
+    public function __construct(PostModule $postModule, Container $container)
     {
-        $this->container = $container;
-        $this->moduleManager = $moduleManager;
-        $this->postModule = $this->moduleManager->getModule('post');
+        $this->container  = $container;
+        $this->postModule = $postModule;
     }
 
     /**
@@ -46,7 +43,28 @@ class PostExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('render_post_component_view', array($this, 'renderPostComponentView'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('cms_post_top_ten', array($this, 'getTopTen')),
+            new \Twig_SimpleFunction('cms_post_related', array($this, 'getRelatedPosts')),
         );
+    }
+
+    /**
+     * Get the top 10 posts
+     *
+     * @return Post[]
+     */
+    public function getTopTen()
+    {
+        $modelManager = $this->container->get('linestorm.cms.model_manager');
+
+        return $modelManager->get('post')->findTopTen();
+    }
+
+    public function getRelatedPosts($post)
+    {
+        $modelManager = $this->container->get('linestorm.cms.model_manager');
+
+        return $modelManager->get('post')->findRelated($post);
     }
 
     /**

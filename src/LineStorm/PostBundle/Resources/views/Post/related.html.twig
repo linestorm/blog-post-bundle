@@ -1,0 +1,29 @@
+{% for related_post in cms_post_related(post) %}
+    {% set top_url = url('linestorm_cms_post', {category: related_post.category.name, id: related_post.id, slug: related_post.slug}) %}
+
+    <div class="media">
+        <a class="pull-left" href="{{ top_url }}">
+            <img class="media-object" src="{{ related_post.coverImage.src }}" alt="{{ related_post.coverImage.alt }}">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">
+                <a class="media" href="{{ top_url }}">
+                    {{ related_post.title }}
+                </a>
+            </h4>
+            <p>
+                {% include 'LineStormPostBundle:Category:label.html.twig' with {category: related_post.category} %}
+            </p>
+            <p class=" hidden-xs hidden-sm">
+                {% include 'LineStormPostBundle:Component/Tag:view.html.twig' with {content: related_post.tags} %}
+            </p>
+            <p class="hidden-xs hidden-sm hidden-md">
+                {{ related_post.blurb }}
+            </p>
+        </div>
+    </div>
+
+    {% if not loop.last %}
+        <hr />
+    {% endif %}
+{% endfor %}

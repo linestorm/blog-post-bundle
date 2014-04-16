@@ -32,7 +32,7 @@ services:
   # TWIG POST MODULE
   linestorm.cms.twig.module_post_extension:
     class: LineStorm\PostBundle\Twig\PostExtension
-    arguments: [ @linestorm.cms.module_manager, @service_container ]
+    arguments: [ @linestorm.cms.module.post, @service_container ]
     tags:
       - { name: twig.extension }
 

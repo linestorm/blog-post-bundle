@@ -65,6 +65,8 @@ class PostController extends AbstractApiController implements ClassResourceInter
             $em->persist($post);
             $em->flush();
 
+
+
             $view = View::create(null, 201, array(
                 'location' => $this->generateUrl('linestorm_cms_module_post_api_get_post', array( 'id' => $form->getData()->getId() ))
             ));
