@@ -4,6 +4,7 @@ namespace LineStorm\PostBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use LineStorm\PostBundle\Model\Post;
@@ -65,39 +66,6 @@ class PostRepository extends EntityRepository
      */
     public function findRelated(Post $post)
     {
-        /*
-
-                $em = $this->getEntityManager();
-                $meta = $this->getClassMetadata();
-
-                $tagMeta = $meta->getAssociationMapping('tags');
-                var_dump($tagMeta['joinTable']['name']);
-
-                $sql = "
-                    SELECT
-                        p2.*
-                    FROM
-                        blog_post p
-                        INNER JOIN blog_post_tag bt ON p.id=bt.blogpost_id
-                        INNER JOIN blog_post_tag bt2 ON bt.blogtag_id=bt2.blogtag_id AND bt.blogpost_id <> bt2.blogpost_id
-                        INNER JOIN blog_post p2 ON p2.id = bt2.blogpost_id
-                    WHERE
-                        p.id = ?1
-                    GROUP BY
-                        p2.id
-                ";
-
-                $rsm = new ResultSetMappingBuilder($em);
-                $rsm->addRootEntityFromClassMetadata($this->getClassName(), 'p2');
-
-                $sqlQuery = $em->createNativeQuery($sql, $rsm);
-                $sqlQuery->setParameter(1, $post->getId());
-                $results =  $sqlQuery->getResult();
-
-                var_dump(count($results));
-                die();
-        */
-
         $qb = $this->createQueryBuilder('p');
 
         // get categoty and tags as well
@@ -115,17 +83,23 @@ class PostRepository extends EntityRepository
             'post' => $post,
         ));
 
-        $result = $query->getSingleResult();
-
         $related = new ArrayCollection();
 
-        foreach($result->getTags() as $tag)
+        try
         {
-            foreach($tag->getPosts() as $rPost)
+            $result = $query->getSingleResult();
+            foreach($result->getTags() as $tag)
             {
-                if(!$related->contains($rPost))
-                    $related[] = $rPost;
+                foreach($tag->getPosts() as $rPost)
+                {
+                    if(!$related->contains($rPost))
+                        $related[] = $rPost;
+                }
             }
+        }
+        catch(NoResultException $e)
+        {
+            // just return an empty collection
         }
 
         return $related;
