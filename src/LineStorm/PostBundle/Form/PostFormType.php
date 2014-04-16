@@ -25,7 +25,7 @@ class PostFormType extends AbstractCmsFormType
             ->add('liveOn', 'datetime', array(
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
-                'data'        => new \DateTime(),
+                'empty_data'  => new \DateTime(),
             ))
             ->add('category', 'entity', array(
                 'class'    => $this->modelManager->getEntityClass('category'),

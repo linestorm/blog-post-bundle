@@ -51,6 +51,11 @@
                         <time datetime="{{ post.liveOn | date("Y-m-d\\TH:i:sP") }}"  pubdate="pubdate">{{ post.liveOn | date("F d, Y") }}</time>
                     </div>
                     <div class="clearfix"></div>
+                    <div>
+                        <p>
+                            {{ include('LineStormPostBundle::social.html.twig') }}
+                        </p>
+                    </div>
                 </div>
 
                 <hr />

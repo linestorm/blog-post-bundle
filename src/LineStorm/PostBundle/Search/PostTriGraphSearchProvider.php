@@ -26,6 +26,14 @@ class PostTriGraphSearchProvider extends TriGraphSearchProvider implements Searc
     /**
      * @inheritdoc
      */
+    public function getTriGraph()
+    {
+        return 'trigraph_post';
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function queryBuilder(QueryBuilder $qb, $alias)
     {
         $qb->addSelect('c')
@@ -62,14 +70,6 @@ class PostTriGraphSearchProvider extends TriGraphSearchProvider implements Searc
                 )
             );
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getTriGraph()
-    {
-        return 'trigraph_post';
     }
 
     /**
