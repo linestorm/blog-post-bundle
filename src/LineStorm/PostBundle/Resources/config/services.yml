@@ -4,7 +4,8 @@ parameters:
   linestorm.cms.module.post.gallery.class:     LineStorm\PostBundle\Module\Component\GalleryComponent
   linestorm.cms.module.post.tag.class:         LineStorm\PostBundle\Module\Component\TagComponent
 
-  linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostTriGraphSearchProvider
+  # linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostTriGraphSearchProvider
+  linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostFullTextSearchProvider
 
 services:
   linestorm.cms.module.post:
