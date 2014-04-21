@@ -18,7 +18,7 @@ class PostFullTextSearchProvider extends FullTextSearchProvider implements Searc
     /**
      * @inheritdoc
      */
-    public function getName()
+    public function getModel()
     {
         return 'post';
     }
@@ -26,9 +26,9 @@ class PostFullTextSearchProvider extends FullTextSearchProvider implements Searc
     /**
      * @inheritdoc
      */
-    public function getTriGraph()
+    public function getIndexModel()
     {
-        return 'trigraph_post';
+        return 'search_fulltext_post';
     }
 
     /**
@@ -37,10 +37,12 @@ class PostFullTextSearchProvider extends FullTextSearchProvider implements Searc
     public function queryBuilder(QueryBuilder $qb, $alias)
     {
         $qb->addSelect('c')
-            ->join($alias.'.category', 'c');
+            ->join($alias.'.category', 'c')
+            ->addGroupBy('c.id');
 
         $qb->addSelect('ta')
-            ->join($alias.'.tags', 'ta');
+            ->join($alias.'.tags', 'ta')
+            ->addGroupBy('ta.id');
     }
 
     /**
@@ -70,31 +72,6 @@ class PostFullTextSearchProvider extends FullTextSearchProvider implements Searc
                 )
             );
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getIndexFields()
-    {
-        return array(
-            'title' => null,
-            'articles' => array(
-                'body'
-            ),
-            'galleries' => array(
-                'body'
-            ),
-            'polls' => array(
-                'body'
-            ),
-            'category' => array(
-                'name'
-            ),
-            'tags' => array(
-                'name'
-            )
-        );
     }
 
 

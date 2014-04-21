@@ -4,7 +4,7 @@ namespace LineStorm\PostBundle\Search;
 
 use Andy\PortfolioBundle\Entity\BlogPost;
 use Doctrine\ORM\QueryBuilder;
-use LineStorm\SearchBundle\Search\Provider\TriGraphSearchProvider;
+use LineStorm\SearchBundle\Search\Provider\SolrSearchProvider;
 use LineStorm\SearchBundle\Search\SearchProviderInterface;
 
 /**
@@ -12,7 +12,7 @@ use LineStorm\SearchBundle\Search\SearchProviderInterface;
  *
  * @package LineStorm\PostBundle\Search
  */
-class PostTriGraphSearchProvider extends TriGraphSearchProvider implements SearchProviderInterface
+class PostSolrSearchProvider extends SolrSearchProvider implements SearchProviderInterface
 {
 
     /**
@@ -26,9 +26,9 @@ class PostTriGraphSearchProvider extends TriGraphSearchProvider implements Searc
     /**
      * @inheritdoc
      */
-    public function getTriGraphModel()
+    public function getIndexModel()
     {
-        return 'search_trigraph_post';
+        return 'search_fulltext_post';
     }
 
     /**
@@ -37,10 +37,12 @@ class PostTriGraphSearchProvider extends TriGraphSearchProvider implements Searc
     public function queryBuilder(QueryBuilder $qb, $alias)
     {
         $qb->addSelect('c')
-            ->join($alias.'.category', 'c');
+            ->join($alias.'.category', 'c')
+            ->addGroupBy('c.id');
 
         $qb->addSelect('ta')
-            ->join($alias.'.tags', 'ta');
+            ->join($alias.'.tags', 'ta')
+            ->addGroupBy('ta.id');
     }
 
     /**
