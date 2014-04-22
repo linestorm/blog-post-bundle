@@ -73,6 +73,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone
         $('.post-form-delete').on('click', function(){
             if(confirm("Are you sure you want to permanently delete this post?")){
                 window.lineStorm.api.call($(this).data('url'), {
+                    method: 'DELETE',
                     success: function(o){
                         alert(o.message);
                         window.location = o.location;

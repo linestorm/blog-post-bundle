@@ -4,7 +4,9 @@ parameters:
   linestorm.cms.module.post.gallery.class:     LineStorm\PostBundle\Module\Component\GalleryComponent
   linestorm.cms.module.post.tag.class:         LineStorm\PostBundle\Module\Component\TagComponent
 
-  linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostTriGraphSearchProvider
+  # linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostTriGraphSearchProvider
+  # linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostFullTextSearchProvider
+  linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostSolrSearchProvider
 
 services:
   linestorm.cms.module.post:
@@ -43,4 +45,6 @@ services:
   linestorm.cms.module.post.search_provider:
     class: %linestorm.cms.module.post.search_provider.class%
     tags:
-      - { name: linestorm.cms.module.search.provider }
+      - { name: linestorm.cms.module.search.provider, map: post }
+    calls:
+      - [ 'setSolr', [@solr.client.default]]
