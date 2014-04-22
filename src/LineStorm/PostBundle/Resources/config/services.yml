@@ -46,5 +46,11 @@ services:
     class: %linestorm.cms.module.post.search_provider.class%
     tags:
       - { name: linestorm.cms.module.search.provider, map: post }
-    calls:
-      - [ 'setSolr', [@solr.client.default]]
+
+
+#  linestorm.cms.module.post.search_provider:
+#    class: %linestorm.cms.module.post.search_provider.class%
+#    tags:
+#      - { name: linestorm.cms.module.search.provider, map: post }
+#    calls:
+#      - [ 'setSolr', [@solr.client.default]]
