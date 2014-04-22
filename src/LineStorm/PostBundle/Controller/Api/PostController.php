@@ -102,9 +102,13 @@ class PostController extends AbstractApiController implements ClassResourceInter
             $postSearchProvider = $searchManager->get('post');
             $postSearchProvider->index($post);
 
-            $view = View::create(null, 201, array(
+            $locationPage = array(
+                'location' => $this->generateUrl('linestorm_cms_module_post_admin_edit', array( 'id' => $form->getData()->getId() ))
+            );
+            $location = array(
                 'location' => $this->generateUrl('linestorm_cms_module_post_api_get_post', array( 'id' => $form->getData()->getId() ))
-            ));
+            );
+            $view = View::create($locationPage, 201, array( 'location' => $location ));
         } else {
             $view = View::create($form);
         }

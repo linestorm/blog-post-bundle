@@ -49,6 +49,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone
             window.lineStorm.api.saveForm($(this), function(on, status, xhr){
                 if(xhr.status === 200){
                 } else if(xhr.status === 201) {
+                    window.location = on.location;
                 } else {
                 }
             }, function(e, status, ex){

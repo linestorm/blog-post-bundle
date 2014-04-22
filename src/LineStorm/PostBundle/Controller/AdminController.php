@@ -76,7 +76,10 @@ class AdminController extends Controller
         $moduleManager = $this->get('linestorm.cms.module_manager');
         $module        = $moduleManager->getModule('post');
 
-        $form = $this->createForm('linestorm_cms_form_post', null, array(
+        $modelManager = $this->get('linestorm.cms.model_manager');
+        $post = $modelManager->create('post');
+
+        $form = $this->createForm('linestorm_cms_form_post', $post, array(
             'action' => $this->generateUrl('linestorm_cms_module_post_api_post_post'),
             'method' => 'POST',
         ));

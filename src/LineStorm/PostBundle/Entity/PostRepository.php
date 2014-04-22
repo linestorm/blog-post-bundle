@@ -76,7 +76,7 @@ class PostRepository extends EntityRepository
            ->join('t.posts',  'p2', Join::WITH, 'p.id != p2.id');
 
         $qb->andWhere('p = :post')
-           ->andWhere('p.liveOn < :now');
+           ->andWhere('p2.liveOn < :now');
 
         $qb->groupBy('p2');
 

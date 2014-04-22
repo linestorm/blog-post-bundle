@@ -114,6 +114,10 @@ abstract class Post
         $this->tags = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->galleries = new ArrayCollection();
+
+        $now = new \DateTime();
+        $this->liveOn = $now;
+        $this->createdOn = $now;
     }
 
     /**
