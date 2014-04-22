@@ -4,6 +4,8 @@
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
     <class name="LineStorm\PostBundle\Model\Post">
+
+
       <property name="title">
         <constraint name="NotNull" />
         <constraint name="Length">
