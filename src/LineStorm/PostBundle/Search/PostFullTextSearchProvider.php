@@ -37,7 +37,7 @@ class PostFullTextSearchProvider extends FullTextSearchProvider implements Searc
     public function queryBuilder(QueryBuilder $qb, $alias)
     {
         $now = new \DateTime();
-        $qb->andWhere($alias.'liveOn < :now')
+        $qb->andWhere($alias.'.liveOn < :now')
             ->setParameter('now', $now);
 
         $qb->addSelect('c')

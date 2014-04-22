@@ -54,7 +54,7 @@ class PostRepository extends EntityRepository
         $qb->join('p.category', 'c')
            ->join('p.tags', 't')
            ->join('p.coverImage', 'i')
-           ->where('p.liveOn < :now')
+           ->andwhere('p.liveOn < :now')
            ->setParameter('now', new \DateTime());
 
         $query = $qb->getQuery()->setMaxResults(10);
@@ -76,7 +76,8 @@ class PostRepository extends EntityRepository
            ->join('t.posts',  'p2', Join::WITH, 'p.id != p2.id');
 
         $qb->andWhere('p = :post')
-           ->andWhere('p2.liveOn < :now');
+           ->andWhere('p2.liveOn < :now')
+           ->andWhere('p.liveOn  < :now');
 
         $qb->groupBy('p2');
 
