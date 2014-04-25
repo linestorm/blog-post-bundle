@@ -3,7 +3,6 @@ var contentCounts = contentCounts || {};
 
 define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone, api) {
 
-
     // setup dropzone
     Dropzone.autoDiscover = false;
 

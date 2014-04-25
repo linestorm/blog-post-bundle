@@ -5,7 +5,7 @@
     {% block requirejs %}
         {{
             include('AndyPortfolioBundle::requirejs.html.twig', {
-                requirejs_module: ['app/main']|merge(module.componentViewAssets)
+                requirejs_module: ['app/main', 'ace/ace']|merge(module.componentViewAssets)
             })
         }}
     {% endblock %}
@@ -17,6 +17,12 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
+    <link rel="stylesheet" href="//yandex.st/highlightjs/8.0/styles/default.min.css">
+    <script type="text/javascript">
+       require(['highlightjs'], function(hjs){
+
+       });
+    </script>
 {% endblock %}
 
 {% block meta_keywords %}{{ post.metaKeywords }}{% endblock %}

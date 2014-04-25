@@ -1,4 +1,11 @@
+
+
 define(['jquery', 'jckeditor'], function ($, ckeditor) {
+
+    CKEDITOR.config.customConfig = window.lineStormTags.assets.path+'/bundles/linestormpost/js/ckeditor/config.js';
+
+    CKEDITOR.plugins.addExternal( 'pbckcode', window.lineStormTags.assets.path+'/vendor/PBCKCode/' );
+    CKEDITOR.plugins.addExternal( 'at-code', window.lineStormTags.assets.path+'/bundles/linestormpost/js/ckeditor/plugins/at-code/' );
 
     $(document).on('widget-init', '.item-articles', function(){
 
@@ -6,7 +13,6 @@ define(['jquery', 'jckeditor'], function ($, ckeditor) {
         $(this).find('textarea.ckeditor-textarea').ckeditor().focus();
 
     });
-
 
     // add ckeditor to all the pre-loaded articles
     $('.post-component-item.item-articles').each(function(){
