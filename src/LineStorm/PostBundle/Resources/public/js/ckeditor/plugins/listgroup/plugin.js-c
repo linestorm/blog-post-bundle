@@ -1,0 +1,26 @@
+// Register the plugin within the editor.
+CKEDITOR.plugins.add('listgroup', {
+
+    lang: 'en',
+    requires: 'widget',
+    icons: 'listgroup',
+
+    init: function (editor) {
+
+        editor.ui.addButton('ListGroup', {
+            label: 'Create a list group',
+            command: 'listgroup',
+            toolbar: 'bootstrap,4'
+        });
+
+        editor.addCommand( 'listgroup', {
+            exec : function( editor )
+            {
+                var timestamp = new Date();
+                editor.insertHtml( '<ul class="list-group">' +
+                    '<li class="list-group-item"></li>' +
+                '</ul>' );
+            }
+        });
+    }
+});

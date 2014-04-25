@@ -8,36 +8,42 @@ CKEDITOR.editorConfig = function( config ) {
     // For the complete reference:
     // http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
+    // config.skin = 'BootstrapCK-Skin';
+
     // The toolbar groups arrangement, optimized for two toolbar rows.
     config.toolbarGroups = [
         { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
         { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
         { name: 'links' },
-        { name: 'insert' },
+        { name: 'insert',       groups: [ 'featurette', 'jumbotron' ] },
         { name: 'forms' },
         { name: 'tools' },
         { name: 'document',    groups: [ 'mode', 'document', 'doctools' ] },
         { name: 'pbckcode' } ,
         '/',
+        { name: 'bootstrap' },
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
         { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
         { name: 'colors' },
+        { name: 'styles' },
         { name: 'others' }
     ];
 
     // Remove some buttons, provided by the standard plugins, which we don't
     // need to have in the Standard(s) toolbar.
-    config.removeButtons = 'Underline,Subscript,Superscript,Help,Maximize';
+    config.removeButtons = 'Subscript,Superscript,About,Maximize';
 
     config.removePlugins = 'elementspath';
 
-    config.extraPlugins = 'autogrow,pbckcode';
+    config.extraPlugins = 'autogrow,pbckcode,linestorm-media,carousel,featurette,jumbotron,trifold,listgroup,badge';
+
+    config.contentsCss = window.lineStormTags.assets.path+'/css/main.css';
 
     // ADVANCED CONTENT FILTER (ACF)
     // ACF protects your CKEditor instance of adding unofficial tags
     // however it strips out the pre tag of pbckcode plugin
     // add this rule to enable it, useful when you want to re edit a post
-    config.allowedContent= true;//'pre[*]{*}(*)'; // add other rules here
+    config.allowedContent = true;//'pre[*]{*}(*)'; // add other rules here
 
     config.scayt_autoStartup = true;
 

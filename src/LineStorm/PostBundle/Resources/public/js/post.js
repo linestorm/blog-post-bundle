@@ -1,7 +1,7 @@
 
 var contentCounts = contentCounts || {};
 
-define(['jquery', 'jqueryui', 'dropzone', '@LineStormPostBundle/Resources/public/js/view'], function ($, $ui, Dropzone, api) {
+define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone, api) {
 
     // setup dropzone
     Dropzone.autoDiscover = false;

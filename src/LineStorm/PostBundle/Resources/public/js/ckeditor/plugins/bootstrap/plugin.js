@@ -1,15 +1,21 @@
-CKEDITOR.plugins.add( 'at-code',
+CKEDITOR.plugins.add( 'bootstrap',
 {
     icons: 'source',
     init: function( editor )
     {
-        editor.ui.addButton( 'Code',
+        editor.addCommand( 'bootstrapRow', new CKEDITOR.dialogCommand( 'bootstrapRow' ) );
+        editor.ui.addButton( 'Bootstrap',
         {
-            label: 'Insert Code',
-            command: 'insertCode',
+            label: 'Insert Bootstrap Row',
+            command: 'bootstrapRow',
             toolbar: 'insert'
         });
 
+        editor.config.allowedContent = true;
+
+        CKEDITOR.dialog.add( 'bootstrapRow', this.path + 'dialogs/bootstrap.js' );
+
+        /*
         editor.addCommand( 'insertCode',
         {
             exec : function( editor )
@@ -25,7 +31,7 @@ CKEDITOR.plugins.add( 'at-code',
 
 
             }
-        });
+        });*/
     }
 
 });
