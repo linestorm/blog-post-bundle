@@ -1,14 +1,15 @@
 {% extends 'LineStormCmsBundle::layout.html.twig' %}
 {% set page = 'blog' %}
 
+{% block requirejs %}
+    {{
+        include('LineStormCmsBundle::requirejs.html.twig', {
+            requirejs_module: ['app/main', 'cms_post_view']|merge(module.componentViewAssets)
+        })
+    }}
+{% endblock %}
+
 {% block head %}
-    {% block requirejs %}
-        {{
-            include('AndyPortfolioBundle::requirejs.html.twig', {
-                requirejs_module: ['app/main', 'ace/ace']|merge(module.componentViewAssets)
-            })
-        }}
-    {% endblock %}
 
     {% stylesheets
         filter="compass" output="assets/bundles/linestormpost/css/view.css"
@@ -17,12 +18,8 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
-    <link rel="stylesheet" href="//yandex.st/highlightjs/8.0/styles/default.min.css">
-    <script type="text/javascript">
-       require(['highlightjs'], function(hjs){
+    <link rel="stylesheet" href="/{{ assetsPath }}/vendor/highlightjs/styles/github.css">
 
-       });
-    </script>
 {% endblock %}
 
 {% block meta_keywords %}{{ post.metaKeywords }}{% endblock %}

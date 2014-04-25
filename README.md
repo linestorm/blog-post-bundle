@@ -88,6 +88,7 @@ requirejs.config({
         cms_post_article:   '/path/to/bundles/linestormpost/js/post_article',
         cms_post_gallery:   '/path/to/bundles/linestormpost/js/post_gallery',
         cms_post_tag:       '/path/to/bundles/linestormpost/js/post_tag',
+        cms_post_view:      '/path/to/bundles/linestormpost/js/view',
     }
 });
 ```
