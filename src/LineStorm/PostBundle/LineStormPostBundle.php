@@ -13,7 +13,7 @@ class LineStormPostBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new ComponentCompilerPass());
+        //$container->addCompilerPass(new ComponentCompilerPass());
 
         $modelDir = realpath(__DIR__.'/Resources/config/model/doctrine');
         $mappings = array(

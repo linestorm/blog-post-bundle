@@ -31,19 +31,4 @@
 
     </class>
 
-    <class name="LineStorm\PostBundle\Model\PostGallery">
-      <property name="images">
-        <constraint name="Count">
-          <option name="min">2</option>
-          <option name="minMessage">You must have at least {{ limit }} images in a gallery</option>
-        </constraint>
-      </property>
-
-      <property name="body">
-        <constraint name="NotNull">
-          <option name="message">A body must be added</option>
-        </constraint>
-      </property>
-    </class>
-
 </constraint-mapping>

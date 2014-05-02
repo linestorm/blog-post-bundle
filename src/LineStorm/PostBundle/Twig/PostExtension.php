@@ -2,10 +2,8 @@
 
 namespace LineStorm\PostBundle\Twig;
 
-use LineStorm\PostBundle\Model\Category;
 use LineStorm\PostBundle\Model\Post;
-use LineStorm\PostBundle\Model\Tag;
-use LineStorm\PostBundle\Module\Component\ComponentInterface;
+use LineStorm\Content\Component\ComponentInterface;
 use LineStorm\PostBundle\Module\PostModule;
 use Symfony\Component\DependencyInjection\Container;
 

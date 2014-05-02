@@ -2,10 +2,8 @@
 
 namespace LineStorm\PostBundle\Module;
 
-use LineStorm\CmsBundle\Module\AbstractModule;
 use LineStorm\CmsBundle\Module\ModuleInterface;
-use LineStorm\PostBundle\Module\Component\AbstractComponent;
-use LineStorm\PostBundle\Module\Component\ComponentInterface;
+use LineStorm\Content\Module\AbstractContentModule;
 use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -13,107 +11,10 @@ use Symfony\Component\Routing\RouteCollection;
  * Class PostModule
  * @package LineStorm\PostBundle\Module
  */
-class PostModule extends AbstractModule implements ModuleInterface
+class PostModule extends AbstractContentModule implements ModuleInterface
 {
     protected $name = 'Post';
     protected $id = 'post';
-
-    /**
-     * @var ComponentInterface[]
-     */
-    private $components = array();
-
-    /**
-     * @param $componentId
-     * @return $this
-     */
-    public function removeComponent($componentId)
-    {
-        unset($this->components[$componentId]);
-
-        return $this;
-    }
-
-    /**
-     * @param $componentId
-     * @return ComponentInterface
-     */
-    public function getComponent($componentId)
-    {
-        if (array_key_exists($componentId, $this->components))
-            return $this->components[$componentId];
-        else
-            return null;
-    }
-
-    /**
-     * @param null $type
-     * @return Component\ComponentInterface[]
-     */
-    public function getComponents($type=null)
-    {
-        if($type === null)
-        {
-            return $this->components;
-        }
-        else
-        {
-            $components = array();
-            foreach($this->components as $component)
-            {
-                if($component->getType() === AbstractComponent::strToType($type))
-                {
-                    $components[] = $component;
-                }
-            }
-
-            return $components;
-        }
-    }
-
-    /**
-     * @param array $components
-     * @return $this
-     */
-    public function setComponents(array $components)
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ComponentInterface $component
-     * @return $this
-     */
-    public function addComponent(ComponentInterface $component)
-    {
-        $this->components[$component->getId()] = $component;
-
-        return $this;
-    }
-
-    public function getComponentAssets()
-    {
-        $assets = array();
-        foreach ($this->components as $component) {
-            $assets = array_merge_recursive($assets, $component->getAssets());
-        }
-
-        return $assets;
-    }
-
-    public function getComponentViewAssets()
-    {
-        $assets = array();
-        foreach ($this->components as $component) {
-            $assets = array_merge_recursive($assets, $component->getViewAssets());
-        }
-
-        return $assets;
-    }
 
     /**
      * Returns the navigation array
@@ -129,7 +30,7 @@ class PostModule extends AbstractModule implements ModuleInterface
     }
 
     /**
-     * Thr route to load as 'home'
+     * The route to load as 'home'
      *
      * @return string
      */

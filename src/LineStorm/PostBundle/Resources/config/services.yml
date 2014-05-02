@@ -1,8 +1,5 @@
 parameters:
   linestorm.cms.module.post.class:             LineStorm\PostBundle\Module\PostModule
-  linestorm.cms.module.post.article.class:     LineStorm\PostBundle\Module\Component\ArticleComponent
-  linestorm.cms.module.post.gallery.class:     LineStorm\PostBundle\Module\Component\GalleryComponent
-  linestorm.cms.module.post.tag.class:         LineStorm\PostBundle\Module\Component\TagComponent
 
   linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostTriGraphSearchProvider
   # linestorm.cms.module.post.search_provider.class: LineStorm\PostBundle\Search\PostFullTextSearchProvider
@@ -13,22 +10,7 @@ services:
     class: %linestorm.cms.module.post.class%
     tags:
       - { name: linestorm.cms.module }
-
-  linestorm.cms.module.post.component.article:
-    class: %linestorm.cms.module.post.article.class%
-    tags:
-      - { name: linestorm.cms.module.post.component }
-
-  linestorm.cms.module.post.component.gallery:
-    class: %linestorm.cms.module.post.gallery.class%
-    tags:
-      - { name: linestorm.cms.module.post.component }
-
-  linestorm.cms.module.post.component.tag:
-    class: %linestorm.cms.module.post.tag.class%
-    tags:
-      - { name: linestorm.cms.module.post.component }
-
+      - { name: linestorm.content.component_module }
 
   #
   # TWIG POST MODULE
@@ -38,15 +20,12 @@ services:
     tags:
       - { name: twig.extension }
 
-
-
   #
   # SEARCH PROVIDERS
   linestorm.cms.module.post.search_provider:
     class: %linestorm.cms.module.post.search_provider.class%
     tags:
       - { name: linestorm.cms.module.search.provider, map: post }
-
 
 #  linestorm.cms.module.post.search_provider:
 #    class: %linestorm.cms.module.post.search_provider.class%

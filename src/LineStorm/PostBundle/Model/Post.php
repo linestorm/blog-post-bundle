@@ -5,6 +5,8 @@ namespace LineStorm\PostBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use LineStorm\ArticleComponentBundle\Model\Article;
+use LineStorm\GalleryComponentBundle\Model\Gallery;
 use LineStorm\MediaBundle\Model\Media;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -72,12 +74,12 @@ abstract class Post
     protected $deletedBy;
 
     /**
-     * @var PostArticle[]
+     * @var Article[]
      */
     protected $articles;
 
     /**
-     * @var PostGallery[]
+     * @var Gallery[]
      */
     protected $galleries;
 
@@ -408,10 +410,10 @@ abstract class Post
     /**
      * Add articles
      *
-     * @param PostArticle $articles
+     * @param Article $articles
      * @return Post
      */
-    public function addArticle(PostArticle $articles)
+    public function addArticle(Article $articles)
     {
         $this->articles[] = $articles;
         $articles->setPost($this);
@@ -422,9 +424,9 @@ abstract class Post
     /**
      * Remove articles
      *
-     * @param PostArticle $articles
+     * @param Article $articles
      */
-    public function removeArticle(PostArticle $articles)
+    public function removeArticle(Article $articles)
     {
         $this->articles->removeElement($articles);
     }
@@ -439,7 +441,7 @@ abstract class Post
         return $this->articles;
     }
 
-    public function hasArticle(PostArticle $article = null)
+    public function hasArticle(Article $article = null)
     {
         return $this->articles->contains($article);
     }
@@ -447,10 +449,10 @@ abstract class Post
     /**
      * Add galleries
      *
-     * @param PostGallery $galleries
+     * @param Gallery $galleries
      * @return Post
      */
-    public function addGallery(PostGallery $galleries)
+    public function addGallery(Gallery $galleries)
     {
         $this->galleries[] = $galleries;
         $galleries->setPost($this);
@@ -461,9 +463,9 @@ abstract class Post
     /**
      * Remove galleries
      *
-     * @param PostGallery $galleries
+     * @param Gallery $galleries
      */
-    public function removeGallery(PostGallery $galleries)
+    public function removeGallery(Gallery $galleries)
     {
         $this->galleries->removeElement($galleries);
     }
