@@ -47,7 +47,7 @@
                 <div class="article-details">
                     <div class="pull-left">
                         {% include 'LineStormPostBundle:Category:label.html.twig' with {category: post.category} %}
-                        {% include 'LineStormPostBundle:Component/Tag:view.html.twig' with {content: post.tags} %}
+                        {% include 'LineStormTagComponentBundle::view.html.twig' with {content: post.tags} %}
                     </div>
                     <div class="pull-right">
                         By {{ post.author.username | capitalize }} on

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use LineStorm\ArticleComponentBundle\Model\Article;
 use LineStorm\GalleryComponentBundle\Model\Gallery;
 use LineStorm\MediaBundle\Model\Media;
+use LineStorm\TagComponentBundle\Model\Tag;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class Post
