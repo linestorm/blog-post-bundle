@@ -6,12 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use LineStorm\ArticleComponentBundle\Model\Article;
-use LineStorm\GalleryComponentBundle\Model\Gallery;
+use LineStorm\Content\Model\ContentNodeInterface;
 use LineStorm\MediaBundle\Model\Media;
 use LineStorm\TagComponentBundle\Model\Tag;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-abstract class Post
+abstract class Post implements ContentNodeInterface
 {
     /*
      * TODO:
@@ -80,11 +80,6 @@ abstract class Post
     protected $articles;
 
     /**
-     * @var Gallery[]
-     */
-    protected $galleries;
-
-    /**
      * @var string
      */
     protected $slug;
@@ -116,7 +111,6 @@ abstract class Post
     {
         $this->tags = new ArrayCollection();
         $this->articles = new ArrayCollection();
-        $this->galleries = new ArrayCollection();
 
         $now = new \DateTime();
         $this->liveOn = $now;
@@ -143,6 +137,12 @@ abstract class Post
     {
         return $this->slug ?: strtolower(str_replace(' ', '-', $this->title));
     }
+
+    /**
+     * Get the raw slug value
+     *
+     * @return string
+     */
     public function getRealSlug()
     {
         return $this->slug;
@@ -378,7 +378,7 @@ abstract class Post
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getTags()
     {
@@ -417,7 +417,7 @@ abstract class Post
     public function addArticle(Article $articles)
     {
         $this->articles[] = $articles;
-        $articles->setPost($this);
+        $articles->setContentNode($this);
 
         return $this;
     }
@@ -435,7 +435,7 @@ abstract class Post
     /**
      * Get articles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getArticles()
     {
@@ -445,40 +445,6 @@ abstract class Post
     public function hasArticle(Article $article = null)
     {
         return $this->articles->contains($article);
-    }
-
-    /**
-     * Add galleries
-     *
-     * @param Gallery $galleries
-     * @return Post
-     */
-    public function addGallery(Gallery $galleries)
-    {
-        $this->galleries[] = $galleries;
-        $galleries->setPost($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove galleries
-     *
-     * @param Gallery $galleries
-     */
-    public function removeGallery(Gallery $galleries)
-    {
-        $this->galleries->removeElement($galleries);
-    }
-
-    /**
-     * Get galleries
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGalleries()
-    {
-        return $this->galleries;
     }
 
     /**
