@@ -228,7 +228,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone
 
         $titleInput.on('keyup', function(){
             if(!hasSlugChanged){
-                $slugInput.val(this.value.replace(/[^\w\d\s-]/g, '').replace(/\s+/g, '-'));
+                $slugInput.val(this.value.replace(/[^\w\d\s-]/g, '').replace(/\s+/g, '-').toLowerCase());
             }
         });
         $slugInput.on('keyup', function(){
