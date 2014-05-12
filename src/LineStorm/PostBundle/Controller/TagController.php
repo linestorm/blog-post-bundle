@@ -3,7 +3,7 @@
 namespace LineStorm\PostBundle\Controller;
 
 use Doctrine\ORM\Query;
-use LineStorm\PostBundle\Model\Tag;
+use LineStorm\TagComponentBundle\Model\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class TagController extends Controller
