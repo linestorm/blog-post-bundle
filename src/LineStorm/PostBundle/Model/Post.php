@@ -5,10 +5,13 @@ namespace LineStorm\PostBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use LineStorm\ArticleComponentBundle\Model\Article;
+use LineStorm\Content\Model\ContentNodeInterface;
 use LineStorm\MediaBundle\Model\Media;
+use LineStorm\TagComponentBundle\Model\Tag;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-abstract class Post
+abstract class Post implements ContentNodeInterface
 {
     /*
      * TODO:
@@ -72,14 +75,9 @@ abstract class Post
     protected $deletedBy;
 
     /**
-     * @var PostArticle[]
+     * @var Article[]
      */
     protected $articles;
-
-    /**
-     * @var PostGallery[]
-     */
-    protected $galleries;
 
     /**
      * @var string
@@ -113,7 +111,6 @@ abstract class Post
     {
         $this->tags = new ArrayCollection();
         $this->articles = new ArrayCollection();
-        $this->galleries = new ArrayCollection();
 
         $now = new \DateTime();
         $this->liveOn = $now;
@@ -140,6 +137,12 @@ abstract class Post
     {
         return $this->slug ?: strtolower(str_replace(' ', '-', $this->title));
     }
+
+    /**
+     * Get the raw slug value
+     *
+     * @return string
+     */
     public function getRealSlug()
     {
         return $this->slug;
@@ -375,7 +378,7 @@ abstract class Post
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getTags()
     {
@@ -408,13 +411,13 @@ abstract class Post
     /**
      * Add articles
      *
-     * @param PostArticle $articles
+     * @param Article $articles
      * @return Post
      */
-    public function addArticle(PostArticle $articles)
+    public function addArticle(Article $articles)
     {
         $this->articles[] = $articles;
-        $articles->setPost($this);
+        $articles->setContentNode($this);
 
         return $this;
     }
@@ -422,9 +425,9 @@ abstract class Post
     /**
      * Remove articles
      *
-     * @param PostArticle $articles
+     * @param Article $articles
      */
-    public function removeArticle(PostArticle $articles)
+    public function removeArticle(Article $articles)
     {
         $this->articles->removeElement($articles);
     }
@@ -432,50 +435,16 @@ abstract class Post
     /**
      * Get articles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getArticles()
     {
         return $this->articles;
     }
 
-    public function hasArticle(PostArticle $article = null)
+    public function hasArticle(Article $article = null)
     {
         return $this->articles->contains($article);
-    }
-
-    /**
-     * Add galleries
-     *
-     * @param PostGallery $galleries
-     * @return Post
-     */
-    public function addGallery(PostGallery $galleries)
-    {
-        $this->galleries[] = $galleries;
-        $galleries->setPost($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove galleries
-     *
-     * @param PostGallery $galleries
-     */
-    public function removeGallery(PostGallery $galleries)
-    {
-        $this->galleries->removeElement($galleries);
-    }
-
-    /**
-     * Get galleries
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGalleries()
-    {
-        return $this->galleries;
     }
 
     /**

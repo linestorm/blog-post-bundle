@@ -26,12 +26,5 @@ class LineStormPostExtension extends Extension
         $loader->load('services.yml');
         $loader->load('services-form-types.yml');
 
-        $xmlLoader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-
-        $xmlLoader->load('orm.xml');
-
-        $container->getDefinition('linestorm.cms.module.post.model.post.listener')->addTag('doctrine.event_subscriber');
-        $container->getDefinition('linestorm.cms.module.post.model.tag.listener')->addTag('doctrine.event_subscriber');
-
     }
 }

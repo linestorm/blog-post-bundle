@@ -1,7 +1,7 @@
 
 var contentCounts = contentCounts || {};
 
-define(['jquery', 'jqueryui', 'dropzone', '@LineStormPostBundle/Resources/public/js/view'], function ($, $ui, Dropzone, api) {
+define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone, api) {
 
     // setup dropzone
     Dropzone.autoDiscover = false;
@@ -228,7 +228,7 @@ define(['jquery', 'jqueryui', 'dropzone', '@LineStormPostBundle/Resources/public
 
         $titleInput.on('keyup', function(){
             if(!hasSlugChanged){
-                $slugInput.val(this.value.replace(/[^\w\d\s-]/g, '').replace(/\s+/g, '-'));
+                $slugInput.val(this.value.replace(/[^\w\d\s-]/g, '').replace(/\s+/g, '-').toLowerCase());
             }
         });
         $slugInput.on('keyup', function(){

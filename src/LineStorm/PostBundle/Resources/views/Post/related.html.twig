@@ -17,7 +17,7 @@
                     {% include 'LineStormPostBundle:Category:label.html.twig' with {category: related_post.category} %}
                 </p>
                 <p class=" hidden-xs hidden-sm">
-                    {% include 'LineStormPostBundle:Component/Tag:view.html.twig' with {content: related_post.tags} %}
+                    {% include 'LineStormTagComponentBundle::view.html.twig' with {content: related_post.tags} %}
                 </p>
                 <p class="hidden-xs hidden-sm hidden-md">
                     {{ related_post.blurb }}
