@@ -1,0 +1,8 @@
+# Common/Project/Build ignores
+.idea
+.sass-cache
+phpunit.phar
+
+# Symfony ignores
+/bin
+/vendor

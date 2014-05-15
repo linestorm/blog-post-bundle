@@ -58,6 +58,13 @@ class PostExtension extends \Twig_Extension
         return $modelManager->get('post')->findTopTen();
     }
 
+    /**
+     * Get a list of related posts
+     *
+     * @param $post
+     *
+     * @return mixed
+     */
     public function getRelatedPosts($post)
     {
         $modelManager = $this->container->get('linestorm.cms.model_manager');
