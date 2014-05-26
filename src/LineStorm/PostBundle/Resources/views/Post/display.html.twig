@@ -67,7 +67,7 @@
                     <div class="post-content">
                         {% set view = render_post_component_view(content) %}
                         {% if view %}
-                            {% include view.template ignore missing with view.options %}
+                            {% include view.template with view.options %}
                         {% endif %}
                     </div>
                 {% endfor %}

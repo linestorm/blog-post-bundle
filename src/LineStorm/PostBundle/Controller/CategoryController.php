@@ -14,13 +14,35 @@ class CategoryController extends Controller
 
         $category = $modelManager->get('category')->findOneByName($category);
 
-        if (!($category instanceof Category)) {
+        if(!($category instanceof Category))
+        {
             throw $this->createNotFoundException("Category Not Found");
         }
 
-        $em = $modelManager->getManager();
+        $em    = $modelManager->getManager();
         $class = $modelManager->getEntityClass('post');
 
+        $postModule = $this->get('linestorm.cms.module.post');
+
+        // find the top X articles
+        $dql = "
+            SELECT
+              p
+            FROM
+              {$class} p
+            WHERE
+                p.liveOn <= :date
+                AND p.category = :category
+            ORDER BY
+                p.liveOn DESC
+        ";
+
+        $topPosts = $em->createQuery($dql)->setMaxResults($postModule->getPageSize())->setParameters(array(
+            'date'     => new \DateTime(),
+            'category' => $category
+        ))->getResult();
+
+        // get all their tags and categories
         $dql = "
             SELECT
                 p,c,t
@@ -29,12 +51,12 @@ class CategoryController extends Controller
                 JOIN p.category c
                 JOIN p.tags t
             WHERE
-                p.liveOn <= :date
+                p IN (:posts)
             ORDER BY
                 p.liveOn DESC
         ";
 
-        $posts = $em->createQuery($dql)->setMaxResults(20)->setParameter('date', new \DateTime())->getResult();
+        $posts = $em->createQuery($dql)->setParameter('posts', $topPosts)->getResult();
 
         return $this->render('LineStormPostBundle:Category:display.html.twig', array(
             'category' => $category,

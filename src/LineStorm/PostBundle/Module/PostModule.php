@@ -17,6 +17,17 @@ class PostModule extends AbstractContentModule implements ModuleInterface
     protected $id = 'post';
 
     /**
+     * The default page size for each frontend page
+     *
+     * @return int
+     */
+    public function getPageSize()
+    {
+        return 20;
+    }
+
+
+    /**
      * Returns the navigation array
      *
      * @return array

@@ -20,22 +20,44 @@ class TagController extends Controller
             throw $this->createNotFoundException("Tag Not Found");
         }
 
-        $postClass = $modelManager->getEntityClass('post');
+        $em    = $modelManager->getManager();
+        $class = $modelManager->getEntityClass('post');
+
+        $postModule = $this->get('linestorm.cms.module.post');
+
+        // find the top X articles
         $dql = "
             SELECT
-                p
+              p
             FROM
-                {$postClass} p
+              {$class} p
+              JOIN p.tags t WITH t = :tag
             WHERE
-                :tag MEMBER OF p.tags
-                AND p.liveOn <= :date
+                p.liveOn <= :date
             ORDER BY
                 p.liveOn DESC
         ";
-        $posts = $modelManager->getManager()->createQuery($dql)->setParameters(array(
-            'date'  => new \DateTime(),
-            'tag'   => $tagEntity,
-        ))->setMaxResults(15)->getResult();
+
+        $topPosts = $em->createQuery($dql)->setMaxResults($postModule->getPageSize())->setParameters(array(
+            'date'     => new \DateTime(),
+            'tag' => $tagEntity
+        ))->getResult();
+
+        // get all their tags and categories
+        $dql = "
+            SELECT
+                p,c,t
+            FROM
+                {$class} p
+                JOIN p.category c
+                JOIN p.tags t
+            WHERE
+                p IN (:posts)
+            ORDER BY
+                p.liveOn DESC
+        ";
+
+        $posts = $em->createQuery($dql)->setParameter('posts', $topPosts)->getResult();
 
         return $this->render('LineStormPostBundle:Tag:display.html.twig', array(
             'tag'   => $tagEntity,

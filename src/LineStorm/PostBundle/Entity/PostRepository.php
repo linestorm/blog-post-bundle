@@ -49,15 +49,29 @@ class PostRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('p');
 
+        // get the top 10
+        $qb->select('partial p.{id}');
+        $qb->andwhere('p.liveOn < :now')
+           ->setMaxResults(10)
+           ->setParameter('now', new \DateTime());
+
+        $query = $qb->getQuery();
+        $topTen = $query->getArrayResult();
+        $topTenIds = array_map(function($post){
+            return $post['id'];
+        },$topTen);
+
+        $qb = $this->createQueryBuilder('p');
+
         // get categoty and tags as well
         $qb->select('p,c,t,i');
         $qb->join('p.category', 'c')
            ->join('p.tags', 't')
            ->join('p.coverImage', 'i')
-           ->andwhere('p.liveOn < :now')
-           ->setParameter('now', new \DateTime());
+           ->andwhere('p.id IN (:posts)')
+           ->setParameter('posts', $topTenIds);
 
-        $query = $qb->getQuery()->setMaxResults(10);
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 

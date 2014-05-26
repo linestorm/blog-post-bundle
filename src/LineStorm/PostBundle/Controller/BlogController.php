@@ -14,6 +14,23 @@ class BlogController extends Controller
         $em = $modelManager->getManager();
         $class = $modelManager->getEntityClass('post');
 
+        $postModule = $this->get('linestorm.cms.module.post');
+
+        // find the top X articles
+        $dql = "
+            SELECT
+              p
+            FROM
+              {$class} p
+            WHERE
+                p.liveOn <= :date
+            ORDER BY
+                p.liveOn DESC
+        ";
+
+        $posts = $em->createQuery($dql)->setMaxResults($postModule->getPageSize())->setParameter('date', new \DateTime())->getResult();
+
+        // get all their tags and categories
         $dql = "
             SELECT
                 p,c,t
@@ -22,12 +39,12 @@ class BlogController extends Controller
                 JOIN p.category c
                 JOIN p.tags t
             WHERE
-                p.liveOn <= :date
+                p IN (:posts)
             ORDER BY
                 p.liveOn DESC
         ";
 
-        $posts = $em->createQuery($dql)->setMaxResults(20)->setParameter('date', new \DateTime())->getResult();
+        $posts = $em->createQuery($dql)->setParameter('posts', $posts)->getResult();
 
         return $this->render('LineStormPostBundle:Pages:index.html.twig', array(
             'posts' => $posts,
