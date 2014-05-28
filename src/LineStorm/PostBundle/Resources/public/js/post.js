@@ -1,7 +1,7 @@
 
 var contentCounts = contentCounts || {};
 
-define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone, api) {
+define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, $ui, Dropzone, th, api) {
 
     // setup dropzone
     Dropzone.autoDiscover = false;
@@ -233,6 +233,33 @@ define(['jquery', 'jqueryui', 'dropzone', 'cms_api'], function ($, $ui, Dropzone
         });
         $slugInput.on('keyup', function(){
             hasSlugChanged = true;
+        });
+
+        $('input.media-search').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 2
+        },{
+            source: function (query, process) {
+                return $.get(lineStormTags.mediaBank.search, { q: query }, function (data) {
+                    return process(data);
+                });
+            },
+            templates: {
+                suggestion: function(data){
+                    return '<div class="media" data-id="'+data.id+'" data-src="'+data.src+'">' +
+                        '<span class="pull-left">' +
+                        '   <img class="media-object" src="'+data.src+'" alt="'+data.alt+'">' +
+                        '</span>' +
+                        '<div class="media-body">' +
+                        '   <h4 class="media-heading">'+data.title+'</h4>' +
+                        '</div>' +
+                    '</div>';
+                }
+            }
+        }).on('typeahead:selected', function(e,s,o){
+            $coverImageform.val(s.id);
+            $coverImageformPreview.attr('src', s.src);
         });
 
     });
