@@ -235,16 +235,20 @@ define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, 
             hasSlugChanged = true;
         });
 
+        var mediaSearch = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: lineStormTags.mediaBank.search+'?q=%QUERY'
+        });
+
+        mediaSearch.initialize();
+
         $('input.media-search').typeahead({
             hint: true,
             highlight: true,
             minLength: 2
         },{
-            source: function (query, process) {
-                return $.get(lineStormTags.mediaBank.search, { q: query }, function (data) {
-                    return process(data);
-                });
-            },
+            source: mediaSearch.ttAdapter(),
             templates: {
                 suggestion: function(data){
                     return '<div class="media" data-id="'+data.id+'" data-src="'+data.src+'">' +
