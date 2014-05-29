@@ -74,6 +74,10 @@
             </div>
 
         </article>
+
+        <h3>Comments</h3>
+
+        {{ include('LineStormCommentBundle:Comment:async.html.twig', {comment_config: 'post', id: post.id}) }}
     </section>
 
     <section class="side">
