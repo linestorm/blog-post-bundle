@@ -1,7 +1,7 @@
 {% extends 'LineStormPostBundle:Admin:form.html.twig' %}
 
 {% block page_title %}Edit Post{% endblock %}
-{% block page_desc %}{% endblock %}
+{% block page_desc %}<a href="{{ url('linestorm_cms_post', {id: post.id, slug: post.slug, category: post.category.name}) }}" target="_blank">Preview Post</a>{% endblock %}
 
 {% block post_form_buttons %}
     <button type="button" class="btn btn-danger post-form-delete" data-url="{{ path('linestorm_cms_module_post_api_delete_post', {id: post.id}) }}">

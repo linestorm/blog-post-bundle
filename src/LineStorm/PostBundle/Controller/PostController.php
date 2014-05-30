@@ -8,6 +8,7 @@ use Doctrine\ORM\Query;
 use LineStorm\PostBundle\Model\Post;
 use LineStorm\PostBundle\Module\PostModule;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class PostController
@@ -35,26 +36,27 @@ class PostController extends Controller
         $module = $moduleManager->getModule('post');
 
         $em = $modelManager->getManager();
-        $class = $modelManager->getEntityClass('post');
+        $repo = $modelManager->get('post');
 
-        $dql = "
-            SELECT
-                p,c,t
-            FROM
-                {$class} p
-                JOIN p.category c
-                JOIN p.tags t
-            WHERE
-                p.id = ?1
-                AND p.liveOn <= :date
-        ";
+        $qb = $repo->createQueryBuilder('p')
+            ->select('p,c,t,a')
+            ->join('p.category', 'c')
+            ->join('p.tags', 't')
+            ->join('p.author', 'a')
+            ->where('p.id = ?1')
+        ;
+
+
+        $user = $this->getUser();
+        if (!(($user instanceof UserInterface) && ($user->hasGroup('admin'))))
+        {
+            $qb->andWhere('p.liveOn <= :date')->setParameter('date', new \DateTime());
+        }
+
 
         try
         {
-            $post = $em->createQuery($dql)->setParameters(array(
-                'date'  => new \DateTime(),
-                1       => $id,
-            ))->getSingleResult();
+            $post = $qb->getQuery()->setParameter(1, $id)->getSingleResult();
         }
         catch(NonUniqueResultException $e)
         {

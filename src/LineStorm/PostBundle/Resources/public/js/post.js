@@ -1,6 +1,10 @@
 
 var contentCounts = contentCounts || {};
 
+window.onbeforeunload = function(){
+    return 'Are you sure you want to leave?';
+};
+
 define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, $ui, Dropzone, th, api) {
 
     // setup dropzone

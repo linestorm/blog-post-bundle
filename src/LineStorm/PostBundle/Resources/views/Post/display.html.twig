@@ -36,6 +36,12 @@
         <div class="pull-right navbar-nav navbar" style="position: absolute; right: 0">
             <a href="{{ path('linestorm_cms_module_post_admin_edit', {id: post.id}) }}" class="btn btn-primary" id="article-edit"><i class="fa-edit"></i> Edit</a>
         </div>
+
+        {% if post.liveOn > "now" | date %}
+            <div class="alert alert-danger">
+                This is a preview at the post is not yet published. The publish date is {{ post.liveOn | date('d/m/Y H:i') }}
+            </div>
+        {% endif %}
     {% endif %}
 
     <section class="main">
@@ -77,7 +83,7 @@
 
         <h3>Comments</h3>
 
-        {{ include('LineStormCommentBundle:Comment:async.html.twig', {comment_config: 'post', id: post.id}) }}
+        {{ include('LineStormCommentBundle:Comment:async.html.twig', {provider: 'post', id: post.id}) }}
     </section>
 
     <section class="side">

@@ -61,28 +61,13 @@
         {{ form_row(form.title, {attr: {class:'form-control post-form-title'}}) }}
         {{ form_row(form.coverImage) }}
 
-        <div class="row">
-            <img src="" class="cover-image">
-        </div>
-
         {{ form_row(form.liveOn) }}
         {{ form_row(form.category, {add_link: {class: 'add-category', href:path('linestorm_cms_module_post_api_new_category')}, attr: {'class': 'form-control category-select'} } ) }}
 
-        <!--
-            <a href="#" class="options-toggle" data-toggle="extra-options">Extra Options <i class="pull-right fa-angle-down"></i></a>
-            <div class="extra-options" style="display: none">
-            </div>
-
-            <hr />
-
-            <a href="#" class="options-toggle" data-toggle="seo-options">SEO Options <i class="pull-right fa-angle-down"></i></a>
-            <div class="seo-options" style="display: none"> </div>
-        -->
         {{ form_row(form.slug,              {help: 'User friendly URL fragment. If left blank, will be derived from title.', attr: {class:'form-control post-form-slug'}}) }}
         {{ form_row(form.blurb,             {help: 'Preview text. If left blank, will be derived from content.'}) }}
 
         <hr />
-
 
         <a href="#" class="options-toggle" data-toggle="seo-options">SEO Advice <i class="pull-right fa-angle-down"></i></a>
         <div class="seo-options" style="display: none">
@@ -107,12 +92,39 @@
 
         <hr />
 
-        <h3>Meta Data</h3>
-        {% for component in module.getComponents('META') %}
-            {{ form_row(form[component.id], { attr: {class: 'tag-search form-control'} }) }}
-        {% endfor %}
+        {% set metaComponents = module.getComponents('META') %}
+        {% if metaComponents|length %}
+            <h3>Meta Data</h3>
+            {% for component in metaComponents %}
+                {{ form_row(form[component.id], { attr: {class: 'tag-search form-control'} }) }}
+            {% endfor %}
 
-        <hr />
+            <hr />
+        {% endif %}
+
+        {% set headerComponents = module.getComponents('HEADER') %}
+        {% if headerComponents|length %}
+            <h3>Header Data</h3>
+            {% for component in headerComponents %}
+                {% for field in component.formFields %}
+                    {{ form_row(form[field], { attr: {class: 'form-control'} }) }}
+                {% endfor %}
+            {% endfor %}
+
+            <hr />
+        {% endif %}
+
+        {% set footerComponents = module.getComponents('FOOTER') %}
+        {% if footerComponents|length %}
+            <h3>Footer Data</h3>
+            {% for component in footerComponents %}
+                {% for field in component.formFields %}
+                    {{ form_row(form[field], { attr: {class: 'form-control'} }) }}
+                {% endfor %}
+            {% endfor %}
+
+            <hr />
+        {% endif %}
 
         <h3>Content
             <div class="pull-right btn-group">
