@@ -48,6 +48,7 @@ ul.post-components {
 
 div.post-component-item {
     position: relative;
+    margin-bottom: 20px;
 
     > .post-component-item-controls {
         position: absolute;
@@ -66,6 +67,9 @@ div.post-component-item {
     }
     > .post-component-item-widget {
         width: calc(100% - 48px);
+        border: 1px solid #aaaaaa;
+        padding: 0 10px 10px;
+        box-shadow: 0 0 15px #ccc !important;
     }
 }
 

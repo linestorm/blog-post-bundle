@@ -42,13 +42,14 @@
 
     {{
         include('LineStormCmsBundle::requirejs.html.twig', {
-            requirejs_module: ['cms_main', 'cms_post']|merge(module.componentAssets)
+            requirejs_module: ['cms_main', 'cms_post', 'cms_media']|merge(module.componentAssets)
         })
     }}
 
     {% stylesheets
         filter="compass" output="assets/bundles/linestormpost/css/post.css"
         "@LineStormPostBundle/Resources/assets/sass/post.scss"
+        "@LineStormMediaBundle/Resources/assets/sass/media.scss"
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -59,7 +60,20 @@
 
     {{ form_start(form, {attr: { class: 'api-save'} }) }}
         {{ form_row(form.title, {attr: {class:'form-control post-form-title'}}) }}
-        {{ form_row(form.coverImage) }}
+
+        {% if post is not null %}
+            {% set coverImage = post.coverImage %}
+        {% else %}
+            {% set coverImage = null %}
+        {% endif %}
+
+        {{
+            include('LineStormMediaBundle:Form:single-entity.html.twig', {
+                form: form.coverImage,
+                media: coverImage,
+                class: 'post-coverimage'
+            })
+        }}
 
         {{ form_row(form.liveOn) }}
         {{ form_row(form.category, {add_link: {class: 'add-category', href:path('linestorm_cms_module_post_api_new_category')}, attr: {'class': 'form-control category-select'} } ) }}

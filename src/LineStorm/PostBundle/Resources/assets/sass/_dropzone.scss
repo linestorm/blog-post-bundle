@@ -1,50 +1,21 @@
+@import "/assets/vendor/dropzone/downloads/css/dropzone.css";
 @import "compass";
 
 .dropzone {
     overflow: hidden;
-    padding: 20px;
-    background-color: #eeeeee; // Old browsers
-    @include filter-gradient(#eeeeee, #cccccc, vertical); // IE6-9
-    @include background-image(linear-gradient(top, #eeeeee 0%, #cccccc 100%));
-    @include transition(all 0.3s ease-in-out);
+
     border: 1px solid #aaaaaa;
-    text-align: center;
-    cursor: pointer;
-    min-height: 75px;
+    background: #eeeeee; // Old browsers
+    @include transition(all 0.3s ease-in-out);
 
     &:hover {
         background-color: #dadada; // Old browsers
-        @include filter-gradient(#dadada, #bababa, vertical); // IE6-9
-        @include background-image(linear-gradient(top, #dadada 0%, #bababa 100%));
-        @include transition(all 0.3s ease-in-out);
     }
-
-    &.dz-drag-hover {
-        // needs latest Compass, add '@import "compass"' to your scss
-        background-color: #c9de96; // Old browsers
-        @include filter-gradient(#c9de96, #398235, vertical); // IE6-9
-        @include background-image(linear-gradient(top,  #c9de96 0%,#8ab66b 44%,#398235 100%));
-        @include transition(all 0.3s ease-in-out);
-
-        .dz-default.dz-message h3 {
-            color: #fff !important;
-        }
-    }
-
-    &.dz-started {
-        .dz-default.dz-message {
-            display: none;
-        }
-    }
-
 
     .dz-default.dz-message {
-        width: 100%;
-        position: absolute;
-        height: 33px;
-        top: 50%;
-        left: 0;
-        margin-top: -18px;
+        height: 60px;
+        margin-top: -21.5px;
+        background-image: none;
     }
 
     .dz-preview {
@@ -57,6 +28,7 @@
         }
         .dz-image {
             height: 100px;
+            width: 100px;
         }
         .dz-remove {
             max-width: 100px;

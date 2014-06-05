@@ -5,10 +5,7 @@ window.onbeforeunload = function(){
     return 'Are you sure you want to leave?';
 };
 
-define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, $ui, Dropzone, th, api) {
-
-    // setup dropzone
-    Dropzone.autoDiscover = false;
+define(['jquery', 'jqueryui', 'typeahead', 'cms_api', 'cms_media_dropzone', 'cms_media_treebrowser'], function ($, $ui, th, api, mDz, mTree) {
 
     // add a new form to the page from a prototype
     window.addForm = function($collectionHolder, prototype, indexer, name) {
@@ -49,7 +46,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, 
             e.preventDefault();
             e.stopPropagation();
             $('#FormErrors').slideUp(function(){ $(this).html(''); });
-            window.lineStorm.api.saveForm($(this), function(on, status, xhr){
+            api.saveForm($(this), function(on, status, xhr){
                 if(xhr.status === 200){
                 } else if(xhr.status === 201) {
                     window.location = on.location;
@@ -58,7 +55,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, 
             }, function(e, status, ex){
                 if(e.status === 400){
                     if(e.responseJSON){
-                        var errors = window.lineStorm.api.parseError(e.responseJSON.errors);
+                        var errors = api.parseError(e.responseJSON.errors);
                         var str = '';
                         for(var i in errors){
                             if(errors[i].length)
@@ -76,7 +73,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, 
 
         $('.post-form-delete').on('click', function(){
             if(confirm("Are you sure you want to permanently delete this post?")){
-                window.lineStorm.api.call($(this).data('url'), {
+                api.call($(this).data('url'), {
                     method: 'DELETE',
                     success: function(o){
                         alert(o.message);
@@ -107,32 +104,46 @@ define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, 
         });
 
         // set up the cover image dropzone
+        var $coverImageform = $('#linestorm_cms_form_post_coverImage');
+        var $coverImageformPreview = $('.image-preview-container > img');
+        $('.new-media').on('click', function(){
+            var $button = $(this);
+            api.call($button.data('url'), {
+                dataType: 'json',
+                'success': function(o){
+                    if(o.form){
+                        var $modal = $(window.lineStorm.modalContainer.replace(/__title__/gim, 'New Media').replace(/__widget__/gim, o.form));
+                        var $form = $modal.find('form');
 
-        var $coverImageDropZone = $('.dropzone-coverImage');
-        var coverImageformId = $coverImageDropZone.data('form-target');
-        var $coverImageform = $('#'+coverImageformId);
-        var $coverImageformPreview = $('.'+coverImageformId+'_preview');
+                        $modal.find('button.modal-save').on('click', function(){
+                            $form.submit();
+                        });
+                        $form.on('submit', function(){
+                            api.saveForm($form, function(o){
+                                if(0 in o){
+                                    var m = o[0];
+                                    $coverImageform.val(m.id);
+                                    $coverImageformPreview.attr('src', m.src);
+                                }
+                                $modal.modal('hide');
+                            },function(xhr, state){
+                            });
+                            return false;
+                        });
 
-        new Dropzone($coverImageDropZone[0], {
-            url: window.lineStormTags.mediaBank.upload,
-            acceptedFiles: 'image/*',
-            init: function(){
-                this.on("success", function(file, response) {
-                    if(file.xhr.status == 200){
-                        alert('An identical file already exists and has been returned.');
+                        $modal.modal({}).appendTo(document.body);
+
+                        $modal.on('shown.bs.modal', function(){
+                            // build the dropzone and trees
+                            mTree.mediaTree($modal.find('.media-tree'));
+                            mDz.dropzone($modal.find('.dropzone'), {
+                                maxFiles: 1
+                            });
+                        });
+
                     }
-                    $coverImageform.val(response.id);
-                    $coverImageformPreview.attr('src', response.src);
-                    this.removeFile(file);
-                });
-                this.on("error", function(file, response) {
-                    this.removeFile(file);
-                    alert("Cannot add file:\n\n"+response.error);
-                });
-                this.on("removedfile", function(file){
-                });
-            },
-            previewTemplate: $coverImageDropZone.data('preview')
+                }
+            });
         });
 
         // set up the sortable content
@@ -199,7 +210,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, 
             e.stopPropagation();
 
 
-            window.lineStorm.api.call(this.href, {
+            api.call(this.href, {
                 'success': function(o){
                     if(o.form){
                         var $modal = $(window.lineStorm.modalContainer.replace(/__title__/gim, 'New Category').replace(/__widget__/gim, o.form));
@@ -209,7 +220,7 @@ define(['jquery', 'jqueryui', 'dropzone', 'typeahead', 'cms_api'], function ($, 
                            $form.submit();
                         });
                         $form.on('submit', function(){
-                            window.lineStorm.api.saveForm($form, function(o){
+                            api.saveForm($form, function(o){
                                 $categorySelect.append('<option value="'+o.id+'">'+o.name+'</option>').val(o.id);
                                 $modal.modal('hide');
                             },function(xhr, state){
