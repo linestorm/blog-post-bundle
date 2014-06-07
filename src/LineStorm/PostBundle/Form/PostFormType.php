@@ -20,7 +20,8 @@ class PostFormType extends AbstractCmsFormType
                 'required' => true
             ))
             ->add('coverImage', 'mediaentity', array(
-
+                'class' => $this->modelManager->getEntityClass('media'),
+                'property' => 'title',
             ))
             ->add('liveOn', 'datetime', array(
                 'date_widget' => 'single_text',
