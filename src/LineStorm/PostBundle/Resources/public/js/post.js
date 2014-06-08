@@ -135,7 +135,7 @@ define(['jquery', 'jqueryui', 'typeahead', 'cms_api', 'cms_media_dropzone', 'cms
 
                         $modal.on('shown.bs.modal', function(){
                             // build the dropzone and trees
-                            mTree.mediaTree($modal.find('.media-tree'));
+                            mTree.mediaTree($modal.find('.media-browser'));
                             mDz.dropzone($modal.find('.dropzone'), {
                                 maxFiles: 1
                             });
