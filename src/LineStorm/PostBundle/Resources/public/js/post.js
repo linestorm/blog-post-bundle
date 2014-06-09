@@ -85,9 +85,9 @@ define(['jquery', 'jqueryui', 'typeahead', 'cms_api', 'cms_media_dropzone', 'cms
 
         var $postBodyHolder;
 
-        $postBodyHolder = $('.post-components');
+        $postBodyHolder = $('.content-components');
 
-        $('a.post-component-new').on('click', function(e) {
+        $('a.content-component-new').on('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -98,7 +98,12 @@ define(['jquery', 'jqueryui', 'typeahead', 'cms_api', 'cms_media_dropzone', 'cms
             // add a new tag form (see next code block)
             var $el = addForm($postBodyHolder, prototype, contentCounts[id]);
 
-            $el.find('.post-component-item').addClass('item-'+id).trigger('widget-init');
+            $el.find('.content-component-item').addClass('item-'+id).trigger('widget-init');
+
+
+            $('html, body').animate({
+                scrollTop: $el.offset().top
+            }, 1000);
 
             return false;
         });
@@ -194,7 +199,7 @@ define(['jquery', 'jqueryui', 'typeahead', 'cms_api', 'cms_media_dropzone', 'cms
         $postBodyHolder.on('click', 'button.item-remove', function(){
             if(confirm('Are you sure you want to remove this item?\n\nNOTE: IT CANNOT BE UNDONE ONCE SAVED')){
                 var i = $(this).data('count');
-                $(this).closest('.post-component-item').parent().remove();
+                $(this).closest('.content-component-item').parent().remove();
             }
         });
 
