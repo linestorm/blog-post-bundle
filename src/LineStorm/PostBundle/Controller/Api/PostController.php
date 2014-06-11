@@ -166,7 +166,7 @@ class PostController extends AbstractApiController implements ClassResourceInter
             $postSearchProvider = $searchManager->get('post');
             $postSearchProvider->index($updatedPost);
 
-            $view = $this->createResponse(array('location' => $this->generateUrl('linestorm_cms_module_post_api_get_post', array( 'id' => $form->getData()->getId()))), 200);
+            $view = $this->createResponse(array('location' => $this->generateUrl('linestorm_cms_module_post_api_get_post', array( 'id' => $updatedPost->getId()))), 200);
         }
         else
         {

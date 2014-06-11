@@ -113,12 +113,15 @@ define(['jquery', 'jqueryui', 'typeahead', 'cms_api', 'cms_media_dropzone', 'cms
         var $coverImageformPreview = $('.image-preview-container > img');
         $('.new-media').on('click', function(){
             var $button = $(this);
+
+            var $modal = $(window.lineStorm.modalContainer.replace(/__title__/gim, 'New Media').replace(/__widget__/gim, '<div class="form-content"><i class="fa-spinner fa-spin"></i></div>'));
+
+            $modal.modal({}).appendTo(document.body);
             api.call($button.data('url'), {
                 dataType: 'json',
                 'success': function(o){
                     if(o.form){
-                        var $modal = $(window.lineStorm.modalContainer.replace(/__title__/gim, 'New Media').replace(/__widget__/gim, o.form));
-                        var $form = $modal.find('form');
+                        var $form = $(o.form);
 
                         $modal.find('button.modal-save').on('click', function(){
                             $form.submit();
@@ -136,16 +139,12 @@ define(['jquery', 'jqueryui', 'typeahead', 'cms_api', 'cms_media_dropzone', 'cms
                             return false;
                         });
 
-                        $modal.modal({}).appendTo(document.body);
+                        $modal.find('.form-content').empty().append($form);
 
-                        $modal.on('shown.bs.modal', function(){
-                            // build the dropzone and trees
-                            mTree.mediaTree($modal.find('.media-browser'));
-                            mDz.dropzone($modal.find('.dropzone'), {
-                                maxFiles: 1
-                            });
+                        mTree.mediaTree($modal.find('.media-browser'));
+                        mDz.dropzone($modal.find('.dropzone'), {
+                            maxFiles: 1
                         });
-
                     }
                 }
             });
@@ -158,7 +157,11 @@ define(['jquery', 'jqueryui', 'typeahead', 'cms_api', 'cms_media_dropzone', 'cms
             create: function( event, ui ) {
                 var $ul = $(this);
                 $ul.children('li').sort(function(a,b) {
-                    return a.dataset.order > b.dataset.order;
+                    var keyA = parseInt(a.dataset.order);
+                    var keyB = parseInt(b.dataset.order);
+                    if (keyA < keyB) return -1;
+                    if (keyA > keyB) return 1;
+                    return 0;
                 }).appendTo($ul);
             },
             start: function(e, ui){

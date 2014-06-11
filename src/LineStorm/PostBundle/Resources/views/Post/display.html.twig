@@ -37,7 +37,7 @@
             <a href="{{ path('linestorm_cms_module_post_admin_edit', {id: post.id}) }}" class="btn btn-primary" id="article-edit"><i class="fa-edit"></i> Edit</a>
         </div>
 
-        {% if post.liveOn|date > "now"|date %}
+        {% if post.liveOn|date("y-m-d H:i:s") > "now"|date("y-m-d H:i:s") %}
             <div class="alert alert-danger">
                 This is a preview at the post is not yet published. The publish date is {{ post.liveOn | date('d/m/Y H:i') }}
             </div>
