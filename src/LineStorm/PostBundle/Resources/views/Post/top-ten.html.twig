@@ -7,7 +7,7 @@
             {{ i+1 }}
         </span>
         <a class="pull-left" href="{{ top_url }}">
-            <img class="media-object" src="{{ top_post.coverImage.src }}" alt="{{ top_post.coverImage.alt }}">
+            <img class="media-object" src="{{ top_post.coverImage.getVersion('thumbnail').src }}" alt="{{ top_post.coverImage.alt }}">
         </a>
         <div class="media-body">
             <h4 class="media-heading">

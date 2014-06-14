@@ -5,7 +5,7 @@
 
         <div class="media">
             <a class="pull-left" href="{{ top_url }}">
-                <img class="media-object" src="{{ related_post.coverImage.src }}" alt="{{ related_post.coverImage.alt }}">
+                <img class="media-object" src="{{ related_post.coverImage.getVersion('thumbnail').src }}" alt="{{ related_post.coverImage.alt }}">
             </a>
             <div class="media-body">
                 <h4 class="media-heading">

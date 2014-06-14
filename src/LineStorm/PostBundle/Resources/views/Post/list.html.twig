@@ -2,7 +2,7 @@
     <div class="post {% if loop.first %}post-leader{% endif %} {% if loop.index in [2,3] %}post-leader-secondary{% endif %}">
         <div class="post-image">
             <a href="{{ path('linestorm_cms_post', {category: post.category.name|lower, id: post.id,
-            slug: post.slug }) }}"><img src="{{ post.coverImage.src }}" /></a>
+            slug: post.slug }) }}"><img src="{% if loop.first %}{{ post.coverImage.getVersion('medium').src }}{% else %}{{ post.coverImage.getVersion('small').src }}{% endif %}" /></a>
         </div>
         <div class="post-details">
             <h2 class="post-header">
