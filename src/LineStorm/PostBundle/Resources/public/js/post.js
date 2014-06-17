@@ -278,9 +278,7 @@ define(['jquery', 'jqueryui', 'typeahead', 'cms_api', 'cms_media_dropzone', 'cms
                         '<span class="pull-left">' +
                         '   <img class="media-object" src="'+data.src+'" alt="'+data.alt+'">' +
                         '</span>' +
-                        '<div class="media-body">' +
-                        '   <h4 class="media-heading">'+data.title+'</h4>' +
-                        '</div>' +
+                        '<p class="media-heading">'+data.title+'</p>' +
                     '</div>';
                 }
             }

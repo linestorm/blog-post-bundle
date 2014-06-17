@@ -26,9 +26,7 @@
     }
 
     .post-image {
-        width: 200px;
-        float: left;
-        margin-right: 20px;
+        width: 100%;
     }
     .post-image img {
         width: 100%;
@@ -119,6 +117,15 @@
     }
 }
 
+.post-minor {
+    .post-image{
+        margin-bottom: 10px;
+        max-height: 175px;
+        height: 175px;
+        overflow: hidden;
+    }
+}
+
 @media (max-width: 767px) {
 
     .post {
@@ -148,8 +155,11 @@
             .post-header {
                 margin-bottom: 10px;
             }
-            .post-preview {
-                display:none;
+            .post-preview p {
+                color: #cccccc;
+            }
+            .post-footer {
+                display: none;
             }
         }
     }
@@ -167,6 +177,15 @@
         height: inherit;
     }
 
+    .post-minor {
+        .post-image{
+            margin-bottom: 0px;
+            max-height: inherit;
+            height: inherit;
+            overflow: inherit;
+        }
+    }
+
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -177,6 +196,19 @@
     }
     .post-leader-secondary {
         width: 100%;
+    }
+
+    .post-minor {
+        height: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .post-image{
+            margin-bottom: 10px;
+            max-height: 223px;
+            height: 223px;
+            overflow: hidden;
+        }
     }
 }
 
@@ -205,6 +237,12 @@
         width: 220px;
     }
 
+    .post-minor {
+        .post-image{
+            max-height: 133px;
+            height: 133px;
+        }
+    }
 
 
     .post-leader:after {
