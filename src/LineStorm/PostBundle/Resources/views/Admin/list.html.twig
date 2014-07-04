@@ -1,26 +1,41 @@
 {% extends 'LineStormCmsBundle:Admin:index.html.twig' %}
 
 {% block module %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Tags</th>
-                <th>Live</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for post in posts %}
-            <tr>
-                <td><a href="{{ path('linestorm_cms_module_post_admin_edit', {id: post.id}) }}">{{ post.title }}</a></td>
-                <td>{{ post.blurb }}</td>
-                <td><label class="label label-success">{{ post.category.name }}</label></td>
-                <td>{% for tag in  post.tags %}<label class="label label-primary">{{ tag.name }}</label>{% endfor %}</td>
-                <td>{{ post.liveOn | date('d/m/Y') }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default" href="{{ url('linestorm_cms_module_post_admin_create') }}">
+                <i class="fa-align-left"></i> New Post
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Tags</th>
+                            <th>Live</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for post in posts %}
+                        <tr>
+                            <td><a href="{{ path('linestorm_cms_module_post_admin_edit', {id: post.id}) }}">{{ post.title }}</a></td>
+                            <td>{{ post.blurb }}</td>
+                            <td><label class="label label-success">{{ post.category.name }}</label></td>
+                            <td>{% for tag in  post.tags %}<label class="label label-primary">{{ tag.name }}</label>{% endfor %}</td>
+                            <td>{{ post.liveOn | date('d/m/Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

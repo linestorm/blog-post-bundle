@@ -164,13 +164,6 @@
 
         <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
             <div class="container">
-                <ul class="nav navbar-nav navbar-left">
-                    <li class="dropdown dropup">
-                        <button type="submit" class="btn btn-default navbar-btn post-save"><i class="fa-save"></i> Save</button>
-                        {% block post_form_buttons %}
-                        {% endblock %}
-                    </li>
-                </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown dropup">
@@ -184,6 +177,15 @@
                                 </li>
                             {% endfor %}
                         </ul>
+                    </li>
+                </ul>
+
+                <!-- On mobile, we need the save buttons at the bottom -->
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown dropup">
+                        <button type="submit" class="btn btn-default navbar-btn post-save"><i class="fa-save"></i> Save</button>
+                        {% block post_form_buttons %}
+                        {% endblock %}
                     </li>
                 </ul>
             </div>
