@@ -9,16 +9,15 @@
     }}
 {% endblock %}
 
-{% block head %}
+{% block stylesheets %}
 
     {% stylesheets
         filter="compass" output="assets/bundles/linestormpost/css/view.css"
         "@LineStormPostBundle/Resources/assets/sass/view.scss"
+        "assets-dev/vendor/highlightjs/styles/github.css"
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
-
-    <link rel="stylesheet" href="/{{ assetsPath }}/vendor/highlightjs/styles/github.css">
 
 {% endblock %}
 
@@ -48,7 +47,13 @@
         <article id="article-body blog">
             <div class="content">
 
-                <img class="article-image" src="{{ post.coverImage.src }}" alt="{{ post.coverImage.alt }}" credits={{ post.coverImage.credits }} />
+                <img id="article-img-{{ post.coverImage.id }}" class="article-image lazy-load-image"
+                     data-bttrlazyloading-xs='{"src": "{{ post.coverImage.getVersion('small').src }}", "width" : {{ post.coverImage.getVersion('small').width }},  "height" : {{ post.coverImage.getVersion('small').height }}}'
+                     data-bttrlazyloading-sm='{"src": "{{ post.coverImage.getVersion('small').src }}", "width" : {{ post.coverImage.getVersion('small').width }},  "height" : {{ post.coverImage.getVersion('small').height }}}'
+                     data-bttrlazyloading-md='{"src": "{{ post.coverImage.getVersion('medium').src }}", "width" : {{ post.coverImage.getVersion('medium').width }},  "height" : {{ post.coverImage.getVersion('medium').height }}}'
+                     data-bttrlazyloading-lg='{"src": "{{ post.coverImage.getVersion('large').src }}", "width" : {{ post.coverImage.getVersion('large').width }},  "height" : {{ post.coverImage.getVersion('large').height }}}'
+                     alt="{{ post.coverImage.alt }}" credits="{{ post.coverImage.credits }}"
+                />
 
                 <div class="article-details">
                     <div class="pull-left">

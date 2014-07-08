@@ -89,4 +89,12 @@ class PostModule extends AbstractContentModule implements ModuleInterface
 
         return $moduleRoutes;
     }
+
+    public function getAssets()
+    {
+        return array(
+            '@LineStormPostBundle/Resources/assets/sass/list.scss',
+            '@LineStormPostBundle/Resources/assets/sass/post.scss',
+        );
+    }
 } 
