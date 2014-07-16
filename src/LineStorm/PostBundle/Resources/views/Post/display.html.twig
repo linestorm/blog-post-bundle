@@ -12,12 +12,12 @@
 {% block stylesheets %}
 
     {% stylesheets
-        filter="compass" output="assets/bundles/linestormpost/css/view.css"
+        filter="compass" output="bundles/linestormpost/css/view.css"
         "@LineStormPostBundle/Resources/assets/sass/view.scss"
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
-    <link rel="stylesheet" href="{{ asset("assets/vendor/highlightjs/styles/github.css") }}" />
+    <link rel="stylesheet" href="{{ asset("vendor/highlightjs/styles/github.css") }}" />
 
 
 {% endblock %}
